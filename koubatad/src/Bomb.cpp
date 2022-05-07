@@ -6,3 +6,18 @@ Bomb::Bomb( int x, int y, int timer, int radius )
     m_Timer = timer;
     m_Radius = radius;
 }
+
+bool Bomb::drawObj() const
+{
+
+}
+
+void Bomb::countDown()
+{
+
+}
+
+void Bomb::explode()
+{
+    
+}

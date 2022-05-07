@@ -17,6 +17,17 @@ public:
      * @param speed Movement speed of Enemy 
      */
     Enemy( int x, int y, int speed );
+    
+    /**
+     * @brief Destroy the Enemy object
+     * 
+     */
+    virtual ~Enemy() = default;
+
+    virtual bool drawObj() const;
+
+    virtual void move();
+
 private:
     /* data */
 };

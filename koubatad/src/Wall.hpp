@@ -16,7 +16,10 @@ public:
      * @param y An Y position of new Wall
      */
     Wall( int x, int y );
+    ~Wall () {};
 
+    virtual bool drawObj() const override;
+    
 private:
     /* data */
 };

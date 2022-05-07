@@ -1,11 +1,20 @@
 #include "Player.hpp"
 
-Player::Player( int x, int y, int speed, int bombRadius, int bombsCount, int bombThrow )
+Player::Player( int x, int y, int speed, int bombRadius, int bombsCount)
 : Entity( x, y, speed)
 {
     m_BombRadius = bombRadius;
     m_BombsCount = bombsCount;
-    m_BombThrow = bombThrow;
+}
+
+bool Player::drawObj() const
+{
+
+}
+
+void Player::move()
+{
+    
 }
 
 bool Player::placeBomb ()

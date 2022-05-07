@@ -18,7 +18,28 @@ public:
      * @param radius Radius of explosion
      */
     Bomb( int x, int y, int timer, int radius );
+   
+    /**
+     * @brief Destroy the Bomb object
+     * 
+     */
+    ~Bomb () {};
+
+    virtual bool drawObj() const override;
+  
+    /**
+     * @brief Counts down timer, at 0 explodes 
+     * 
+     */
+    void countDown();
+  
+    /**
+     * @brief Draws explosion in radius, destroys destroyable objects 
+     * 
+     */
+    void explode();
+
 private:
-    int m_Timer;
-    int m_Radius;
+    int m_Timer; // Current time until explosion
+    int m_Radius; // Radius of explosion
 };

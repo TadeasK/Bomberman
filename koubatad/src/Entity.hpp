@@ -2,6 +2,10 @@
 
 #include "Object.hpp"
 
+/**
+ * @brief A class representing any Entity object
+ * 
+ */
 class Entity: public Object
 {
 public:
@@ -13,6 +17,16 @@ public:
      * @param speed Movement speed of Entity
      */
     Entity( int x, int y, int speed);
-private:
-    int m_Speed;
+    virtual ~Entity () = default;
+
+    virtual bool drawObj() const override;
+    
+    /**
+     * @brief Moves the entity 
+     * 
+     */
+    virtual void move( /*Parameter defining the direction of moving*/ ) = 0;
+
+protected:
+    int m_Speed; // Speed of entity
 };

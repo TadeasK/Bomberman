@@ -14,6 +14,7 @@ public:
      * @param y A Y position of object
      */
     Object( int x, int y);
+    virtual ~Object () = default;
 
     /**
      * @brief Draws object into environment 
@@ -21,8 +22,9 @@ public:
      * @return true If drawn succesfully
      * @return false 
      */
-    bool drawObj ();
-private:
-    int m_X;
-    int m_Y;
+    virtual bool drawObj () const = 0;
+
+protected:
+    int m_X; // A current X position of object 
+    int m_Y; // A current  Y position of object
 };

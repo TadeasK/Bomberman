@@ -6,7 +6,7 @@ Object::Object ( int x, int y )
     m_Y = y;
 }
 
-bool Object::drawObj()
+bool Object::drawObj() const
 {
     return true;
 }

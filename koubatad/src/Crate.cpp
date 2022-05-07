@@ -5,3 +5,18 @@ Crate::Crate ( int x, int y, bool full )
 {
     m_Filled = full;
 }
+
+Crate::~Crate() {    
+    if ( m_Filled )
+        dropBonus();
+}
+
+bool Crate::drawObj() const
+{
+
+}
+
+void Crate::dropBonus()
+{
+
+}
