@@ -20,6 +20,11 @@ public:
 
     virtual bool drawObj() const override;
 
+    /**
+     * @brief If Special object is picked up gives the Player picking it it's bonus 
+     * 
+     */
+    virtual void giveEffect();
 private:
     /* data */
 };

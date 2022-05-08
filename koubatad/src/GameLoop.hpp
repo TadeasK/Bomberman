@@ -1,5 +1,6 @@
 #pragma once
 
+
 /**
  * @brief Manages the game events 
  * 
@@ -10,5 +11,15 @@ public:
     GameLoop();
     ~GameLoop();
 
+    /**
+     * @brief Generates map from file
+     *
+     */
+    void generateMap();
 
+    /**
+     * @brief Controls the whole game
+     *
+     */
+    void gameControl();
 };

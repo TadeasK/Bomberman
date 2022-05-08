@@ -17,7 +17,6 @@ public:
      * @param speed Movement speed of Player
      * @param bombRadius Explosion radius of player's bombs
      * @param bombsCount Maximum number of bobms player is allowed to place at the same time
-     * @param bombThrow Range of player's bomb throw
      */
     Player( int x, int y, int speed, int bombRadius = 0, int bombsCount = 1);
     ~Player() {};

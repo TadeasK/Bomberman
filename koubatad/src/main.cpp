@@ -1,4 +1,7 @@
+#include "MainMenu.hpp"
+
 int main ()
 {
-    // TODO Program control
+    MainMenu game;
+    game.menuLoop();
 }

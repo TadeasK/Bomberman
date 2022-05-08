@@ -8,3 +8,9 @@ bool BuffMove::drawObj() const
 {
 
 }
+
+void BuffMove::giveEffect()
+{
+
+}
+

@@ -8,3 +8,8 @@ bool BuffRadius::drawObj() const
 {
 
 }
+
+void BuffRadius::giveEffect()
+{
+
+}

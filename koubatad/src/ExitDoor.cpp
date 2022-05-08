@@ -8,3 +8,8 @@ bool ExitDoor::drawObj() const
 {
 
 }
+
+void ExitDoor::giveEffect()
+{
+
+}

@@ -8,3 +8,8 @@ bool BuffDetonator::drawObj() const
 {
 
 }
+
+void BuffDetonator::giveEffect()
+{
+    
+}
