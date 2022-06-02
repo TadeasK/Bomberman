@@ -6,7 +6,4 @@ Entity::Entity ( int x, int y, int speed )
     m_Speed = speed;
 }
 
-void Entity::move ( /* param */ )
-{
-    
-}
+Entity::~Entity() {}

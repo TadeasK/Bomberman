@@ -17,9 +17,7 @@ public:
      * @param speed Movement speed of Entity
      */
     Entity( int x, int y, int speed);
-    virtual ~Entity () = default;
-
-    virtual bool drawObj() const override;
+    virtual ~Entity ();
     
     /**
      * @brief Moves the entity 

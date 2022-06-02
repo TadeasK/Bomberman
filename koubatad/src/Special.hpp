@@ -16,15 +16,13 @@ public:
      * @param y An Y position of new Bomb
      */
     Special( int x, int y );
-    virtual ~Special() = default;
-
-    virtual bool drawObj() const override;
+    virtual ~Special ();
 
     /**
      * @brief If Special object is picked up gives the Player picking it it's bonus 
      * 
      */
-    virtual void giveEffect();
+    virtual void giveEffect() = 0;
 private:
     /* data */
 };
