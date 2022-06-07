@@ -1,60 +1,57 @@
 #pragma once
 
+#include "Menu.hpp"
+#include "OptionsMenu.hpp"
 #include "GameLoop.hpp"
+#include <vector>
+#include <string>
 
 /**
- * @brief Represents and operates MainMenu functions 
- * 
+ * @brief Represents Main menu, prints its contents, operates based on user input
  */
-class MainMenu
+class MainMenu: public Menu
 {
 public:
-    MainMenu();
-    ~MainMenu();
-
     /**
-     * @brief Initializes ncurses window, checks if terminal supports all neded functions
-     * 
-     * @return true If everything went alright
-     * @return false If terminal doesn't support colors or doesn't fit minimal size
-    */
-    bool initNcurses();
-
-    /**
-     * @brief Operates main menu, based on user choice can start the game,
-     *  show amd change settings or show help
+     * @brief Initialize ncurses for menus, read and apply from config file
      * 
      */
-    void menuLoop();
+    MainMenu();
 
 private:
-    int m_WIDTH;
-    int m_HEIGHT;
-    const static int MIN_WIDTH = 80;
-    const static int MIN_HEIGHT = 24;
+    enum OPTIONS { START_GAME, OPTIONS, QUIT };
 
     /**
-     * @brief Operates options menu, user can see and edit configuration 
-     * 
-     */
-    void optionsLoop();
-    
-    /**
-     * @brief Shows help for the game 
-     * 
-     */
-    void helpLoop();
-    
-    /**
-     * @brief Reads user input
-     * 
-     */
-    void readInput();
+    * @brief Initializes ncurses window, checks if terminal supports all needed functions
+    *
+    */
+    void initNcurses();
 
     /**
-     * @brief Set colors to use 
-     * 
+     * @brief Set colors to use
+     *
      */
     void initColors();
+
+    /**
+     * @brief Read from config file, setup configuration
+     *
+     */
+    void initConfig();
+
+    /**
+    *  @brief Prepares the game to run, starts the game
+    *
+    */
+    void runGame();
+
+    /**
+     * @brief Operates options menu, user can see and edit configuration
+    *
+    */
+    void options();
+
+    virtual void takeAction(size_t currSelect) override;
 };
+
 

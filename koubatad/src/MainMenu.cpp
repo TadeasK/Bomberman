@@ -1,81 +1,51 @@
 #include "MainMenu.hpp"
-#include <ncurses.h>
-#include <iostream>
-
-//----------------------------------------------------------------------------------------------
 
 MainMenu::MainMenu()
-{}
-
-//----------------------------------------------------------------------------------------------
-
-MainMenu::~MainMenu()
+    : Menu()
 {
-    endwin();
+    initNcurses();
+    initConfig();
+
+    running = true;
+    getmaxyx(stdscr,m_WIDTH,m_HEIGHT);
+    refreshWindow();
+
+    menuItems = {
+            "Start game",
+            "Options",
+            "Quit"
+    };
 }
 
 //----------------------------------------------------------------------------------------------
 
-bool MainMenu::initNcurses()
+void MainMenu::initNcurses()
 {
     initscr(); // Initialize window
     if ( !has_colors() ) {
-        std::cerr << "Your terminal doesn't support colors, which is required to run this game."
-                  << std::endl; 
-        return false;
+        endwin();
+        throw "Your terminal doesn't support colors, which is required to run this game.";
     }
     start_color(); // Initialize color mode
     initColors(); // Set color pairs
 
+    cbreak();
     raw(); // Turn of line buffering
     keypad(stdscr, TRUE); // Activate special keys (arrow, F1...)
     noecho(); // Don't repeat input
+    curs_set(0); // Make the cursor invisible
 
     getmaxyx(stdscr, m_HEIGHT, m_WIDTH); // Read window parameters
-    
     // Check if terminal has sufficient dimensions
-    if ( m_HEIGHT < MIN_HEIGHT || m_WIDTH < MIN_WIDTH ) { 
-        std::cerr << "Your terminal is too small. Minumum dimensions of terminal are: "
-        << MIN_WIDTH << ":" << MIN_HEIGHT
-        << std::endl; 
-        return false;
+    if ( m_HEIGHT < MIN_HEIGHT || m_WIDTH < MIN_WIDTH ) {
+        endwin();
+        throw "Your terminal is too small. Minimum dimensions of terminal are: "
+              + std::to_string(MIN_WIDTH) + " : " + std::to_string(MIN_HEIGHT);
     }
-
-    return true;
 }
 
 //----------------------------------------------------------------------------------------------
 
-void MainMenu::menuLoop()
-{
-    while (true) {
-
-    }
-
-}
-
-//----------------------------------------------------------------------------------------------
-
-void MainMenu::optionsLoop()
-{
-
-}
-
-//----------------------------------------------------------------------------------------------
-
-void MainMenu::helpLoop()
-{
-
-}
-
-//----------------------------------------------------------------------------------------------
-
-void MainMenu::readInput()
-{
-
-}
-
-//----------------------------------------------------------------------------------------------
 
 void MainMenu::initColors()
 {
@@ -84,4 +54,53 @@ void MainMenu::initColors()
     init_pair(3, COLOR_WHITE, COLOR_BLACK); // Bombs, specials color
     init_pair(4, COLOR_GREEN, COLOR_BLACK); // Player color
     init_pair(5, COLOR_BLUE, COLOR_BLACK); // Player2 color
+    init_pair(6, COLOR_MAGENTA, COLOR_BLACK); // Hint color
 }
+
+//----------------------------------------------------------------------------------------------
+
+
+void MainMenu::initConfig()
+{
+
+}
+
+//----------------------------------------------------------------------------------------------
+
+void MainMenu::runGame()
+{
+
+    GameLoop game;
+    game.run();
+}
+
+//----------------------------------------------------------------------------------------------
+
+void MainMenu::options()
+{
+    OptionsMenu optionsMenu;
+    optionsMenu.runMenu();
+}
+
+//----------------------------------------------------------------------------------------------
+
+void MainMenu::takeAction(size_t currSelect)
+{
+    switch (currSelect) {
+        case START_GAME:
+            cleanUp();
+            runGame();
+            break;
+        case OPTIONS:
+            cleanUp();
+            options();
+            break;
+        case QUIT:
+            running = false;
+            break;
+    }
+}
+
+//----------------------------------------------------------------------------------------------
+
+
