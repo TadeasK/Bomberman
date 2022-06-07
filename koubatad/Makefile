@@ -1,7 +1,8 @@
 # Compilator aliases
 CXX=g++
-CXXFLAGS= -Wall -pedantic -std=c++17 -O2
-
+CXXFLAGS=-Wall -pedantic -std=c++17 -O2
+DEBUGFLAGS=-Wall -pedantic -g -std=c++17 -O2
+VALGRINDFLAGS=-s --leak-check=full --show-leak-kinds=all
 # Doxygen comfiguration file
 DOX=Doxyfile
 
@@ -12,19 +13,21 @@ RM=rm -rf
 BIN=koubatad
 
 # What to put into zip file
-ZIP=zadani.txt $(wildcard src/*.hpp) doc/
+ZIP=zadani.txt prohlaseni.txt Makefile Doxyfile src/ examples/ assets/
 
 # modules to make 
-# ls *.cpp | sed 's/.cpp/.o/g' | tr '\n' ' '
-MODULES=tmp/main.o tmp/Bomb.o tmp/BuffBomb.o tmp/BuffDetonator.o tmp/BuffMove.o tmp/BuffRadius.o tmp/BuffThrow.o tmp/Crate.o tmp/Enemy.o tmp/Entity.o tmp/ExitDoor.o tmp/GameLoop.o tmp/MainMenu.o tmp/Monster1.o tmp/Monster2.o tmp/Monster3.o tmp/Object.o tmp/Player.o tmp/Special.o tmp/Wall.o
+# ls src/*.cpp | sed 's/.cpp/.o/g' | sed 's/src/tmp/g' | tr '\n' ' '
+MODULES=tmp/Bomb.o tmp/BuffBomb.o tmp/BuffDetonator.o tmp/BuffMove.o tmp/BuffRadius.o tmp/BuffThrow.o tmp/Crate.o \
+tmp/Enemy.o tmp/Entity.o tmp/ExitDoor.o tmp/GameLoop.o tmp/main.o tmp/MainMenu.o tmp/Menu.o tmp/Monster1.o \
+tmp/Monster2.o tmp/Monster3.o tmp/Object.o tmp/OptionsMenu.o tmp/Player.o tmp/Special.o tmp/Wall.o
 
 # Makefile parameters
 
 # Generate all outputs, documentation
-all: deps compile doc
+all: compile doc
 
 # Create binary executable of the whole program
-compile: $(BIN)
+compile: deps $(BIN)
 
 # Run the exectuable
 run: compile
@@ -48,6 +51,14 @@ $(BIN).zip: $(ZIP)
 	cp --parents -r $^ tmp/$(BIN)/
 	cd tmp/ && zip -r ../$@ $(BIN)/
 	rm -rf tmp/
+
+# Compile and run in debug mode
+debug: debugComp
+	valgrind $(VALGRINDFLAGS) ./$(BIN)
+
+debugComp: $(MODULES)
+	@mkdir -p tmp/
+	$(CXX) $(DEBUGFLAGS) -o $(BIN) $^ -lncurses
 
 # Compile and Link
 $(BIN): $(MODULES)
