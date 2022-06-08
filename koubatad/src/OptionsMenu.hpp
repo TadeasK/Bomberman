@@ -2,6 +2,8 @@
 
 #include "Menu.hpp"
 
+#include <map>
+
 class OptionsMenu: public Menu
 {
 public:
@@ -11,8 +13,35 @@ public:
     */
     OptionsMenu();
 
+    virtual void runMenu() override;
+
 private:
-    enum OPTIONS { MOVEMENT_UP, MOVEMENT_DOWN, MOVEMENT_LEFT, MOVEMENT_RIGHT, PLACE_BOMB, BACK };
+    enum OPTIONS { BACK };
+    const std::vector<std::string> m_SettingKeysP1 = {
+            "PLAYER 1: ",
+            "",
+            "UP = W",
+            "DOWN = S",
+            "LEFT = A",
+            "RIGHT = D",
+            "BOMB = SPACE"
+    };
+
+    const std::vector<std::string> m_SettingKeysP2 = {
+            "PLAYER 2: ",
+            "",
+            "UP = ARROW UP",
+            "DOWN = ARROW DOWN",
+            "LEFT = ARROW LEFT",
+            "RIGHT = ARROW RIGHT",
+            "BOMB = NUMPAD ENTER"
+    };
+
+    /**
+     * @brief Display settings for both players
+     *
+     */
+    void displaySettings();
 
     virtual void takeAction(size_t currSelect) override;
 };

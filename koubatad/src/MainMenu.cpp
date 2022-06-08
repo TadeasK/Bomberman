@@ -4,15 +4,18 @@ MainMenu::MainMenu()
     : Menu()
 {
     initNcurses();
-    initConfig();
 
     running = true;
+    m_Name = "Main menu";
     getmaxyx(stdscr,m_WIDTH,m_HEIGHT);
-    refreshWindow();
+    menuHeight = m_HEIGHT / 2;
+    menuWidth = m_WIDTH / 2;
+    menuWindow = newwin(menuHeight, menuWidth, m_HEIGHT / 4, m_WIDTH / 4);
+    keypad(menuWindow, true);
 
     menuItems = {
             "Start game",
-            "Options",
+            "Controls",
             "Quit"
     };
 }
@@ -49,29 +52,21 @@ void MainMenu::initNcurses()
 
 void MainMenu::initColors()
 {
-    init_pair(1, COLOR_RED, COLOR_BLACK); // Border color
+    init_pair(1, COLOR_RED, COLOR_BLACK); // Placed bomb, Wall color
     init_pair(2, COLOR_RED, COLOR_YELLOW); // Explosion color
-    init_pair(3, COLOR_WHITE, COLOR_BLACK); // Bombs, specials color
+    init_pair(3, COLOR_WHITE, COLOR_BLACK); // Specials color
     init_pair(4, COLOR_GREEN, COLOR_BLACK); // Player color
     init_pair(5, COLOR_BLUE, COLOR_BLACK); // Player2 color
-    init_pair(6, COLOR_MAGENTA, COLOR_BLACK); // Hint color
-}
-
-//----------------------------------------------------------------------------------------------
-
-
-void MainMenu::initConfig()
-{
-
+    init_pair(6, COLOR_MAGENTA, COLOR_BLACK); // Hint color, Crate color
+    init_pair(7, COLOR_YELLOW, COLOR_BLACK); // Enemy color
 }
 
 //----------------------------------------------------------------------------------------------
 
 void MainMenu::runGame()
 {
-
-    GameLoop game;
-    game.run();
+    GameMenu game;
+    game.runMenu();
 }
 
 //----------------------------------------------------------------------------------------------
@@ -91,12 +86,14 @@ void MainMenu::takeAction(size_t currSelect)
             cleanUp();
             runGame();
             break;
-        case OPTIONS:
+        case CONTROLS:
             cleanUp();
             options();
             break;
         case QUIT:
             running = false;
+            break;
+        default:
             break;
     }
 }

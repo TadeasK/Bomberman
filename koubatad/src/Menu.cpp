@@ -16,11 +16,12 @@ void Menu::runMenu()
         if ( refreshWindow() )
             displayErr();
 
+        displayName();
         displayHelp();
         printMenuItems( currSelect );
         input = readInput( currSelect);
 
-        if ( input == KEY_ENTER || input == ENTER  ) // KEY_ENTER does not work for some reason
+        if ( input == KEY_ENTER || input == ENTER ) // KEY_ENTER does not work for some reason
             takeAction (currSelect);
     }
     delwin(menuWindow);
@@ -64,10 +65,18 @@ void Menu::printMenuItems( size_t currSelect )
     for ( size_t i = 0; i < menuItems.size(); i++) { // Prints the menu and highlights current choice
         if ( i == currSelect )
             wattron(menuWindow, A_STANDOUT);
-        mvwprintw(menuWindow,
-                  (menuHeight/2 - menuItems.size()/2 + i),
-                  (menuWidth/2 - menuItems[i].length()/2),
-                  menuItems[i].c_str() );
+        if ( i == menuItems.size() - 1 ) {
+            mvwprintw(menuWindow,
+                      (menuHeight - 4),
+                      (menuWidth / 2 - menuItems[i].length() / 2),
+                      menuItems[i].c_str());
+        }
+        else {
+            mvwprintw(menuWindow,
+                      (menuHeight / 2 - menuItems.size() / 2 + i),
+                      (menuWidth / 2 - menuItems[i].length() / 2),
+                      menuItems[i].c_str());
+        }
         wattroff(menuWindow, A_STANDOUT);
     }
 }
@@ -77,7 +86,7 @@ void Menu::printMenuItems( size_t currSelect )
 void Menu::displayHelp()
 {
     wattron(menuWindow, COLOR_PAIR(6));
-    mvwprintw(menuWindow, menuHeight - 2, (menuWidth / 2 - hint.length() / 2), hint.c_str());
+    mvwprintw(menuWindow, menuHeight - 2, (menuWidth / 2 - hintMsg.length() / 2), hintMsg.c_str());
     wattroff(menuWindow, COLOR_PAIR(6));
 }
 
@@ -86,8 +95,17 @@ void Menu::displayHelp()
 void Menu::displayErr()
 {
     wattron(menuWindow, COLOR_PAIR(1));
-    mvwprintw(menuWindow, 2, (menuWidth / 2 - hint.length() / 2), sizeErr.c_str());
+    mvwprintw(menuWindow, 1, (menuWidth / 2 - sizeErrMsg.length() / 2), sizeErrMsg.c_str());
     wattroff(menuWindow, COLOR_PAIR(1));
+}
+
+//----------------------------------------------------------------------------------------------
+
+void Menu::displayName()
+{
+    wattron(menuWindow, COLOR_PAIR(5) | A_UNDERLINE);
+    mvwprintw(menuWindow, 2, (menuWidth / 2 - m_Name.length() / 2), m_Name.c_str());
+    wattroff(menuWindow, COLOR_PAIR(5) | A_UNDERLINE);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -123,8 +141,13 @@ bool Menu::refreshWindow()
     return sizeErr;
 }
 
+//----------------------------------------------------------------------------------------------
+
 void Menu::cleanUp()
 {
     clear();
     refresh();
 }
+
+//----------------------------------------------------------------------------------------------
+

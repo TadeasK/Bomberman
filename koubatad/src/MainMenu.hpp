@@ -2,7 +2,7 @@
 
 #include "Menu.hpp"
 #include "OptionsMenu.hpp"
-#include "GameLoop.hpp"
+#include "GameMenu.hpp"
 #include <vector>
 #include <string>
 
@@ -19,10 +19,11 @@ public:
     MainMenu();
 
 private:
-    enum OPTIONS { START_GAME, OPTIONS, QUIT };
+    enum OPTIONS { START_GAME, CONTROLS, QUIT };
 
     /**
     * @brief Initializes ncurses window, checks if terminal supports all needed functions
+    * @throws String error if terminal size is not sufficient or terminal doesn't support color
     *
     */
     void initNcurses();
@@ -31,13 +32,7 @@ private:
      * @brief Set colors to use
      *
      */
-    void initColors();
-
-    /**
-     * @brief Read from config file, setup configuration
-     *
-     */
-    void initConfig();
+    void static initColors();
 
     /**
     *  @brief Prepares the game to run, starts the game
