@@ -29,5 +29,5 @@ public:
     virtual void move();
 
 private:
-    /* data */
+    const char m_Repr = '$';
 };

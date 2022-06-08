@@ -21,5 +21,5 @@ public:
     virtual bool drawObj() const override;
     
 private:
-    /* data */
+    const char m_Repr = 'X'; // Char representing Wall
 };

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Entity.hpp"
+#include "Bomb.hpp"
+#include <vector>
 
 /**
  * @brief A class representing a Player entity 
@@ -16,9 +18,9 @@ public:
      * @param y An Y position of new Player
      * @param speed Movement speed of Player
      * @param bombRadius Explosion radius of player's bombs
-     * @param bombsCount Maximum number of bobms player is allowed to place at the same time
+     * @param bombsCount Maximum number of bombs player is allowed to place at the same time
      */
-    Player( int x, int y, int speed, int bombRadius = 0, int bombsCount = 1);
+    Player( int x, int y, int speed, int bombRadius, int bombsCount, int bombThrow, int bombTimer);
     ~Player() {};
 
     virtual bool drawObj() const override;
@@ -37,8 +39,10 @@ public:
     bool placeBomb ();
 
 private:
+    const char m_Repr = '@'; // Constant character representing the player on the map
     int m_BombRadius; // Current radius of player placed bombs
     int m_BombsCount; // Current maximum count of bombs player can place at the same time
-    int m_BombThrow = 0; // Max range at which player can place a bomb
-    int m_BombsPlaced = 0; // Current number of bombs placed
+    int m_BombThrow; // Max range at which player can place a bomb
+    int m_BombTimer; // How long it takes for bombs placed by this player to explode
+    std::vector<Bomb> m_BombsPlaced; // Current number of bombs placed
 };

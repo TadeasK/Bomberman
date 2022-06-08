@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ncurses.h"
+
 /**
  * @brief A class representing any object in the game 
  * 

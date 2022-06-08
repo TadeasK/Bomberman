@@ -28,11 +28,13 @@ public:
     virtual bool drawObj() const override;
 
 private:
+    const char m_Repr = '#';
+    bool m_Filled; // Attribute containing info about whether the object has bonus inside or not
+
     /**
      * @brief When the crate is destroyed, if it is filled drop a bonus
      *
      */
     void dropBonus();
 
-    bool m_Filled; // Attribute containing info about whether the object has bonus inside or not
 };
