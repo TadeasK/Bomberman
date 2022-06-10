@@ -1,14 +1,10 @@
 #include "GameMenu.hpp"
 
 GameMenu::GameMenu()
+    :Menu()
 {
     running = true;
-    getmaxyx(stdscr,m_WIDTH,m_HEIGHT);
     m_Name = "Select game mode";
-    menuHeight = m_HEIGHT / 2;
-    menuWidth = m_WIDTH / 2;
-    menuWindow = newwin(menuHeight, menuWidth, m_HEIGHT / 4, m_WIDTH / 4);
-    keypad(menuWindow, true);
 
     menuItems = {
             "Single Player",
@@ -43,12 +39,16 @@ void GameMenu::takeAction(size_t currSelect)
 
 void GameMenu::startSingle()
 {
-
+    std::string name = "Choose level";
+    LevelMenu game(name);
+    game.runMenu();
 }
 
 //----------------------------------------------------------------------------------------------
 
 void GameMenu::startMulti()
 {
-
+    std::string name = "Choose map";
+    LevelMenu game(name, true);
+    game.runMenu();
 }

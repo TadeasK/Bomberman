@@ -1,9 +1,55 @@
 #include "Menu.hpp"
 
+Menu::Menu()
+{
+    initNcurses();
+
+    getmaxyx(stdscr,m_WIDTH,m_HEIGHT);
+    menuHeight = m_HEIGHT / 2;
+    menuWidth = m_WIDTH / 2;
+    menuWindow = newwin(menuHeight, menuWidth, m_HEIGHT / 4, m_WIDTH / 4);
+    keypad(menuWindow, true);
+}
+
 //----------------------------------------------------------------------------------------------
 
-Menu::Menu()
-{}
+void Menu::initNcurses()
+{
+    initscr(); // Initialize window
+    if ( !has_colors() ) {
+        endwin();
+        throw "Your terminal doesn't support colors, which is required to run this game.";
+    }
+    start_color(); // Initialize color mode
+    initColors(); // Set color pairs
+
+    cbreak();
+    raw(); // Turn of line buffering
+    keypad(stdscr, TRUE); // Activate special keys (arrow, F1...)
+    noecho(); // Don't repeat input
+    curs_set(0); // Make the cursor invisible
+
+    getmaxyx(stdscr, m_HEIGHT, m_WIDTH); // Read window parameters
+    // Check if terminal has sufficient dimensions
+    if ( m_HEIGHT < MIN_HEIGHT || m_WIDTH < MIN_WIDTH ) {
+        endwin();
+        throw "Your terminal is too small. Minimum dimensions of terminal are: "
+              + std::to_string(MIN_WIDTH) + " : " + std::to_string(MIN_HEIGHT);
+    }
+}
+
+//----------------------------------------------------------------------------------------------
+
+void Menu::initColors()
+{
+    init_pair(1, COLOR_RED, COLOR_BLACK); // Placed bomb, Wall color
+    init_pair(2, COLOR_RED, COLOR_YELLOW); // Explosion color
+    init_pair(3, COLOR_WHITE, COLOR_BLACK); // Specials color
+    init_pair(4, COLOR_GREEN, COLOR_BLACK); // Player color
+    init_pair(5, COLOR_BLUE, COLOR_BLACK); // Player2 color
+    init_pair(6, COLOR_MAGENTA, COLOR_BLACK); // Hint color, Crate color
+    init_pair(7, COLOR_YELLOW, COLOR_BLACK); // Enemy color
+}
 
 //----------------------------------------------------------------------------------------------
 
@@ -14,7 +60,7 @@ void Menu::runMenu()
 
     while (running) {
         if ( refreshWindow() )
-            displayErr();
+            displayErr(sizeErrMsg);
 
         displayName();
         displayHelp();
@@ -92,10 +138,11 @@ void Menu::displayHelp()
 
 //----------------------------------------------------------------------------------------------
 
-void Menu::displayErr()
+void Menu::displayErr( const std::string& errMsg, const std::string& additionalInfo )
 {
     wattron(menuWindow, COLOR_PAIR(1));
-    mvwprintw(menuWindow, 1, (menuWidth / 2 - sizeErrMsg.length() / 2), sizeErrMsg.c_str());
+    mvwprintw(menuWindow, 1, (menuWidth / 2 - errMsg.length() / 2), errMsg.c_str());
+    mvwprintw(menuWindow, 2, (menuWidth / 2 - additionalInfo.length() / 2), additionalInfo.c_str());
     wattroff(menuWindow, COLOR_PAIR(1));
 }
 
@@ -104,7 +151,7 @@ void Menu::displayErr()
 void Menu::displayName()
 {
     wattron(menuWindow, COLOR_PAIR(5) | A_UNDERLINE);
-    mvwprintw(menuWindow, 2, (menuWidth / 2 - m_Name.length() / 2), m_Name.c_str());
+    mvwprintw(menuWindow, 3, (menuWidth / 2 - m_Name.length() / 2), m_Name.c_str());
     wattroff(menuWindow, COLOR_PAIR(5) | A_UNDERLINE);
 }
 

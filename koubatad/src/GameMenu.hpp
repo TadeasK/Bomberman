@@ -1,14 +1,18 @@
 #pragma once
 
 #include "Menu.hpp"
+#include "LevelMenu.hpp"
 
 /**
- * @brief Manages the game events 
+ * @brief Represents Menu where you can select what game mode to play, starts that game mode
  * 
  */
 class GameMenu: public Menu
 {
 public:
+    /**
+     * @brief Initializes ncurses window for this menu
+     */
     GameMenu();
 
 private:

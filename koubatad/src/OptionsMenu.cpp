@@ -6,10 +6,6 @@ OptionsMenu::OptionsMenu()
     running = true;
     m_Name = "Controls";
     getmaxyx(stdscr,m_WIDTH,m_HEIGHT);
-    menuHeight = m_HEIGHT / 2;
-    menuWidth = m_WIDTH / 2;
-    menuWindow = newwin(menuHeight, menuWidth, m_HEIGHT / 4, m_WIDTH / 4);
-    keypad(menuWindow, true);
 
     /*
     menuItems = {
@@ -35,7 +31,7 @@ void OptionsMenu::runMenu()
 
     while (running) {
         if ( refreshWindow() )
-            displayErr();
+            displayErr(sizeErrMsg);
 
         displaySettings();
         displayName();

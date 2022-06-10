@@ -1,8 +1,6 @@
 #pragma once
 
 #include <ncurses.h>
-#include <fstream>
-#include <sstream>
 #include <string>
 #include <vector>
 
@@ -47,6 +45,19 @@ protected:
     const std::string sizeErrMsg = "Terminal reached minimal dimensions!";
 
     /**
+    * @brief Initializes ncurses window, checks if terminal supports all needed functions
+    * @throws String error if terminal size is not sufficient or terminal doesn't support color
+    *
+    */
+    void initNcurses();
+
+    /**
+     * @brief Set colors to use
+     *
+     */
+    void static initColors();
+
+    /**
      * @brief Reads, acts upon user input
      * @param currSelect Changes selected menu option based on user input
      * @return integer value of user input
@@ -69,7 +80,7 @@ protected:
     /**
      *  @brief Displays error message if an error has occured
      */
-    virtual void displayErr();
+    virtual void displayErr( const std::string& errMsg, const std::string& additionalInfo = "" );
 
     /**
      *  @brief Displays name of current Menu
