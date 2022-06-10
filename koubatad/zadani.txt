@@ -30,7 +30,7 @@ nějaký bonus (dobrý nebo špatný), zároveň bomby budou schopné zabít mon
 hráče, který sám bombu položil. 
 
 Bude možné hrát jak singleplayer kampaň proti AI kontrolovaným nepřátelům (monstra), tak 
-multiplayer proti dalším hráčům na jedné klávesnici.
+multiplayer proti dalšímu hráči na jedné klávesnici.
 
 Singleplayer i multiplayer herní módy budou typu king of the hill tzn. poslední přeživší vyhrává.
 V singleplayer kampani navíc po zabití všech monster aktivuje dveře, které mu umožní postoupit do
@@ -40,22 +40,20 @@ Jednotlivé levely kampaně budou uloženy v souborech a z nich bude čteno rozl
 při její generaci. Multiplayer bude z těchto map čerpat a při spuštění hry pro více hráčů si bude
 možné vybrat mapu na které se bude hrát.
 
-Hráč se bude moci pohybovat pouze kolmo na osy X a Y. Ovládání pohybu a pokládaní bomb bude předem
-nastaveno, avšak hráči bude umožněno nastavit si vlastní konfiguraci, která bude uložena v samosta-
-tném souboru. Při hře více hráčů si každý hráč bude moci nastavit vlastní ovládání.
+Hráč se bude moci pohybovat pouze kolmo na osy X a Y. Ovládání pohybu a pokládaní bomb obou hráčů
+bude předem nastaveno.
 
 Dále se v souboru bude ukládat současný postup hráče hrou (jakého nejvyššího levelu dosáhl, jaké 
 má jeho postavička vylepšení) společně s nejlepším dosaženým skórem. Skóre získává hráč za prochá-
 zení levely a zabíjení monster.
 
-Při spuštění hry si hráč bude moci zvolit jaký typ hry chce hrát (kampaň, hráč proti hráči) a
-nastavit ovládání.
+Při spuštění hry si hráč bude moci zvolit jaký typ hry chce hrát (kampaň, hráč proti hráči).
 
 -------------------------------------------------------------------------------------------------
 
 Polymorfismus:
-    Všechny použité třídy budou dědit ze třídy, která bude držet informaci o své současné pozici,
-    jelikož tu o sobě musí vědět každý herní objekt. Dále bude implementovat základní metody pro
+    Všechny herní objekt budou dědit ze třídy, která bude držet informaci o své současné pozici,
+    jelikož tu o sobě musí vědět každý z nich. Dále bude implementovat základní metody pro
     zobrazování na herní ploše. Z ní přímo budou čerpat třídy zobrazující statické objekty herního
     prostředí.
 
@@ -68,5 +66,10 @@ Polymorfismus:
     Poslední polymorfní třída rovněž dědící z hlavní třídy bude obalovat spceiální objekty.
     Tyto speciální objekty budou například různé bonusy pro hráče, který je sebere či exit do
     dalšího levelu kampaně.
+
+    Další úroveň polymorfismu je aplikována v třídách reprezentujících menu hry. Mateřská třída
+    implementuje vykreslování oken menu a další základní vlastnosti, jako třeba chování při 
+    změně velikosti terminálu a načítání uživatelského vstupu, každá podtřída si pak implementuje
+    vlastní akce, kterých v daném menu lze dosáhnout v reakci na uživatelův vstup.
 
 -------------------------------------------------------------------------------------------------

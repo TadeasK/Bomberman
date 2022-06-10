@@ -18,8 +18,9 @@ ZIP=zadani.txt prohlaseni.txt Makefile Doxyfile src/ examples/ assets/
 # modules to make 
 # ls src/*.cpp | sed 's/.cpp/.o/g' | sed 's/src/tmp/g' | tr '\n' ' '
 MODULES=tmp/Bomb.o tmp/BuffBomb.o tmp/BuffDetonator.o tmp/BuffMove.o tmp/BuffRadius.o tmp/BuffThrow.o tmp/Crate.o \
-tmp/Enemy.o tmp/Entity.o tmp/ExitDoor.o tmp/GameLoop.o tmp/main.o tmp/MainMenu.o tmp/Menu.o tmp/Monster1.o \
-tmp/Monster2.o tmp/Monster3.o tmp/Object.o tmp/OptionsMenu.o tmp/Player.o tmp/Special.o tmp/Wall.o
+tmp/Enemy.o tmp/Entity.o tmp/ExitDoor.o tmp/GameMenu.o tmp/main.o tmp/MainMenu.o tmp/Menu.o tmp/Monster1.o \
+tmp/Monster2.o tmp/Monster3.o tmp/Object.o tmp/OptionsMenu.o tmp/Player.o tmp/Special.o tmp/Wall.o tmp/GameManager.o \
+tmp/LevelMenu.o
 
 # Makefile parameters
 
@@ -35,7 +36,7 @@ run: compile
 
 # Removes all created files
 clean:
-	$(RM) tmp doc $(BIN) $(BIN).zip 2>/dev/null
+	$(RM) tmp doc $(BIN) $(BIN).zip debug.txt 2>/dev/null
 
 # Generates documentation
 doc:
@@ -53,12 +54,11 @@ $(BIN).zip: $(ZIP)
 	rm -rf tmp/
 
 # Compile and run in debug mode
-debug: debugComp
-	valgrind $(VALGRINDFLAGS) ./$(BIN)
+debug: compile
+	valgrind $(VALGRINDFLAGS) ./$(BIN) 2> debug.txt
 
-debugComp: $(MODULES)
-	@mkdir -p tmp/
-	$(CXX) $(DEBUGFLAGS) -o $(BIN) $^ -lncurses
+test: compile
+	./$(BIN) -test
 
 # Compile and Link
 $(BIN): $(MODULES)
