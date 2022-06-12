@@ -3,8 +3,8 @@
 Menu::Menu()
 {
     initNcurses();
-
-    getmaxyx(stdscr,m_WIDTH,m_HEIGHT);
+    running = true;
+    getmaxyx(stdscr,m_HEIGHT,m_WIDTH);
     menuHeight = m_HEIGHT / 2;
     menuWidth = m_WIDTH / 2;
     menuWindow = newwin(menuHeight, menuWidth, m_HEIGHT / 4, m_WIDTH / 4);
@@ -42,7 +42,7 @@ void Menu::initNcurses()
 
 void Menu::initColors()
 {
-    init_pair(1, COLOR_RED, COLOR_BLACK); // Placed bomb, Wall color
+    init_pair(1, COLOR_RED, COLOR_MAGENTA); // Placed bomb, Wall color
     init_pair(2, COLOR_RED, COLOR_YELLOW); // Explosion color
     init_pair(3, COLOR_WHITE, COLOR_BLACK); // Specials color
     init_pair(4, COLOR_GREEN, COLOR_BLACK); // Player color
@@ -69,10 +69,10 @@ void Menu::runMenu()
 
         if ( input == KEY_ENTER || input == ENTER ) // KEY_ENTER does not work for some reason
             takeAction (currSelect);
+        refresh();
     }
     delwin(menuWindow);
     endwin();
-    return;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -80,6 +80,7 @@ void Menu::runMenu()
 int Menu::readInput(size_t& currSelect)
 {
     int input = wgetch(menuWindow);
+
     if ( input == EOT || input == ETX ) { // Check if user pressed ctrl+C or ctrl+D
         running = false;
         return -1;
@@ -140,10 +141,10 @@ void Menu::displayHelp()
 
 void Menu::displayErr( const std::string& errMsg, const std::string& additionalInfo )
 {
-    wattron(menuWindow, COLOR_PAIR(1));
-    mvwprintw(menuWindow, 1, (menuWidth / 2 - errMsg.length() / 2), errMsg.c_str());
-    mvwprintw(menuWindow, 2, (menuWidth / 2 - additionalInfo.length() / 2), additionalInfo.c_str());
-    wattroff(menuWindow, COLOR_PAIR(1));
+    wattron(stdscr, COLOR_PAIR(1));
+    mvprintw(2, (m_WIDTH / 2 - errMsg.length() / 2), errMsg.c_str());
+    mvprintw(3, (m_WIDTH / 2 - additionalInfo.length() / 2), additionalInfo.c_str());
+    wattroff(stdscr, COLOR_PAIR(1));
 }
 
 //----------------------------------------------------------------------------------------------

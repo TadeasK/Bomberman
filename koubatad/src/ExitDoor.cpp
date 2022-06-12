@@ -4,7 +4,7 @@ ExitDoor::ExitDoor( int x, int y )
 : Special (x,y)
 {}
 
-bool ExitDoor::drawObj() const
+void ExitDoor::drawObj() const
 {
 
 }

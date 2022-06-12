@@ -17,15 +17,9 @@ public:
      * @param timer Time in seconds until explosion
      * @param radius Radius of explosion
      */
-    Bomb( int x, int y, int timer, int radius );
+    Bomb( int x, int y,WINDOW* window, int timer = 5, int radius = 1);
    
-    /**
-     * @brief Destroy the Bomb object
-     * 
-     */
-    ~Bomb () {};
-
-    virtual bool drawObj() const override;
+    virtual void drawObj() const override;
   
     /**
      * @brief Counts down timer, at 0 explodes 

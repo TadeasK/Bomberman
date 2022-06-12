@@ -43,8 +43,6 @@ void OptionsMenu::runMenu()
             takeAction (currSelect);
     }
     delwin(menuWindow);
-    endwin();
-    return;
 }
 
 void OptionsMenu::takeAction(size_t currSelect)

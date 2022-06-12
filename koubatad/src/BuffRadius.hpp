@@ -17,8 +17,7 @@ public:
      * @param y An Y position of the buff
      */
     BuffRadius(int x, int y);
-    ~BuffRadius() {};
 
-    virtual bool drawObj() const override;
+    virtual void drawObj() const override;
     virtual void giveEffect() override;
 };

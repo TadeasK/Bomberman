@@ -5,15 +5,12 @@
 #include <ncurses.h>
 #include <vector>
 #include <memory>
-#include <fstream>
-#include <sstream>
 #include <iostream>
 
 /**
  * @brief Operates the game
  */
-class LevelMenu: public Menu
-{
+class LevelMenu : public Menu {
 public:
     /**
      * @brief Constructs LevelMenu
@@ -22,21 +19,22 @@ public:
      * @param bestScorePath Path to best score file
      * @param mapsPath Path to maps file
      */
-    explicit LevelMenu(std::string& name, bool multi = false,
-                       const std::string& bestScorePath = "assets/scores.txt",
-                       const std::string& mapsPath = "assets/map" );
-
+    explicit LevelMenu(std::string &name, bool multi = false,
+                       const std::string &bestScorePath = "assets/scores.txt",
+                       const std::string &mapsPath = "assets/map");
 
 
 private:
     bool m_Multi;
     int m_Map = 1;
 
-    enum OPTIONS { MAP1, MAP2, MAP3, MAP4, MAP5, BACK };
+    enum OPTIONS {
+        MAP1, MAP2, MAP3, MAP4, MAP5, BACK
+    };
     std::string bestScoreFile;
     std::string maps;
 
-    virtual void takeAction( size_t currSelect ) override;
+    void takeAction(size_t currSelect) override;
 
     /**
      * @brief Starts the game

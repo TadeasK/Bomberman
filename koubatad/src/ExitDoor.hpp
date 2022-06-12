@@ -16,8 +16,7 @@ public:
      * @param y An Y position of the door
      */
     ExitDoor(int x, int y);
-    ~ExitDoor() {};
 
-    virtual bool drawObj() const override;
-    virtual void giveEffect() override;
+    void drawObj() const override;
+    void giveEffect() override;
 };

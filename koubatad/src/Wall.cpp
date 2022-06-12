@@ -1,12 +1,12 @@
 #include "Wall.hpp"
 
-Wall::Wall( int x, int y )
-: Object ( x, y)
+Wall::Wall( int x, int y, WINDOW* window )
+: Object ( x, y, window)
 {}
 
-bool Wall::drawObj() const
+void Wall::drawObj() const
 {
-    wattron(stdscr, COLOR_PAIR(1));
-    mvprintw(m_Y, m_X, "%c", m_Repr);
-    wattroff(stdscr, COLOR_PAIR(1));
+    wattron(m_Window, COLOR_PAIR(1));
+    mvwprintw(m_Window,m_Y, m_X, "%c", m_Repr);
+    wattroff(m_Window, COLOR_PAIR(1));
 }

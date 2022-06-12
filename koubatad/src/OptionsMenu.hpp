@@ -13,7 +13,7 @@ public:
     */
     OptionsMenu();
 
-    virtual void runMenu() override;
+    void runMenu() override;
 
 private:
     enum OPTIONS { BACK };
@@ -43,5 +43,5 @@ private:
      */
     void displaySettings();
 
-    virtual void takeAction(size_t currSelect) override;
+    void takeAction(size_t currSelect) override;
 };

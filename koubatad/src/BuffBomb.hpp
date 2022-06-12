@@ -15,9 +15,8 @@ public:
      * @param x A X position of the buff
      * @param y An Y position of the buff
      */
-    BuffBomb(int x, int y);
-    ~BuffBomb() {};
+    BuffBomb(int x, int y, WINDOW* window);
 
-    virtual bool drawObj() const override;
+    virtual void drawObj() const override;
     virtual void giveEffect() override;
 };

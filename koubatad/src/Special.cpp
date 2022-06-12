@@ -1,7 +1,5 @@
 #include "Special.hpp"
 
-Special::Special ( int x, int y )
-: Object ( x ,y)
-{}
+Special::Special(int x, int y, WINDOW *window)
+        : Object(x, y, window) {}
 
-Special::~Special() {}

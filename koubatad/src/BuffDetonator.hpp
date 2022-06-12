@@ -16,8 +16,7 @@ public:
      * @param y An Y position of the buff
      */
     BuffDetonator(int x, int y);
-    ~BuffDetonator() {};
 
-    virtual bool drawObj() const override;
+    virtual void drawObj() const override;
     virtual void giveEffect() override;
 };

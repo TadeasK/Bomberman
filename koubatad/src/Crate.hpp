@@ -17,24 +17,12 @@ public:
      * @param y An Y position of new Crate
      * @param full Boolean value of whether Crate contains anything or not
      */
-    Crate(int x, int y, bool full);
+    Crate(int x, int y, WINDOW* window, bool full);
   
-    /**
-     * @brief Destroy the Crate object
-     *
-     */
-    ~Crate();
-
-    virtual bool drawObj() const override;
+    virtual void drawObj() const override;
 
 private:
     const char m_Repr = '#';
     bool m_Filled; // Attribute containing info about whether the object has bonus inside or not
-
-    /**
-     * @brief When the crate is destroyed, if it is filled drop a bonus
-     *
-     */
-    void dropBonus();
 
 };

@@ -1,10 +1,10 @@
 #include "BuffBomb.hpp"
 
-BuffBomb::BuffBomb( int x, int y )
-: Special (x,y)
+BuffBomb::BuffBomb( int x, int y, WINDOW*window )
+: Special (x,y,window)
 {}
 
-bool BuffBomb::drawObj() const
+void BuffBomb::drawObj() const
 {
 
 }

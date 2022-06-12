@@ -15,10 +15,9 @@ public:
      * @param x An X position of new Wall
      * @param y An Y position of new Wall
      */
-    Wall( int x, int y );
-    ~Wall () {};
+    Wall( int x, int y, WINDOW* window );
 
-    virtual bool drawObj() const override;
+    void drawObj() const override;
     
 private:
     const char m_Repr = 'X'; // Char representing Wall

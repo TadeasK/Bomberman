@@ -1,6 +1,7 @@
 #include "MainMenu.hpp"
 
-MainMenu::MainMenu():Menu()
+MainMenu::MainMenu()
+    : Menu()
 {
     running = true;
     m_Name = "Main menu";

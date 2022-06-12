@@ -78,7 +78,7 @@ protected:
     virtual void displayHelp();
 
     /**
-     *  @brief Displays error message if an error has occured
+     *  @brief Displays error message if an error has occurred
      */
     virtual void displayErr( const std::string& errMsg, const std::string& additionalInfo = "" );
 
