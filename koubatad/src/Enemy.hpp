@@ -16,18 +16,13 @@ public:
      * @param y An Y position of new Enemy
      * @param speed Movement speed of Enemy 
      */
-    Enemy( int x, int y, int speed );
+    Enemy( int x, int y,WINDOW * window, int speed );
     
-    /**
-     * @brief Destroy the Enemy object
-     * 
-     */
-    virtual ~Enemy() = default;
+    void drawObj() const override;
 
-    virtual bool drawObj() const;
+    void move() override;
 
-    virtual void move();
-
+    bool checkConstrains(int x, int y) override;
 private:
     const char m_Repr = '$';
 };

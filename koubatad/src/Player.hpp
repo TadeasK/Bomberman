@@ -8,8 +8,7 @@
  * @brief A class representing a Player entity 
  * 
  */
-class Player: public Entity
-{
+class Player : public Entity {
 public:
     /**
      * @brief Construct a new Player object
@@ -19,30 +18,58 @@ public:
      * @param speed Movement speed of Player
      * @param bombRadius Explosion radius of player's bombs
      * @param bombsCount Maximum number of bombs player is allowed to place at the same time
+     * @param bombThrow Range at which player can throw bomb
+     * @param bombTimer Time until player placed bombs explode
      */
-    Player( int x, int y, int speed, int bombRadius, int bombsCount, int bombThrow, int bombTimer);
-    ~Player() {};
+    Player(int x, int y, WINDOW *window, int color = 4, int speed = 1, int bombRadius = 1, int bombsCount = 1,
+           int bombThrow = 0, int bombTimer = 5, int health = 3);
 
-    virtual bool drawObj() const override;
+    int getHealth() const;
 
-    virtual void move() override;
+    void drawObj() const override;
+
+    void move() override;
+
+    /**
+     * @brief Sets Player into state, which will be evaluated when move() is called
+     * @param action Value of action
+     */
+    void setAction(size_t action);
+
+private:
+    enum STATE_OPTIONS {
+        MOVE_UP = 1, MOVE_LEFT, MOVE_RIGHT, MOVE_DOWN, PLACE_BOMB
+    };
+    int m_Color; // Color of player on the map
+    int m_State = 0; // State of player
+    const char m_Repr = '@'; // Constant character representing the player on the map
+    int m_BombRadius; // Current radius of player placed bombs
+    size_t m_BombsCount; // Current maximum count of bombs player can place at the same time
+    int m_BombThrow; // Max range at which player can place a bomb
+    int m_BombTimer; // How long it takes for bombs placed by this player to explode
+    int m_Health;
+    std::vector<Bomb> m_BombsPlaced; // Current number of bombs placed
+    const int GAME_WINDOW_HEIGHT = 15;
+    const int GAME_WINDOW_WIDTH = 15;
 
     /**
      * @brief Places bomb at player's feet/throw a bomb
-     * 
-     * @param x An X position where to place the bomb 
+     *
+     * @param x An X position where to place the bomb
      * @param y An Y position where to place the bomb
      * @param radius Radius of bomb explosion
-     * @return true If place succesfull
+     * @return true If place successful
      * @return false If bomb can not be placed
      */
-    bool placeBomb ();
+    bool placeBomb();
 
-private:
-    const char m_Repr = '@'; // Constant character representing the player on the map
-    int m_BombRadius; // Current radius of player placed bombs
-    int m_BombsCount; // Current maximum count of bombs player can place at the same time
-    int m_BombThrow; // Max range at which player can place a bomb
-    int m_BombTimer; // How long it takes for bombs placed by this player to explode
-    std::vector<Bomb> m_BombsPlaced; // Current number of bombs placed
+    bool moveUp();
+
+    bool moveLeft();
+
+    bool moveRight();
+
+    bool moveDown();
+
+    bool checkConstrains(int x, int y) override;
 };
