@@ -17,10 +17,12 @@ ZIP=zadani.txt prohlaseni.txt Makefile Doxyfile src/ examples/ assets/
 
 # modules to make 
 # ls src/*.cpp | sed 's/.cpp/.o/g' | sed 's/src/tmp/g' | tr '\n' ' '
-MODULES=tmp/Bomb.o tmp/BuffBomb.o tmp/BuffDetonator.o tmp/BuffMove.o tmp/BuffRadius.o tmp/BuffThrow.o tmp/Crate.o \
-tmp/Enemy.o tmp/Entity.o tmp/ExitDoor.o tmp/GameMenu.o tmp/main.o tmp/MainMenu.o tmp/Menu.o tmp/Monster1.o \
-tmp/Monster2.o tmp/Monster3.o tmp/Object.o tmp/OptionsMenu.o tmp/Player.o tmp/Special.o tmp/Wall.o tmp/GameManager.o \
+MODULES=tmp/Bomb.o  tmp/Crate.o \
+tmp/Enemy.o tmp/Entity.o  tmp/GameMenu.o tmp/main.o tmp/MainMenu.o tmp/Menu.o  \
+tmp/Object.o tmp/OptionsMenu.o tmp/Player.o tmp/Special.o tmp/Wall.o tmp/GameManager.o \
 tmp/LevelMenu.o
+
+# tmp/Monster1.o tmp/Monster2.o tmp/Monster3.o tmp/BuffBomb.o tmp/BuffDetonator.o tmp/BuffMove.o tmp/BuffRadius.o tmp/BuffThrow.o tmp/ExitDoor.o
 
 # Makefile parameters
 
