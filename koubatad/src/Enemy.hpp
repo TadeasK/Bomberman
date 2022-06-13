@@ -22,7 +22,13 @@ public:
 
     void move() override;
 
-    bool checkConstrains(int x, int y) override;
 private:
+    int count = 0;
+    enum STATE_OPTIONS {
+        MOVE_UP = 1, MOVE_LEFT, MOVE_DOWN, MOVE_RIGHT
+    };
+    int m_State = 1; // State of Enemy
     const char m_Repr = '$';
+
+    bool checkConstrains(int x, int y) override;
 };
