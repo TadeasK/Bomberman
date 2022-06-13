@@ -43,6 +43,7 @@ void Menu::initNcurses()
 void Menu::initColors()
 {
     init_pair(1, COLOR_RED, COLOR_MAGENTA); // Placed bomb, Wall color
+    init_pair(8, COLOR_RED, COLOR_BLACK); // Placed bomb
     init_pair(2, COLOR_RED, COLOR_YELLOW); // Explosion color
     init_pair(3, COLOR_WHITE, COLOR_BLACK); // Specials color
     init_pair(4, COLOR_GREEN, COLOR_BLACK); // Player color
@@ -65,11 +66,11 @@ void Menu::runMenu()
         displayName();
         displayHelp();
         printMenuItems( currSelect );
+        refresh();
         input = readInput( currSelect);
 
         if ( input == KEY_ENTER || input == ENTER ) // KEY_ENTER does not work for some reason
             takeAction (currSelect);
-        refresh();
     }
     delwin(menuWindow);
     endwin();
@@ -142,8 +143,8 @@ void Menu::displayHelp()
 void Menu::displayErr( const std::string& errMsg, const std::string& additionalInfo )
 {
     wattron(stdscr, COLOR_PAIR(1));
-    mvprintw(2, (m_WIDTH / 2 - errMsg.length() / 2), errMsg.c_str());
-    mvprintw(3, (m_WIDTH / 2 - additionalInfo.length() / 2), additionalInfo.c_str());
+    mvwprintw(stdscr,2, (m_WIDTH / 2 - errMsg.length() / 2), errMsg.c_str());
+    mvwprintw(stdscr,3, (m_WIDTH / 2 - additionalInfo.length() / 2), additionalInfo.c_str());
     wattroff(stdscr, COLOR_PAIR(1));
 }
 

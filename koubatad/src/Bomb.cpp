@@ -9,9 +9,9 @@ Bomb::Bomb( int x, int y,WINDOW* window, int timer, int radius )
 
 void Bomb::drawObj() const
 {
-    wattron(m_Window, COLOR_PAIR(1));
+    wattron(m_Window, COLOR_PAIR(8));
     mvwprintw(m_Window,m_Y, m_X, "%d", m_Timer);
-    wattroff(m_Window, COLOR_PAIR(1));
+    wattroff(m_Window, COLOR_PAIR(8));
 }
 
 void Bomb::countDown()

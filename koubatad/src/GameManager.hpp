@@ -62,15 +62,15 @@ private:
      */
     std::string static parseFile(std::ifstream &file);
 
-    void createWall(size_t x, size_t y);
+    void createWall(int x, int y);
 
-    void createCrate(size_t x, size_t y, bool isFull);
+    void createCrate(int x, int y, bool isFull);
 
-    void createEnemy(size_t x, size_t y);
+    void createEnemy(int x, int y);
 
-    void createPlayer1(size_t x, size_t y);
+    void createPlayer1(int x, int y);
 
-    void createPlayer2(size_t x, size_t y);
+    void createPlayer2(int x, int y);
 
     int readInput(size_t &currSelect) override;
 

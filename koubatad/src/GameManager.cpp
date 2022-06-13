@@ -176,17 +176,17 @@ std::string GameManager::parseFile(std::ifstream &file) {
 }
 //----------------------------------------------------------------------------------------------
 
-void GameManager::createWall(size_t x, size_t y) {
+void GameManager::createWall(int x, int y) {
     m_Objects.emplace_back(std::make_shared<Wall>(x, y, menuWindow));
 }
 
 //----------------------------------------------------------------------------------------------
-void GameManager::createCrate(size_t x, size_t y, bool isFull) {
+void GameManager::createCrate(int x, int y, bool isFull) {
     m_Objects.emplace_back(std::make_shared<Crate>(x, y, menuWindow, isFull));
 }
 
 //----------------------------------------------------------------------------------------------
-void GameManager::createEnemy(size_t x, size_t y) {
+void GameManager::createEnemy(int x, int y) {
     if ( !m_Multi) {
         std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(x, y, menuWindow, 1);
         m_Objects.emplace_back(enemy);
@@ -195,14 +195,14 @@ void GameManager::createEnemy(size_t x, size_t y) {
 }
 
 //----------------------------------------------------------------------------------------------
-void GameManager::createPlayer1(size_t x, size_t y) {
+void GameManager::createPlayer1(int x, int y) {
     m_Player1 = std::make_shared<Player>(x, y, menuWindow);
     m_Objects.push_back(m_Player1);
     m_Entities.push_back(m_Player1);
 }
 
 //----------------------------------------------------------------------------------------------
-void GameManager::createPlayer2(size_t x, size_t y) {
+void GameManager::createPlayer2(int x, int y) {
     if (m_Multi) {
         m_Player2 = std::make_shared<Player>(x, y, menuWindow, 5);
         m_Objects.push_back(m_Player2);

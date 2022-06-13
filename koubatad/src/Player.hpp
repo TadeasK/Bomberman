@@ -49,8 +49,7 @@ private:
     int m_BombTimer; // How long it takes for bombs placed by this player to explode
     int m_Health;
     std::vector<Bomb> m_BombsPlaced; // Current number of bombs placed
-    const int GAME_WINDOW_HEIGHT = 15;
-    const int GAME_WINDOW_WIDTH = 15;
+
 
     /**
      * @brief Places bomb at player's feet/throw a bomb
