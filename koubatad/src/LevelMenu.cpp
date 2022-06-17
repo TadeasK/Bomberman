@@ -58,8 +58,13 @@ void LevelMenu::takeAction(size_t currSelect) {
 
 void LevelMenu::runGame() {
     maps.append(std::to_string(m_Map));
-    GameManager game(m_Multi, maps);
-    game.runMenu();
+    try {
+        GameManager game(m_Multi, maps);
+        game.runMenu();
+    }
+    catch (std::string &err) {
+        displayErr(err, "Try selecting different map.");
+    }
     maps.pop_back();
 }
 

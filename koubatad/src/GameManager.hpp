@@ -12,6 +12,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <chrono>
 
 class GameManager : public Menu {
 public:
@@ -42,25 +43,19 @@ private:
     void printStats();
 
     /**
-     * @brief Reads from map config file, prepares the right map
-     * @param objects string
-     */
-    bool prepareMap(std::string &objects);
-
-    /**
      * @brief Read configuration from file in path
-     * @param path Path to .conf file
+     * @param path Path to map file file
      * @throws String error if file couldn't be opened or closed or if configuration in it is corrupted
      *
      */
-    std::string static readConfig(const std::string &path);
+    std::string readConfig(const std::string &path);
 
     /**
      * @brief Parse file, save constants
      * @param file File to be parsed
      *
      */
-    std::string static parseFile(std::ifstream &file);
+    std::string parseFile(std::ifstream &file);
 
     void createWall(int x, int y);
 

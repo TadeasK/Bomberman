@@ -46,27 +46,7 @@ void GameManager::runMenu() {
 //----------------------------------------------------------------------------------------------
 
 void GameManager::generateMap() {
-/*    int wallX, wallY, wallSpaceX, wallSpaceY;
-    // readMapData( wallX, wallY, wallSpaceX, wallSpaceY); // Positions and spaces as reference
-    int tmpX = wallX, tmpY=wallY;
-    while (true) {
-        m_Objects.emplace_back(std::make_shared<Wall>(tmpX,tmpY));
-        if ( tmpX + wallSpaceX < menuWidth ) {
-            tmpX += wallSpaceX;
-            continue;
-        }
-        tmpX = wallX;
-        if ( tmpY + wallSpaceY < menuHeight )
-                tmpY+=wallSpaceY;
-        else
-            break;
-    }
-*/
-    std::string objects;
-    if (!prepareMap(objects)) {
-        running = false;
-        return;
-    }
+    std::string objects = readConfig(m_MapPath);
     int index = 0;
     for (int i = 1; i < GAME_WINDOW_HEIGHT - 1; i++) {
         for (int j = 1; j < GAME_WINDOW_WIDTH - 1; j++) {
@@ -92,11 +72,13 @@ void GameManager::generateMap() {
                     createPlayer2(j, i);
                     break;
                 default:
-                    break;
+                    throw "Content of file " + m_MapPath + " might be corrupted.";
             }
             index++;
         }
     }
+    if ( (m_Player2 == nullptr && m_Multi )|| m_Player1 == nullptr )
+        throw "Content of file " + m_MapPath + " might be corrupted.";
 }
 
 //----------------------------------------------------------------------------------------------
@@ -138,30 +120,14 @@ void GameManager::printStats() {
                  "%s: %d", "P2 HEALTH", m_Player2->getHealth());
 }
 
-
-bool GameManager::prepareMap(std::string &objects) {
-    try {
-        objects = readConfig(m_MapPath);
-    }
-    catch (std::string &err) {
-        displayErr(err, "Try selecting different map.");
-        return false;
-    }
-    return true;
-}
-
 //----------------------------------------------------------------------------------------------
 
 std::string GameManager::readConfig(const std::string &path) {
     std::ifstream inFile(path);
     if (!inFile.is_open() || !inFile.good())
-        throw "Couldn't open file: " + path;
+        throw "Couldn't open file: '" + path + "'.";
 
     return parseFile(inFile);
-
-//    inFile.close();
-//    if ( inFile.fail() )
-//        throw "Failed closing file: " + path;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -172,6 +138,8 @@ std::string GameManager::parseFile(std::ifstream &file) {
     while (std::getline(file, line)) {
         final.append(line);
     }
+    if ( final.length() != (size_t)((GAME_WINDOW_WIDTH-2)*(GAME_WINDOW_HEIGHT-2)) )
+        throw "Content of file '" + m_MapPath + "' might be corrupted.";
     return final;
 }
 //----------------------------------------------------------------------------------------------
@@ -196,17 +164,25 @@ void GameManager::createEnemy(int x, int y) {
 
 //----------------------------------------------------------------------------------------------
 void GameManager::createPlayer1(int x, int y) {
-    m_Player1 = std::make_shared<Player>(x, y, menuWindow);
-    m_Objects.push_back(m_Player1);
-    m_Entities.push_back(m_Player1);
+    if ( m_Player1 == nullptr ) {
+        m_Player1 = std::make_shared<Player>(x, y, menuWindow);
+        m_Objects.push_back(m_Player1);
+        m_Entities.push_back(m_Player1);
+    }
+    else
+        throw "Content of file '" + m_MapPath + "' might be corrupted.";
 }
 
 //----------------------------------------------------------------------------------------------
 void GameManager::createPlayer2(int x, int y) {
-    if (m_Multi) {
+    if (!m_Multi)
+        return;
+    if ( m_Player2 == nullptr ) {
         m_Player2 = std::make_shared<Player>(x, y, menuWindow, 5);
         m_Objects.push_back(m_Player2);
         m_Entities.push_back(m_Player2);
     }
+    else
+        throw "Content of file '" + m_MapPath + "' might be corrupted.";
 }
 //----------------------------------------------------------------------------------------------

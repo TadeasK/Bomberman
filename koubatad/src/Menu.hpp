@@ -17,7 +17,7 @@ public:
      *
      */
     Menu();
-
+    ~Menu() { endwin(); }
     /**
      * @brief Operates menus, based on user choice can start the game,
      *  show settings or show help

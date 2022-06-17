@@ -11,11 +11,13 @@ void Enemy::drawObj() const {
 //----------------------------------------------------------------------------------------------
 
 void Enemy::move() {
-    if ( count < 1000 ) {
+
+    if (count < 10000) {
         count++;
         return;
     }
-    count =0;
+    count = 0;
+
     switch (m_State) {
         case MOVE_UP:
             if (checkConstrains(m_X, m_Y - m_Speed)) {
@@ -57,6 +59,8 @@ bool Enemy::checkConstrains(int x, int y) {
     switch (screenChar) {
         case ' ':
             return true;
+        case '@':
+            // TODO: When player hit - reduce player HP
         default:
             return false;
     }
