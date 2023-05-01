@@ -56,10 +56,10 @@ Další informace:
     Poznámka 29.4.2023: Není nutné implementovat hru real-time, hra může být i tahová.
 
     https://en.wikipedia.org/wiki/Bomberman
+    
+========================================================================================================================
 
 Vlastní specifikace zadání:
-
-========================================================================================================================
 
 Hra Bomberman se bude řídit standartními pravidly původní hry.
 
@@ -108,5 +108,10 @@ Polymorfismus:
     implementuje vykreslování oken menu a další základní vlastnosti, jako třeba chování při 
     změně velikosti terminálu a načítání uživatelského vstupu, každá podtřída si pak implementuje
     vlastní akce, kterých v daném menu lze dosáhnout v reakci na uživatelův vstup.
+    
+    Třídní diagram lze nalézt ve složce doc/, která obsahuje veškerou dokumentaci vygenerovanou pomocí 
+    utility Doxygen. S tím jste pravděpodobně seznámeni, nicméně pro jistotu uvádím, že na vygenerované
+    HTML stránce se nachází v menu "Classes/Class Hiearchy".
 
 -------------------------------------------------------------------------------------------------
+   Složka src/ obsahuje hlavičkové a .cpp soubory dosavadní implementace, která není ještě plně funkční, ale obsahuje zamýšlené rozhraní.
