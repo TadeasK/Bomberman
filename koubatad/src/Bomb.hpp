@@ -14,10 +14,11 @@ public:
      * 
      * @param x An X position of new Bomb
      * @param y An Y position of new Bomb
+     * @param window Window, where object is displayed
      * @param timer Time in seconds until explosion
      * @param radius Radius of explosion
      */
-    Bomb( int x, int y,WINDOW* window, int timer = 5, int radius = 1);
+    Bomb( int x, int y, WINDOW* window, int timer = 5, int radius = 1);
    
     virtual void drawObj() const override;
   

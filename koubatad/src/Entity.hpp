@@ -14,6 +14,7 @@ public:
      * 
      * @param x An X position of new Entity
      * @param y An Y position of new Entity
+     * @param window Window, where object is displayed
      * @param speed Movement speed of Entity
      */
     Entity( int x, int y, WINDOW* window, int speed);

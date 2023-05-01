@@ -15,8 +15,9 @@ public:
      * @param x An X position of new Enemy
      * @param y An Y position of new Enemy
      * @param speed Movement speed of Enemy 
+     * @param window Window, where object is displayed
      */
-    Enemy( int x, int y,WINDOW * window, int speed );
+    Enemy( int x, int y, WINDOW * window, int speed );
     
     void drawObj() const override;
 

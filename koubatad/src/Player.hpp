@@ -15,11 +15,14 @@ public:
      * 
      * @param x An X position of new Player
      * @param y An Y position of new Player
+     * @param window Window, where Player is displayed
+     * @param color Color of player
      * @param speed Movement speed of Player
      * @param bombRadius Explosion radius of player's bombs
      * @param bombsCount Maximum number of bombs player is allowed to place at the same time
      * @param bombThrow Range at which player can throw bomb
      * @param bombTimer Time until player placed bombs explode
+     * @param health Health of player
      */
     Player(int x, int y, WINDOW *window, int color = 4, int speed = 1, int bombRadius = 1, int bombsCount = 1,
            int bombThrow = 0, int bombTimer = 5, int health = 3);

@@ -14,6 +14,7 @@ public:
      * 
      * @param x An X position of new Wall
      * @param y An Y position of new Wall
+     * @param window Window, where object is displayed
      */
     Wall( int x, int y, WINDOW* window );
 

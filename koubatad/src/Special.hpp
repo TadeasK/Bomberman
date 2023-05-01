@@ -13,6 +13,7 @@ public:
      * 
      * @param x An X position of new Bomb
      * @param y An Y position of new Bomb
+     * @param window Window, where object is displayed
      */
     Special(int x, int y, WINDOW* window);
 
