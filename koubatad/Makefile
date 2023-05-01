@@ -13,7 +13,7 @@ RM=rm -rf
 BIN=koubatad
 
 # What to put into zip file
-ZIP=zadani.txt prohlaseni.txt Makefile Doxyfile src/ examples/ assets/
+ZIP=zadani.txt prohlaseni.txt src/ doc/
 
 # modules to make 
 # ls src/*.cpp | sed 's/.cpp/.o/g' | sed 's/src/tmp/g' | tr '\n' ' '
