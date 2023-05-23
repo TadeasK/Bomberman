@@ -80,7 +80,7 @@ protected:
     /**
      *  @brief Displays error message if an error has occurred
      */
-    virtual void displayErr( const std::string& errMsg, const std::string& additionalInfo = "" );
+    virtual void displayErr( const std::string& errMsg, const std::string& additionalInfo );
 
     /**
      *  @brief Displays name of current Menu

@@ -14,6 +14,10 @@
 #include <iostream>
 #include <chrono>
 
+/**
+ * @brief Main game object - Manages all game objects and runs the game
+ *
+ */
 class GameManager : public Menu {
 public:
     explicit GameManager(bool multi, std::string &map);

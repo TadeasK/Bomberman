@@ -15,6 +15,7 @@ GameManager::GameManager(bool multi, std::string &map)
 }
 //----------------------------------------------------------------------------------------------
 
+// TODO Add game time + bombs counting, collisions, damage
 void GameManager::runMenu() {
     int input;
     size_t x = 0;
@@ -38,7 +39,7 @@ void GameManager::runMenu() {
         if (input != ERR)
             werase(menuWindow);
     }
-    // saveScore();
+    // TODO saveScore();
     cleanUp();
     delwin(menuWindow);
 }
@@ -77,7 +78,7 @@ void GameManager::generateMap() {
             index++;
         }
     }
-    if ( (m_Player2 == nullptr && m_Multi )|| m_Player1 == nullptr )
+    if ((m_Player2 == nullptr && m_Multi) || m_Player1 == nullptr)
         throw "Content of file " + m_MapPath + " might be corrupted.";
 }
 
@@ -138,7 +139,7 @@ std::string GameManager::parseFile(std::ifstream &file) {
     while (std::getline(file, line)) {
         final.append(line);
     }
-    if ( final.length() != (size_t)((GAME_WINDOW_WIDTH-2)*(GAME_WINDOW_HEIGHT-2)) )
+    if (final.length() != (size_t) ((GAME_WINDOW_WIDTH - 2) * (GAME_WINDOW_HEIGHT - 2)))
         throw "Content of file '" + m_MapPath + "' might be corrupted.";
     return final;
 }
@@ -155,7 +156,7 @@ void GameManager::createCrate(int x, int y, bool isFull) {
 
 //----------------------------------------------------------------------------------------------
 void GameManager::createEnemy(int x, int y) {
-    if ( !m_Multi) {
+    if (!m_Multi) {
         std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(x, y, menuWindow, 1);
         m_Objects.emplace_back(enemy);
         m_Entities.emplace_back(enemy);
@@ -164,12 +165,11 @@ void GameManager::createEnemy(int x, int y) {
 
 //----------------------------------------------------------------------------------------------
 void GameManager::createPlayer1(int x, int y) {
-    if ( m_Player1 == nullptr ) {
+    if (m_Player1 == nullptr) {
         m_Player1 = std::make_shared<Player>(x, y, menuWindow);
         m_Objects.push_back(m_Player1);
         m_Entities.push_back(m_Player1);
-    }
-    else
+    } else
         throw "Content of file '" + m_MapPath + "' might be corrupted.";
 }
 
@@ -177,12 +177,11 @@ void GameManager::createPlayer1(int x, int y) {
 void GameManager::createPlayer2(int x, int y) {
     if (!m_Multi)
         return;
-    if ( m_Player2 == nullptr ) {
+    if (m_Player2 == nullptr) {
         m_Player2 = std::make_shared<Player>(x, y, menuWindow, 5);
         m_Objects.push_back(m_Player2);
         m_Entities.push_back(m_Player2);
-    }
-    else
+    } else
         throw "Content of file '" + m_MapPath + "' might be corrupted.";
 }
 //----------------------------------------------------------------------------------------------

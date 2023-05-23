@@ -24,7 +24,7 @@ void Menu::initNcurses()
     initColors(); // Set color pairs
 
     cbreak();
-    raw(); // Turn of line buffering
+    raw(); // Turn off line buffering
     keypad(stdscr, TRUE); // Activate special keys (arrow, F1...)
     noecho(); // Don't repeat input
     curs_set(0); // Make the cursor invisible
@@ -61,7 +61,7 @@ void Menu::runMenu()
 
     while (running) {
         if ( refreshWindow() )
-            displayErr(sizeErrMsg);
+            displayErr(sizeErrMsg, "");
 
         displayName();
         displayHelp();
@@ -87,21 +87,17 @@ int Menu::readInput(size_t& currSelect)
         return -1;
     }
 
-    switch (input) {
-        case KEY_UP:
-            if ( currSelect == 0 )
-                currSelect = menuItems.size()-1;
-            else
-                currSelect--;
-            break;
-        case KEY_DOWN:
-            if ( currSelect == menuItems.size()-1)
-                currSelect = 0;
-            else
-                currSelect++;
-            break;
-        default:
-            break;
+    if ( input == KEY_UP || input == 'w' ) {
+        if (currSelect == 0)
+            currSelect = menuItems.size() - 1;
+        else
+            currSelect--;
+    }
+    else if ( input == KEY_DOWN || input == 's' ) {
+        if ( currSelect == menuItems.size()-1)
+            currSelect = 0;
+        else
+            currSelect++;
     }
     return input;
 }
@@ -117,13 +113,13 @@ void Menu::printMenuItems( size_t currSelect )
             mvwprintw(menuWindow,
                       (menuHeight - 4),
                       (menuWidth / 2 - menuItems[i].length() / 2),
-                      menuItems[i].c_str());
+                      "%s", menuItems[i].c_str());
         }
         else {
             mvwprintw(menuWindow,
                       (menuHeight / 2 - menuItems.size() / 2 + i),
                       (menuWidth / 2 - menuItems[i].length() / 2),
-                      menuItems[i].c_str());
+                      "%s", menuItems[i].c_str());
         }
         wattroff(menuWindow, A_STANDOUT);
     }
@@ -134,7 +130,7 @@ void Menu::printMenuItems( size_t currSelect )
 void Menu::displayHelp()
 {
     wattron(menuWindow, COLOR_PAIR(6));
-    mvwprintw(menuWindow, menuHeight - 2, (menuWidth / 2 - hintMsg.length() / 2), hintMsg.c_str());
+    mvwprintw(menuWindow, menuHeight - 2, (menuWidth / 2 - hintMsg.length() / 2), "%s", hintMsg.c_str());
     wattroff(menuWindow, COLOR_PAIR(6));
 }
 
@@ -143,8 +139,8 @@ void Menu::displayHelp()
 void Menu::displayErr( const std::string& errMsg, const std::string& additionalInfo )
 {
     wattron(stdscr, COLOR_PAIR(1));
-    mvwprintw(stdscr,2, (m_WIDTH / 2 - errMsg.length() / 2), errMsg.c_str());
-    mvwprintw(stdscr,3, (m_WIDTH / 2 - additionalInfo.length() / 2), additionalInfo.c_str());
+    mvwprintw(stdscr,2, (m_WIDTH / 2 - errMsg.length() / 2), "%s", errMsg.c_str());
+    mvwprintw(stdscr,3, (m_WIDTH / 2 - additionalInfo.length() / 2), "%s", additionalInfo.c_str());
     wattroff(stdscr, COLOR_PAIR(1));
 }
 
@@ -153,7 +149,7 @@ void Menu::displayErr( const std::string& errMsg, const std::string& additionalI
 void Menu::displayName()
 {
     wattron(menuWindow, COLOR_PAIR(5) | A_UNDERLINE);
-    mvwprintw(menuWindow, 3, (menuWidth / 2 - m_Name.length() / 2), m_Name.c_str());
+    mvwprintw(menuWindow, 3, (menuWidth / 2 - m_Name.length() / 2), "%s", m_Name.c_str());
     wattroff(menuWindow, COLOR_PAIR(5) | A_UNDERLINE);
 }
 

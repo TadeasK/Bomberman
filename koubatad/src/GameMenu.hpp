@@ -21,12 +21,12 @@ private:
     /**
      * @brief Starts single player game
      */
-    void startSingle();
+    static void startSingle();
 
     /**
      * @brief Starts multi player game
      */
-    void startMulti();
+    static void startMulti();
 
     void takeAction(size_t currSelect) override;
 

@@ -13,7 +13,7 @@ void Bomb::drawObj() const
     mvwprintw(m_Window,m_Y, m_X, "%d", m_Timer);
     wattroff(m_Window, COLOR_PAIR(8));
 }
-
+// TODO
 void Bomb::countDown()
 {
 

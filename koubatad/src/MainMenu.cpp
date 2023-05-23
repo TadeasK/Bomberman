@@ -32,9 +32,11 @@ void MainMenu::controls()
 
 //----------------------------------------------------------------------------------------------
 
+// TODO
 void MainMenu::showLeaderboard()
 {
 
+    // TODO: Read/Write file assets/scores.txt
 }
 
 //----------------------------------------------------------------------------------------------
@@ -47,7 +49,6 @@ void MainMenu::takeAction(size_t currSelect)
             runGame();
             break;
         case BEST_SCORES:
-            // TODO: Read/Write file assets/scores.txt
             cleanUp();
             showLeaderboard();
             break;

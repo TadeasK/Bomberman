@@ -18,23 +18,23 @@ public:
 private:
     enum OPTIONS { BACK };
     const std::vector<std::string> m_SettingKeysP1 = {
-            "PLAYER 1: ",
+            "PLAYER 1:",
             "",
-            "UP = W",
-            "DOWN = S",
-            "LEFT = A",
+            "UP    = W",
+            "DOWN  = S",
+            "LEFT  = A",
             "RIGHT = D",
-            "BOMB = SPACE"
+            "BOMB  = SPACE"
     };
 
     const std::vector<std::string> m_SettingKeysP2 = {
-            "PLAYER 2: ",
+            "PLAYER 2:",
             "",
-            "UP = ARROW UP",
-            "DOWN = ARROW DOWN",
-            "LEFT = ARROW LEFT",
-            "RIGHT = ARROW RIGHT",
-            "BOMB = NUMPAD ENTER"
+            "UP    = ARR UP",
+            "DOWN  = ARR DOWN",
+            "LEFT  = ARR LEFT",
+            "RIGHT = ARR RIGHT",
+            "BOMB  = NUM ENTER"
     };
 
     /**

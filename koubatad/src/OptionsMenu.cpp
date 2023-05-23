@@ -6,17 +6,6 @@ OptionsMenu::OptionsMenu()
     running = true;
     m_Name = "Controls";
     getmaxyx(stdscr,m_WIDTH,m_HEIGHT);
-
-    /*
-    menuItems = {
-            std::string("UP key = ") + static_cast<char>(toupper(P1_MVUP)),
-            std::string("DOWN key = ") + static_cast<char>(toupper(P1_MVDN)),
-            std::string("LEFT key = ") + static_cast<char>(toupper(P1_MVL)),
-            std::string("RIGHT key = ") + static_cast<char>(toupper(P1_MVR)),
-            std::string("BOMB key = ") + static_cast<char>(toupper(P1_BOMB)),
-            "Back"
-    };
-     */
     menuItems = {
             "Back"
     };
@@ -31,7 +20,7 @@ void OptionsMenu::runMenu()
 
     while (running) {
         if ( refreshWindow() )
-            displayErr(sizeErrMsg);
+            displayErr(sizeErrMsg, "");
 
         displaySettings();
         displayName();
@@ -61,11 +50,11 @@ void OptionsMenu::displaySettings()
         mvwprintw(menuWindow,
                   (menuHeight / 2 - m_SettingKeysP1.size() / 2 + i),
                   ( i == 0 ? (menuWidth / 4 - m_SettingKeysP1[i].length() / 2 ) : ( 2 ) ), // If first item center
-                  m_SettingKeysP1[i].c_str());
+                  "%s", m_SettingKeysP1[i].c_str());
 
         mvwprintw(menuWindow,
                   (menuHeight / 2 - m_SettingKeysP2.size() / 2 + i),
                   ( i == 0 ? (3 * menuWidth / 4 - m_SettingKeysP2[i].length() / 2 ) : ( menuWidth / 2 + 2 ) ),
-                  m_SettingKeysP2[i].c_str());
+                  "%s", m_SettingKeysP2[i].c_str());
     }
 }

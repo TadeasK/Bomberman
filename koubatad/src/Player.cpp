@@ -2,8 +2,7 @@
 
 
 Player::Player(int x, int y, WINDOW *window, int color, int speed, int bombRadius, int bombsCount, int bombThrow,
-               int bombTimer, int health)
-        : Entity(x, y, window, speed) {
+               int bombTimer, int health) : Entity(x, y, window, speed) {
     m_Color = color;
     m_BombRadius = bombRadius;
     m_BombsCount = bombsCount;

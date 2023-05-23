@@ -4,6 +4,7 @@ BuffRadius::BuffRadius( int x, int y )
 : Special (x,y)
 {}
 
+// TODO
 void BuffRadius::drawObj() const
 {
 
