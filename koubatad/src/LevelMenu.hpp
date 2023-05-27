@@ -34,7 +34,7 @@ private:
     std::string bestScoreFile;
     std::string maps;
 
-    void takeAction(size_t currSelect) override;
+    void takeAction(int currSelect) override;
 
     /**
      * @brief Starts the game

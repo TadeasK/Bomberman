@@ -16,7 +16,7 @@ OptionsMenu::OptionsMenu()
 void OptionsMenu::runMenu()
 {
     int input;
-    size_t currSelect = 0;
+    int currSelect = 0;
 
     while (running) {
         if ( refreshWindow() )
@@ -26,7 +26,7 @@ void OptionsMenu::runMenu()
         displayName();
         displayHelp();
         printMenuItems( currSelect );
-        input = readInput( currSelect);
+        input = readInput(currSelect);
 
         if ( input == KEY_ENTER || input == ENTER  ) // KEY_ENTER does not work for some reason
             takeAction (currSelect);
@@ -34,7 +34,7 @@ void OptionsMenu::runMenu()
     delwin(menuWindow);
 }
 
-void OptionsMenu::takeAction(size_t currSelect)
+void OptionsMenu::takeAction(int currSelect)
 {
     switch (currSelect) {
         case BACK:

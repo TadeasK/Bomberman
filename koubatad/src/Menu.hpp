@@ -63,7 +63,7 @@ protected:
      * @return integer value of user input
      * 
      */
-    virtual int readInput( size_t& currSelect);
+    virtual int readInput( int& currSelect);
 
     /**
      *  @brief Print menu items to screen
@@ -104,6 +104,6 @@ protected:
      * @param currSelect Currently selected option, this option will be executed
      *
      */
-    virtual void takeAction( size_t currSelect ) = 0;
+    virtual void takeAction( int currSelect ) = 0;
 };
 

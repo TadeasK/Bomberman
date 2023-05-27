@@ -57,7 +57,7 @@ void Menu::initColors()
 void Menu::runMenu()
 {
     int input;
-    size_t currSelect = 0;
+    int currSelect = 0;
 
     while (running) {
         if ( refreshWindow() )
@@ -78,7 +78,7 @@ void Menu::runMenu()
 
 //----------------------------------------------------------------------------------------------
 
-int Menu::readInput(size_t& currSelect)
+int Menu::readInput(int& currSelect)
 {
     int input = wgetch(menuWindow);
 
@@ -89,12 +89,12 @@ int Menu::readInput(size_t& currSelect)
 
     if ( input == KEY_UP || input == 'w' ) {
         if (currSelect == 0)
-            currSelect = menuItems.size() - 1;
+            currSelect = (int)menuItems.size() - 1;
         else
             currSelect--;
     }
     else if ( input == KEY_DOWN || input == 's' ) {
-        if ( currSelect == menuItems.size()-1)
+        if ( currSelect == (int)menuItems.size()-1)
             currSelect = 0;
         else
             currSelect++;

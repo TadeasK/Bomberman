@@ -15,7 +15,7 @@ GameMenu::GameMenu()
 
 //----------------------------------------------------------------------------------------------
 
-void GameMenu::takeAction(size_t currSelect)
+void GameMenu::takeAction(int currSelect)
 {
     switch (currSelect) {
         case SINGLE:

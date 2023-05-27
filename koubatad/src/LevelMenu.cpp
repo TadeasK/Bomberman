@@ -22,7 +22,7 @@ LevelMenu::LevelMenu(std::string &name, bool multi,
 
 //----------------------------------------------------------------------------------------------
 
-void LevelMenu::takeAction(size_t currSelect) {
+void LevelMenu::takeAction(int currSelect) {
     switch (currSelect) {
         case MAP1:
             cleanUp();

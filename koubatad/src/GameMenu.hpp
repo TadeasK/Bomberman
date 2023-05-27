@@ -28,6 +28,6 @@ private:
      */
     static void startMulti();
 
-    void takeAction(size_t currSelect) override;
+    void takeAction(int currSelect) override;
 
 };

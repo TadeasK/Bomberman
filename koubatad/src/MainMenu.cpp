@@ -41,7 +41,7 @@ void MainMenu::showLeaderboard()
 
 //----------------------------------------------------------------------------------------------
 
-void MainMenu::takeAction(size_t currSelect)
+void MainMenu::takeAction(int currSelect)
 {
     switch (currSelect) {
         case START_GAME:
