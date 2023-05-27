@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Object.hpp"
+#include <chrono>
+#include <vector>
+#include <cmath>
 
 /**
  * @brief A class representing Bomb object
@@ -20,21 +23,29 @@ public:
      */
     Bomb( int x, int y, WINDOW* window, int timer = 5, int radius = 1);
    
-    virtual void drawObj() const override;
-  
+    void drawObj() const override;
+
+    void action();
+
+    bool m_Exploded = false; // Activity of bomb
+private:
+    int m_FusionTimer; // Fusion time (until explosion)
+    int m_Timer; // Current time until explosion
+    int m_Radius; // Radius of explosion
+    std::chrono::steady_clock::time_point m_PlacedTime;
+
+
     /**
-     * @brief Counts down timer, at 0 explodes 
-     * 
-     */
-    void countDown();
-  
-    /**
-     * @brief Draws explosion in radius, destroys destroyable objects 
-     * 
+     * @brief Draws explosion in radius, destroys destroyable objects
+     *
      */
     void explode();
 
-private:
-    int m_Timer; // Current time until explosion
-    int m_Radius; // Radius of explosion
+    /**
+     * @brief Counts down timer, at 0 explodes
+     *
+     */
+    void countDown();
+
+    double getElapsedTime() const;
 };

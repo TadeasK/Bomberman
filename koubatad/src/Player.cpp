@@ -16,15 +16,11 @@ void Player::drawObj() const {
     wattron(m_Window, COLOR_PAIR(m_Color));
     mvwprintw(m_Window, m_Y, m_X, "%c", m_Repr);
     wattroff(m_Window, COLOR_PAIR(m_Color));
-
 }
 
 //----------------------------------------------------------------------------------------------
 void Player::move() {
-    for (const auto &bomb: m_BombsPlaced)
-        bomb.drawObj();
-
-    switch (m_State) {
+    switch (m_Dir) {
         case MOVE_UP:
             moveUp();
             break;
@@ -37,37 +33,32 @@ void Player::move() {
         case MOVE_RIGHT:
             moveRight();
             break;
-        case PLACE_BOMB:
-            placeBomb();
-            break;
         default:
             break;
     }
-    m_State = 0;
+    // TODO POSSIBLE BUG WITH THROW
+    m_Dir = 0;
 }
 
 //----------------------------------------------------------------------------------------------
-void Player::setAction(size_t action) {
-    switch (action) {
+void Player::setMove(size_t dir) {
+    checkBombs();
+    switch (dir) {
         case 'w':
         case KEY_UP:
-            m_State = MOVE_UP;
+            m_Dir = MOVE_UP;
             break;
         case 'a':
         case KEY_LEFT:
-            m_State = MOVE_LEFT;
+            m_Dir = MOVE_LEFT;
             break;
         case 's':
         case KEY_DOWN:
-            m_State = MOVE_DOWN;
+            m_Dir = MOVE_DOWN;
             break;
         case 'd':
         case KEY_RIGHT:
-            m_State = MOVE_RIGHT;
-            break;
-        case ' ':
-        case KEY_ENTER:
-            m_State = PLACE_BOMB;
+            m_Dir = MOVE_RIGHT;
             break;
         default:
             break;
@@ -75,19 +66,27 @@ void Player::setAction(size_t action) {
 }
 
 //----------------------------------------------------------------------------------------------
-bool Player::placeBomb() {
+std::shared_ptr<Bomb> Player::placeBomb() {
     // TODO Throw at player pos + throw dist (method deciding face direction)
-    //      set bomb radius, add bombs placed
     if (m_BombsPlaced.size() >= m_BombsCount)
-        return false;
+        return nullptr;
 
     // if ( !checkConstrains() )
 
     int bombX = m_X, bombY = m_Y; // + m_BombThrow
-    m_BombsPlaced.emplace_back(Bomb(bombX, bombY, m_Window, m_BombTimer, m_BombRadius));
-    return true;
+    auto bomb = std::make_shared<Bomb>(bombX, bombY, m_Window, m_BombTimer, m_BombRadius);
+    m_BombsPlaced.push_back(bomb);
+    return bomb;
 }
-
+//----------------------------------------------------------------------------------------------
+void Player::checkBombs() {
+    for ( auto bombIt = m_BombsPlaced.begin(); bombIt != m_BombsPlaced.end(); ) {
+        if ( (*bombIt)->m_Exploded )
+            bombIt = m_BombsPlaced.erase(bombIt);
+        else
+            ++bombIt;
+    }
+}
 bool Player::moveUp() {
     if (!checkConstrains(m_X, m_Y - m_Speed))
         return false;

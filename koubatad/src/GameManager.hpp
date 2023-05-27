@@ -30,11 +30,13 @@ private:
     const int GAME_WINDOW_HEIGHT = 15;
     const int GAME_WINDOW_WIDTH = 15;
     std::string m_MapPath;
+    std::chrono::steady_clock::time_point m_StartTime;
 
     std::vector<std::shared_ptr<Object>> m_Objects; // All the object present in game
     std::vector<std::shared_ptr<Entity>> m_Entities; // All entity objects
     std::shared_ptr<Player> m_Player1; // Player1 object
     std::shared_ptr<Player> m_Player2; // Player2 object
+    std::vector<std::shared_ptr<Bomb>> m_Bombs; // Bomb objects
 
     /**
      * @brief Generate map based on chosen map file
@@ -71,9 +73,12 @@ private:
 
     void createPlayer2(int x, int y);
 
-    int readInput(size_t &currSelect) override;
+    double getElapsedTime() const;
 
-    void takeAction(size_t action) override;
+    int readInput(int &currSelect) override;
+
+    void takeAction(int action) override;
+
 };
 
 

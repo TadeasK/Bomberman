@@ -15,20 +15,33 @@ GameManager::GameManager(bool multi, std::string &map)
 }
 //----------------------------------------------------------------------------------------------
 
-// TODO Add game time + bombs counting, collisions, damage
+// TODO collisions, damage
 void GameManager::runMenu() {
     int input;
-    size_t x = 0;
+    int x = 0;
+    m_StartTime = std::chrono::steady_clock::now();
+
     while (running) {
         box(menuWindow, x, x);
-        wrefresh(menuWindow);
-        refresh();
 
         input = readInput(x);
-
-        input = static_cast<size_t>(input);
         takeAction(input);
         printStats();
+
+        for ( auto bombIt = m_Bombs.begin(); bombIt != m_Bombs.end(); ) {
+            (*bombIt)->action();
+            if ( (*bombIt)->m_Exploded ) {
+                for ( auto objIt = m_Objects.begin(); objIt != m_Objects.end(); ) {
+                    if ( *objIt == *bombIt)
+                        objIt = m_Objects.erase(objIt);
+                    else
+                        ++objIt;
+                }
+                bombIt = m_Bombs.erase(bombIt);
+            }
+            else
+                ++bombIt;
+        }
 
         for (auto const &obj: m_Objects)
             obj->drawObj();
@@ -38,6 +51,9 @@ void GameManager::runMenu() {
 
         if (input != ERR)
             werase(menuWindow);
+
+        wrefresh(menuWindow);
+        refresh();
     }
     // TODO saveScore();
     cleanUp();
@@ -84,7 +100,7 @@ void GameManager::generateMap() {
 
 //----------------------------------------------------------------------------------------------
 
-int GameManager::readInput(size_t &currSelect) {
+int GameManager::readInput(int &currSelect) {
     int input = wgetch(menuWindow);
 
     if (input == EOT || input == ETX) { // Check if user pressed ctrl+C or ctrl+D
@@ -96,14 +112,28 @@ int GameManager::readInput(size_t &currSelect) {
 }
 //----------------------------------------------------------------------------------------------
 
-void GameManager::takeAction(size_t action) {
+void GameManager::takeAction(int action) {
     if (action == ENTER)
         action = KEY_ENTER;
-    if (action == 'w' || action == 'a' || action == 's' || action == 'd' || action == ' ')
-        m_Player1->setAction(action);
+    if (action == 'w' || action == 'a' || action == 's' || action == 'd' )
+        m_Player1->setMove(action);
+    if ( action == ' ' ) {
+        auto bomb = m_Player1->placeBomb();
+        if ( bomb != nullptr ) {
+            m_Objects.push_back(bomb);
+            m_Bombs.push_back(bomb);
+        }
+    }
     if (m_Multi) {
-        if (action == KEY_UP || action == KEY_LEFT || action == KEY_RIGHT || action == KEY_DOWN || action == KEY_ENTER)
-            m_Player2->setAction(action);
+        if (action == KEY_UP || action == KEY_LEFT || action == KEY_RIGHT || action == KEY_DOWN )
+            m_Player2->setMove(action);
+        if ( action == KEY_ENTER ) {
+            auto bomb = m_Player2->placeBomb();
+            if ( bomb != nullptr ) {
+                m_Objects.push_back(bomb);
+                m_Bombs.push_back(bomb);
+            }
+        }
     }
 }
 
@@ -113,12 +143,16 @@ void GameManager::printStats() {
              "%s: %d", "P1 HEALTH", m_Player1->getHealth());
 
     if (!m_Multi)
-        mvprintw((m_HEIGHT / 2 - menuHeight / 2) - 2, m_WIDTH / 2 - 3,
+        mvprintw((m_HEIGHT / 2 - menuHeight / 2) - 2, m_WIDTH / 2 - menuWidth / 2,
                  "%s: %d", "SCORE", m_Score);
 
     if (m_Multi)
         mvprintw((m_HEIGHT / 2 + menuHeight / 2) + 1, m_WIDTH / 2 - menuWidth / 2,
                  "%s: %d", "P2 HEALTH", m_Player2->getHealth());
+
+
+    mvprintw((m_HEIGHT / 2 - menuHeight / 2) - 3, m_WIDTH / 2 - menuWidth / 2,
+             "%s: %.2f", "TIME", getElapsedTime());
 }
 
 //----------------------------------------------------------------------------------------------
@@ -183,5 +217,12 @@ void GameManager::createPlayer2(int x, int y) {
         m_Entities.push_back(m_Player2);
     } else
         throw "Content of file '" + m_MapPath + "' might be corrupted.";
+}
+
+//----------------------------------------------------------------------------------------------
+double GameManager::getElapsedTime() const {
+    auto currTimePoint = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsedTime = currTimePoint - m_StartTime;
+    return elapsedTime.count();
 }
 //----------------------------------------------------------------------------------------------

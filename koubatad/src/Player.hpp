@@ -3,6 +3,7 @@
 #include "Entity.hpp"
 #include "Bomb.hpp"
 #include <vector>
+#include <memory>
 
 /**
  * @brief A class representing a Player entity 
@@ -34,25 +35,10 @@ public:
     void move() override;
 
     /**
-     * @brief Sets Player into state, which will be evaluated when move() is called
-     * @param action Value of action
+     * @brief Sets Player direction, which will be evaluated when move() is called
+     * @param dir New direction of player
      */
-    void setAction(size_t action);
-
-private:
-    enum STATE_OPTIONS {
-        MOVE_UP = 1, MOVE_LEFT, MOVE_RIGHT, MOVE_DOWN, PLACE_BOMB
-    };
-    int m_Color; // Color of player on the map
-    int m_State = 0; // State of player
-    const char m_Repr = '@'; // Constant character representing the player on the map
-    int m_BombRadius; // Current radius of player placed bombs
-    size_t m_BombsCount; // Current maximum count of bombs player can place at the same time
-    int m_BombThrow; // Max range at which player can place a bomb
-    int m_BombTimer; // How long it takes for bombs placed by this player to explode
-    int m_Health;
-    std::vector<Bomb> m_BombsPlaced; // Current number of bombs placed
-
+    void setMove(size_t dir);
 
     /**
      * @brief Places bomb at player's feet/throw a bomb
@@ -63,15 +49,55 @@ private:
      * @return true If place successful
      * @return false If bomb can not be placed
      */
-    bool placeBomb();
+    std::shared_ptr<Bomb> placeBomb();
 
+
+private:
+    enum DIR_OPTIONS {
+        MOVE_UP = 1, MOVE_LEFT, MOVE_RIGHT, MOVE_DOWN
+    };
+    int m_Color; // Color of player on the map
+    int m_Dir = 0; // State of player
+    const char m_Repr = '@'; // Constant character representing the player on the map
+    int m_BombRadius; // Current radius of player placed bombs
+    size_t m_BombsCount; // Current maximum count of bombs player can place at the same time
+    std::vector<std::shared_ptr<Bomb>> m_BombsPlaced;
+    int m_BombThrow; // Max range at which player can place a bomb
+    int m_BombTimer; // How long it takes for bombs placed by this player to explode
+    int m_Health;
+
+    /**
+     * @brief Sets player's direction to UP, checking if he can move that way
+     * @return True if movement possible, False otherwise
+     */
     bool moveUp();
 
+    /**
+     * @brief Sets player's direction to LEFT, checking if he can move that way
+     * @return True if movement possible, False otherwise
+     */
     bool moveLeft();
 
+    /**
+     * @brief Sets player's direction to RIGHT, checking if he can move that way
+     * @return True if movement possible, False otherwise
+     */
     bool moveRight();
 
+    /**
+     * @brief Sets player's direction to DOWN, checking if he can move that way
+     * @return True if movement possible, False otherwise
+     */
     bool moveDown();
 
+    /**
+     * @brief Check if movement to given coordinates is possible
+     * @return True if movement possible, False otherwise
+     */
     bool checkConstrains(int x, int y) override;
+
+    /**
+     * @brief Checks status of bombs, removes exploded bombs
+     */
+    void checkBombs();
 };
