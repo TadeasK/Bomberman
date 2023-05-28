@@ -236,6 +236,7 @@ void GameManager::explodeBomb(std::shared_ptr<Bomb> &bomb) {
             continue;
         }
         else if ( status == 1) {
+            m_Special.emplace_back(x);
             handleCollision(x);
         }
         else

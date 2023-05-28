@@ -29,7 +29,7 @@ private:
     int m_Map = 1;
 
     enum OPTIONS {
-        MAP1, MAP2, MAP3, MAP4, MAP5, BACK
+        MAP1, MAP2, MAP3, MAP4, MAP5, MAP6, BACK
     };
     std::string bestScoreFile;
     std::string maps;

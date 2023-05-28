@@ -34,7 +34,5 @@ public:
     virtual bool checkConstrains( int x, int y) = 0;
 
 protected:
-    const int GAME_WINDOW_HEIGHT = 15;
-    const int GAME_WINDOW_WIDTH = 15;
     int m_Speed; // Speed of entity
 };

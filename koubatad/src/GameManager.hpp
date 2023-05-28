@@ -35,8 +35,8 @@ private:
 
     std::vector<std::shared_ptr<Object>> m_Objects; // All the object present in game
     std::vector<std::shared_ptr<Entity>> m_Entities; // All entity objects
-    std::shared_ptr<Player> m_Player1; // Player1 object
-    std::shared_ptr<Player> m_Player2; // Player2 object
+    std::shared_ptr<Player> m_Player1 = nullptr; // Player1 object
+    std::shared_ptr<Player> m_Player2 = nullptr; // Player2 object
     std::vector<std::shared_ptr<Bomb>> m_Bombs; // Bomb objects
     std::vector<std::shared_ptr<Special>> m_Special; // Special objects
 

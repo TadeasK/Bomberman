@@ -16,6 +16,7 @@ LevelMenu::LevelMenu(std::string &name, bool multi,
             "Level 3",
             "Level 4",
             "Level 5",
+            "Level 6",
             "Back"
     };
 }
@@ -43,6 +44,10 @@ void LevelMenu::takeAction(int currSelect) {
         case MAP5:
             cleanUp();
             m_Map = MAP5 + 1;
+            break;
+        case MAP6:
+            cleanUp();
+            m_Map = MAP6 + 1;
             break;
         case BACK:
             running = false;

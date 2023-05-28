@@ -3,19 +3,19 @@
 #include "Special.hpp"
 
 /**
- * @brief A class representing buff that increases range at which player can place bombs 
+ * @brief A class representing buff that increases player health
  * 
  */
-class BuffThrow: public Special
+class BuffHeal: public Special
 {
 public:
     /**
-     * @brief Construct a new Buff Throw object
+     * @brief Construct a new BuffHeal object
      * 
      * @param x A X position of the buff
      * @param y An Y position of the buff
      */
-    BuffThrow(int x, int y);
+    BuffHeal(int x, int y,WINDOW* window);
 
     virtual bool drawObj() const override;
     virtual int giveEffect() override;
