@@ -11,12 +11,11 @@ void Enemy::drawObj() const {
 //----------------------------------------------------------------------------------------------
 
 void Enemy::move() {
-
-    if (count < 10000) {
-        count++;
+    if (m_Delay < 4000) {
+        m_Delay++;
         return;
     }
-    count = 0;
+    m_Delay = 0;
 
     switch (m_State) {
         case MOVE_UP:

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Entity.hpp"
-
+#include <random>
 /**
  * @brief A class representing Enemy (AI controlled) entity 
  * 
@@ -24,7 +24,7 @@ public:
     void move() override;
 
 private:
-    int count = 0;
+    int m_Delay = rand() % 3001; // Delays enemy movement
     enum STATE_OPTIONS {
         MOVE_UP = 1, MOVE_LEFT, MOVE_DOWN, MOVE_RIGHT
     };

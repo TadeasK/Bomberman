@@ -20,9 +20,13 @@ void GameManager::runMenu() {
     int input;
     int x = 0;
     m_StartTime = std::chrono::steady_clock::now();
+    const std::chrono::microseconds frameDelay( static_cast<int>(1000.0/30.0) );
 
     while (running) {
+        auto start = std::chrono::steady_clock::now();
         box(menuWindow, x, x);
+        wrefresh(menuWindow);
+        refresh();
 
         input = readInput(x);
         takeAction(input);
@@ -47,8 +51,11 @@ void GameManager::runMenu() {
         if (input != ERR)
             werase(menuWindow);
 
-        wrefresh(menuWindow);
-        refresh();
+        auto end = std::chrono::steady_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        auto delay = frameDelay - elapsed;
+        if (delay > std::chrono::milliseconds::zero())
+            std::this_thread::sleep_for(delay);
     }
     // TODO saveScore();
     cleanUp();
