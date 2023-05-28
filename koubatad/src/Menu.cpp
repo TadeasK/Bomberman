@@ -4,7 +4,7 @@ Menu::Menu()
 {
     initNcurses();
     running = true;
-    getmaxyx(stdscr,m_HEIGHT,m_WIDTH);
+    getmaxyx(stdscr, m_HEIGHT, m_WIDTH);
     menuHeight = m_HEIGHT / 2;
     menuWidth = m_WIDTH / 2;
     menuWindow = newwin(menuHeight, menuWidth, m_HEIGHT / 4, m_WIDTH / 4);
@@ -16,7 +16,7 @@ Menu::Menu()
 void Menu::initNcurses()
 {
     initscr(); // Initialize window
-    if ( !has_colors() ) {
+    if (!has_colors()) {
         endwin();
         throw "Your terminal doesn't support colors, which is required to run this game.";
     }
@@ -31,10 +31,10 @@ void Menu::initNcurses()
 
     getmaxyx(stdscr, m_HEIGHT, m_WIDTH); // Read window parameters
     // Check if terminal has sufficient dimensions
-    if ( m_HEIGHT < MIN_HEIGHT || m_WIDTH < MIN_WIDTH ) {
+    if (m_HEIGHT < MIN_HEIGHT || m_WIDTH < MIN_WIDTH) {
         endwin();
-        throw "Your terminal is too small. Minimum dimensions of terminal are: "
-              + std::to_string(MIN_WIDTH) + " : " + std::to_string(MIN_HEIGHT);
+        throw "Your terminal is too small. Minimum dimensions of terminal are: " + std::to_string(MIN_WIDTH) + " : " +
+              std::to_string(MIN_HEIGHT);
     }
 }
 
@@ -60,17 +60,17 @@ void Menu::runMenu()
     int currSelect = 0;
 
     while (running) {
-        if ( refreshWindow() )
+        if (refreshWindow())
             displayErr(sizeErrMsg, "");
 
         displayName();
         displayHelp();
-        printMenuItems( currSelect );
+        printMenuItems(currSelect);
         refresh();
-        input = readInput( currSelect);
+        input = readInput(currSelect);
 
-        if ( input == KEY_ENTER || input == ENTER ) // KEY_ENTER does not work for some reason
-            takeAction (currSelect);
+        if (input == KEY_ENTER || input == ENTER) // KEY_ENTER does not work for some reason
+            takeAction(currSelect);
     }
     delwin(menuWindow);
     endwin();
@@ -78,23 +78,23 @@ void Menu::runMenu()
 
 //----------------------------------------------------------------------------------------------
 
-int Menu::readInput(int& currSelect)
+int Menu::readInput(int &currSelect)
 {
     int input = wgetch(menuWindow);
 
-    if ( input == EOT || input == ETX ) { // Check if user pressed ctrl+C or ctrl+D
+    if (input == EOT || input == ETX) { // Check if user pressed ctrl+C or ctrl+D
         running = false;
         return -1;
     }
 
-    if ( input == KEY_UP || input == 'w' ) {
+    if (input == KEY_UP || input == 'w') {
         if (currSelect == 0)
-            currSelect = (int)menuItems.size() - 1;
+            currSelect = (int) menuItems.size() - 1;
         else
             currSelect--;
     }
-    else if ( input == KEY_DOWN || input == 's' ) {
-        if ( currSelect == (int)menuItems.size()-1)
+    else if (input == KEY_DOWN || input == 's') {
+        if (currSelect == (int) menuItems.size() - 1)
             currSelect = 0;
         else
             currSelect++;
@@ -104,22 +104,18 @@ int Menu::readInput(int& currSelect)
 
 //----------------------------------------------------------------------------------------------
 
-void Menu::printMenuItems( size_t currSelect )
+void Menu::printMenuItems(size_t currSelect)
 {
-    for ( size_t i = 0; i < menuItems.size(); i++) { // Prints the menu and highlights current choice
-        if ( i == currSelect )
+    for (size_t i = 0; i < menuItems.size(); i++) { // Prints the menu and highlights current choice
+        if (i == currSelect)
             wattron(menuWindow, A_STANDOUT);
-        if ( i == menuItems.size() - 1 ) {
-            mvwprintw(menuWindow,
-                      (menuHeight - 4),
-                      (menuWidth / 2 - menuItems[i].length() / 2),
-                      "%s", menuItems[i].c_str());
+        if (i == menuItems.size() - 1) {
+            mvwprintw(menuWindow, (menuHeight - 4), (menuWidth / 2 - menuItems[i].length() / 2), "%s",
+                      menuItems[i].c_str());
         }
         else {
-            mvwprintw(menuWindow,
-                      (menuHeight / 2 - menuItems.size() / 2 + i),
-                      (menuWidth / 2 - menuItems[i].length() / 2),
-                      "%s", menuItems[i].c_str());
+            mvwprintw(menuWindow, (menuHeight / 2 - menuItems.size() / 2 + i),
+                      (menuWidth / 2 - menuItems[i].length() / 2), "%s", menuItems[i].c_str());
         }
         wattroff(menuWindow, A_STANDOUT);
     }
@@ -136,11 +132,11 @@ void Menu::displayHelp()
 
 //----------------------------------------------------------------------------------------------
 
-void Menu::displayErr( const std::string& errMsg, const std::string& additionalInfo )
+void Menu::displayErr(const std::string &errMsg, const std::string &additionalInfo)
 {
     wattron(stdscr, COLOR_PAIR(1));
-    mvwprintw(stdscr,2, (m_WIDTH / 2 - errMsg.length() / 2), "%s", errMsg.c_str());
-    mvwprintw(stdscr,3, (m_WIDTH / 2 - additionalInfo.length() / 2), "%s", additionalInfo.c_str());
+    mvwprintw(stdscr, 2, (m_WIDTH / 2 - errMsg.length() / 2), "%s", errMsg.c_str());
+    mvwprintw(stdscr, 3, (m_WIDTH / 2 - additionalInfo.length() / 2), "%s", additionalInfo.c_str());
     wattroff(stdscr, COLOR_PAIR(1));
 }
 
@@ -159,10 +155,10 @@ bool Menu::refreshWindow()
 {
     int newHeight, newWidth;
     bool sizeErr = false;
-    getmaxyx(stdscr,newHeight,newWidth);
+    getmaxyx(stdscr, newHeight, newWidth);
 
     // If terminal dimensions changed
-    if ( newHeight != m_HEIGHT || newWidth != m_WIDTH ) {
+    if (newHeight != m_HEIGHT || newWidth != m_WIDTH) {
         delwin(menuWindow);
         cleanUp();
         getmaxyx(stdscr, m_HEIGHT, m_WIDTH);
@@ -172,7 +168,7 @@ bool Menu::refreshWindow()
             m_HEIGHT = MIN_HEIGHT;
             sizeErr = true;
         }
-        else if ( m_WIDTH < MIN_WIDTH ) {
+        else if (m_WIDTH < MIN_WIDTH) {
             m_WIDTH = MIN_WIDTH;
             sizeErr = true;
         }

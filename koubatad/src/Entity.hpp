@@ -6,7 +6,7 @@
  * @brief A class representing any Entity object
  * 
  */
-class Entity: public Object
+class Entity : public Object
 {
 public:
     /**
@@ -17,7 +17,7 @@ public:
      * @param window Window, where object is displayed
      * @param speed Movement speed of Entity
      */
-    Entity( int x, int y, WINDOW* window, int speed);
+    Entity(int x, int y, WINDOW *window, int speed);
 
     /**
      * @brief Moves the entity 
@@ -31,7 +31,7 @@ public:
      * @param y Y coordinate
      * @return True if place is free
      */
-    virtual bool checkConstrains( int x, int y) = 0;
+    virtual bool checkConstrains(int x, int y) = 0;
 
 protected:
     int m_Speed; // Speed of entity

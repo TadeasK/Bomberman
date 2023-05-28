@@ -3,7 +3,8 @@
 LevelMenu::LevelMenu(std::string &name, bool multi,
                      const std::string &bestScorePath,
                      const std::string &mapsPath)
-        : Menu() {
+        : Menu()
+{
     maps = mapsPath;
     running = true;
     m_Name = name;
@@ -23,7 +24,8 @@ LevelMenu::LevelMenu(std::string &name, bool multi,
 
 //----------------------------------------------------------------------------------------------
 
-void LevelMenu::takeAction(int currSelect) {
+void LevelMenu::takeAction(int currSelect)
+{
     switch (currSelect) {
         case MAP1:
             cleanUp();
@@ -61,7 +63,8 @@ void LevelMenu::takeAction(int currSelect) {
 
 //----------------------------------------------------------------------------------------------
 
-void LevelMenu::runGame() {
+void LevelMenu::runGame()
+{
     maps.append(std::to_string(m_Map));
     try {
         GameManager game(m_Multi, maps);

@@ -9,15 +9,16 @@
  * @brief Represents and operates Menu functions, prints Menu windows
  * 
  */
-class Menu
-{
+class Menu {
 public:
     /**
      * @brief Constructs a new menu object
      *
      */
     Menu();
+
     ~Menu() { endwin(); }
+
     /**
      * @brief Operates menus, based on user choice can start the game,
      *  show settings or show help
@@ -33,7 +34,7 @@ protected:
     std::vector<std::string> menuItems; // Items in menu
     int menuHeight; // Height of sub-window
     int menuWidth; // Width of sub-window
-    WINDOW * menuWindow; // Pointer to sub-window
+    WINDOW *menuWindow; // Pointer to sub-window
 
     // Constants
     const static int MIN_WIDTH = 80; // Minimal width of window to run game
@@ -63,14 +64,14 @@ protected:
      * @return integer value of user input
      * 
      */
-    virtual int readInput( int& currSelect);
+    virtual int readInput(int &currSelect);
 
     /**
      *  @brief Print menu items to screen
      *  @param currSelect Which menu option is currently chosen (highlights the option based in this parameter)
      *
      */
-    virtual void printMenuItems( size_t currSelect);
+    virtual void printMenuItems(size_t currSelect);
 
     /**
      *  @brief Displays controls help to Menu screen
@@ -80,7 +81,7 @@ protected:
     /**
      *  @brief Displays error message if an error has occurred
      */
-    virtual void displayErr( const std::string& errMsg, const std::string& additionalInfo );
+    virtual void displayErr(const std::string &errMsg, const std::string &additionalInfo);
 
     /**
      *  @brief Displays name of current Menu
@@ -104,6 +105,6 @@ protected:
      * @param currSelect Currently selected option, this option will be executed
      *
      */
-    virtual void takeAction( int currSelect ) = 0;
+    virtual void takeAction(int currSelect) = 0;
 };
 

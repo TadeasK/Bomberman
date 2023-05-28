@@ -6,7 +6,7 @@
  * @brief A class representing buff that allows player to detonate bomb remotely
  * 
  */
-class BuffDetonator: public Special
+class BuffDetonator : public Special
 {
 public:
     /**
@@ -15,8 +15,9 @@ public:
      * @param x A X position of the buff
      * @param y An Y position of the buff
      */
-    BuffDetonator(int x, int y, WINDOW* window);
+    BuffDetonator(int x, int y, WINDOW *window);
 
     virtual bool drawObj() const override;
+
     virtual int giveEffect() override;
 };

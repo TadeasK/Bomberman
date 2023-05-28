@@ -19,7 +19,8 @@
  * @brief Main game object - Manages all game objects and runs the game
  *
  */
-class GameManager : public Menu {
+class GameManager : public Menu
+{
 public:
     explicit GameManager(bool multi, std::string &map);
 
@@ -85,22 +86,23 @@ private:
      * @brief Explode bomb, remove it from objects, create explosion
      * @param bomb Bomb to be exploded
      */
-    void explodeBomb( std::shared_ptr<Bomb>& bomb );
+    void explodeBomb(std::shared_ptr<Bomb> &bomb);
 
-    void handleCollision(const std::shared_ptr<Special>& special );
+    void handleCollision(const std::shared_ptr<Special> &special);
 
     /**
      * @brief Check if given object is in Entity vector, if so removes it
      * @param obj Object to check presence of
      * @return True if object found, False otherwise
      */
-    bool checkEntity( const std::shared_ptr<Object>& obj);
+    bool checkEntity(const std::shared_ptr<Object> &obj);
+
     /**
      * @brief Check if given object is in Special vector, if so removes it
      * @param obj Object to check presence of
      * @return True if object found, False otherwise
      */
-    bool checkSpecial( const std::shared_ptr<Object>& obj);
+    bool checkSpecial(const std::shared_ptr<Object> &obj);
 };
 
 

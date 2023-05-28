@@ -6,7 +6,7 @@
  * @brief A class representing buff that increases player health
  * 
  */
-class BuffHeal: public Special
+class BuffHeal : public Special
 {
 public:
     /**
@@ -15,8 +15,9 @@ public:
      * @param x A X position of the buff
      * @param y An Y position of the buff
      */
-    BuffHeal(int x, int y,WINDOW* window);
+    BuffHeal(int x, int y, WINDOW *window);
 
     virtual bool drawObj() const override;
+
     virtual int giveEffect() override;
 };

@@ -1,7 +1,7 @@
 #include "MainMenu.hpp"
 
 MainMenu::MainMenu()
-    : Menu()
+        : Menu()
 {
     running = true;
     m_Name = "Main menu";
@@ -63,5 +63,6 @@ void MainMenu::takeAction(int currSelect)
             break;
     }
 }
+//----------------------------------------------------------------------------------------------
 
 

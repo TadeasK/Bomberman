@@ -4,7 +4,10 @@
 
 #include <map>
 
-class OptionsMenu: public Menu
+/**
+ * @brief Represents menu which shows available controls
+ */
+class OptionsMenu : public Menu
 {
 public:
     /**
@@ -16,7 +19,10 @@ public:
     void runMenu() override;
 
 private:
-    enum OPTIONS { BACK };
+    enum OPTIONS
+    {
+        BACK
+    };
     const std::vector<std::string> m_SettingKeysP1 = {
             "PLAYER 1:",
             "",

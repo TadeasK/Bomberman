@@ -45,21 +45,21 @@ void GameManager::runMenu()
 
         for (auto const &spec: m_Special) {
             int status = spec->update();
-            if ( status == 1 )
+            if (status == 1)
                 handleCollision(spec);
         }
 
         for (auto obj = m_Objects.begin(); obj != m_Objects.end();) {
-            if ( !(*obj)->drawObj()) { // Object was destroyed/killed
-                if ( (*obj) == m_Player1 ) {
+            if (!(*obj)->drawObj()) { // Object was destroyed/killed
+                if ((*obj) == m_Player1) {
                     // Player 2 is winner TODO
                     //running = false;
                     break;
                 }
-                if ( (*obj) == m_Player2 )
+                if ((*obj) == m_Player2)
                     // Player 1 is winner TODO
                     break;
-                if ( checkEntity((*obj)) ) // Must be Enemy
+                if (checkEntity((*obj))) // Must be Enemy
                     m_Score += 100;
                 /*
                 if ( checkSpecial((*obj)) ) // Must be Enemy
@@ -305,7 +305,7 @@ void GameManager::handleCollision(const std::shared_ptr<Special> &special)
 bool GameManager::checkEntity(const std::shared_ptr<Object> &obj)
 {
     for (auto entity = m_Entities.begin(); entity != m_Entities.end();) {
-        if ( *entity == obj ) {
+        if (*entity == obj) {
             m_Entities.erase(entity);
             return true;
         }
@@ -317,10 +317,11 @@ bool GameManager::checkEntity(const std::shared_ptr<Object> &obj)
 bool GameManager::checkSpecial(const std::shared_ptr<Object> &obj)
 {
     for (auto spec = m_Special.begin(); spec != m_Special.end();) {
-        if ( *spec == obj ) {
+        if (*spec == obj) {
             m_Special.erase(spec);
             return true;
         }
     }
     return false;
 }
+//----------------------------------------------------------------------------------------------

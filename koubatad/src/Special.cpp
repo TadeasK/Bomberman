@@ -1,9 +1,13 @@
 #include "Special.hpp"
 
 Special::Special(int x, int y, WINDOW *window)
-        : Object(x, y, window) {}
+        : Object(x, y, window)
+{
+}
+//----------------------------------------------------------------------------------------------
 
-int Special::collision() const {
+int Special::collision() const
+{
     if (m_X < 0 || m_Y < 0 || m_X > GAME_WINDOW_WIDTH || m_Y > GAME_WINDOW_HEIGHT)
         return -1;
     chtype screenObj = mvwinch(m_Window, m_Y, m_X);
@@ -23,7 +27,7 @@ int Special::update()
 
 void Special::reduceLifeSpan()
 {
-    if ( --m_LifeSpan <= 0)
+    if (--m_LifeSpan <= 0)
         m_Exist = false;
 }
 //----------------------------------------------------------------------------------------------

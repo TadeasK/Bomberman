@@ -9,7 +9,7 @@
 /**
  * @brief Represents Main menu, prints its contents, operates based on user input
  */
-class MainMenu: public Menu
+class MainMenu : public Menu
 {
 public:
     /**
@@ -19,7 +19,10 @@ public:
     MainMenu();
 
 private:
-    enum OPTIONS { START_GAME, BEST_SCORES, CONTROLS, QUIT };
+    enum OPTIONS
+    {
+        START_GAME, BEST_SCORES, CONTROLS, QUIT
+    };
 
 
     /**

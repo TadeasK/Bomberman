@@ -7,7 +7,7 @@
  * @brief A class representing buff that increases explosion radius of player placed bombs
  * 
  */
-class BuffRadius: public Special
+class BuffRadius : public Special
 {
 public:
     /**
@@ -16,8 +16,9 @@ public:
      * @param x A X position of the buff
      * @param y An Y position of the buff
      */
-    BuffRadius(int x, int y,WINDOW* window);
+    BuffRadius(int x, int y, WINDOW *window);
 
     virtual bool drawObj() const override;
+
     virtual int giveEffect() override;
 };

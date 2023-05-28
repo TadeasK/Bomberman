@@ -11,7 +11,7 @@
  * @brief A class representing Bomb object
  * 
  */
-class Bomb: public Object
+class Bomb : public Object
 {
 public:
     /**
@@ -23,8 +23,8 @@ public:
      * @param timer Time in seconds until explosion
      * @param radius Radius of explosion
      */
-    Bomb( int x, int y, WINDOW* window, int timer = 5, int radius = 1);
-   
+    Bomb(int x, int y, WINDOW *window, int timer = 5, int radius = 1);
+
     bool drawObj() const override;
 
     void action();

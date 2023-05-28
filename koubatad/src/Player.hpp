@@ -9,7 +9,8 @@
  * @brief A class representing a Player entity 
  * 
  */
-class Player : public Entity {
+class Player : public Entity
+{
 public:
     /**
      * @brief Construct a new Player object
@@ -32,7 +33,7 @@ public:
 
     bool drawObj() const override;
 
-    virtual void receiveEffect ( int effect ) override;
+    virtual void receiveEffect(int effect) override;
 
     void move() override;
 
@@ -55,7 +56,8 @@ public:
 
 
 private:
-    enum DIR_OPTIONS {
+    enum DIR_OPTIONS
+    {
         MOVE_UP = 1, MOVE_LEFT, MOVE_RIGHT, MOVE_DOWN
     };
     int m_Color; // Color of player on the map

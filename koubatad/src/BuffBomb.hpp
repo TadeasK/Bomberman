@@ -6,7 +6,7 @@
  * @brief Class representing buff that increases player's max bomb count 
  * 
  */
-class BuffBomb: public Special
+class BuffBomb : public Special
 {
 public:
     /**
@@ -16,8 +16,9 @@ public:
      * @param y An Y position of the buff
      * @param window Window, where object is displayed
      */
-    BuffBomb(int x, int y, WINDOW* window);
+    BuffBomb(int x, int y, WINDOW *window);
 
     virtual bool drawObj() const override;
+
     virtual int giveEffect() override;
 };

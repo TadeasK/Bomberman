@@ -25,7 +25,7 @@ public:
      * @brief Draws object into environment 
      * 
      * @return true If drawn successfully
-     * @return false 
+     * @return false If object doesn't exist anymore
      */
     virtual bool drawObj () const = 0;
 
@@ -37,7 +37,7 @@ protected:
     WINDOW * m_Window; // Window where object is displayed
     int m_X; // A current X position of object
     int m_Y; // A current  Y position of object
-    bool m_Exist = true; // If object exists or if it has been destoroyed/killed
+    bool m_Exist = true; // If object exists or if it has been destroyed/killed
     enum EFFECT {
         EXPLOSION, BOMB_INC, RADIUS_INC, HEAL, LEVITATE, DETONATOR
     };

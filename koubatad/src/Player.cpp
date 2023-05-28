@@ -2,7 +2,8 @@
 
 
 Player::Player(int x, int y, WINDOW *window, int color, int speed, int bombRadius, int bombsCount,
-               int bombTimer, int health) : Entity(x, y, window, speed) {
+               int bombTimer, int health) : Entity(x, y, window, speed)
+{
     m_Color = color;
     m_BombRadius = bombRadius;
     m_BombsCount = bombsCount;
@@ -11,7 +12,8 @@ Player::Player(int x, int y, WINDOW *window, int color, int speed, int bombRadiu
 }
 
 //----------------------------------------------------------------------------------------------
-bool Player::drawObj() const {
+bool Player::drawObj() const
+{
     wattron(m_Window, COLOR_PAIR(m_Color));
     mvwprintw(m_Window, m_Y, m_X, "%c", m_Repr);
     wattroff(m_Window, COLOR_PAIR(m_Color));
@@ -44,8 +46,8 @@ void Player::move()
 }
 
 //----------------------------------------------------------------------------------------------
-void Player::setMove(size_t dir) {
-    checkBombs();
+void Player::setMove(size_t dir)
+{
     switch (dir) {
         case 'w':
         case KEY_UP:
@@ -69,7 +71,8 @@ void Player::setMove(size_t dir) {
 }
 
 //----------------------------------------------------------------------------------------------
-std::shared_ptr<Bomb> Player::placeBomb() {
+std::shared_ptr<Bomb> Player::placeBomb()
+{
     // TODO Throw at player pos + throw dist (method deciding face direction)
     if (m_BombsPlaced.size() >= m_BombsCount)
         return nullptr;
@@ -81,16 +84,21 @@ std::shared_ptr<Bomb> Player::placeBomb() {
     m_BombsPlaced.push_back(bomb);
     return bomb;
 }
+
 //----------------------------------------------------------------------------------------------
-void Player::checkBombs() {
-    for ( auto bombIt = m_BombsPlaced.begin(); bombIt != m_BombsPlaced.end(); ) {
-        if ( (*bombIt)->m_Exploded )
+void Player::checkBombs()
+{
+    for (auto bombIt = m_BombsPlaced.begin(); bombIt != m_BombsPlaced.end();) {
+        if ((*bombIt)->m_Exploded)
             bombIt = m_BombsPlaced.erase(bombIt);
         else
             ++bombIt;
     }
 }
-bool Player::moveUp() {
+
+//----------------------------------------------------------------------------------------------
+bool Player::moveUp()
+{
     if (!checkConstrains(m_X, m_Y - m_Speed))
         return false;
     m_Y -= m_Speed;
@@ -98,7 +106,8 @@ bool Player::moveUp() {
 }
 
 //----------------------------------------------------------------------------------------------
-bool Player::moveLeft() {
+bool Player::moveLeft()
+{
     if (!checkConstrains(m_X - m_Speed, m_Y))
         return false;
     m_X -= m_Speed;
@@ -106,7 +115,8 @@ bool Player::moveLeft() {
 }
 
 //----------------------------------------------------------------------------------------------
-bool Player::moveRight() {
+bool Player::moveRight()
+{
     if (!checkConstrains(m_X + m_Speed, m_Y))
         return false;
     m_X += m_Speed;
@@ -114,7 +124,8 @@ bool Player::moveRight() {
 }
 //----------------------------------------------------------------------------------------------
 
-bool Player::moveDown() {
+bool Player::moveDown()
+{
     if (!checkConstrains(m_X, m_Y + m_Speed))
         return false;
     m_Y += m_Speed;
@@ -122,23 +133,26 @@ bool Player::moveDown() {
 }
 
 //----------------------------------------------------------------------------------------------
-int Player::getHealth() const {
+int Player::getHealth() const
+{
     return m_Health;
 }
 
 //----------------------------------------------------------------------------------------------
-bool Player::checkConstrains(int x, int y) {
+bool Player::checkConstrains(int x, int y)
+{
     if (x < 0 || y < 0 || x > GAME_WINDOW_WIDTH || y > GAME_WINDOW_HEIGHT)
         return false;
 
     chtype screenObj = mvwinch(m_Window, y, x);
     chtype screenChar = screenObj & A_CHARTEXT;
-    if ( screenChar == ' ')
+    if (screenChar == ' ')
         return true;
-    else if ( screenChar == '#' || screenChar == 'X' )
+    else if (screenChar == '#' || screenChar == 'X')
         return false;
     return m_Levitate;
 }
+//----------------------------------------------------------------------------------------------
 
 void Player::receiveEffect(int effect)
 {
@@ -164,10 +178,11 @@ void Player::receiveEffect(int effect)
             break;
     }
 }
+//----------------------------------------------------------------------------------------------
 
 void Player::checkHealth()
 {
-    if ( m_Health <= 0)
+    if (m_Health <= 0)
         m_Exist = false;
 }
 //----------------------------------------------------------------------------------------------

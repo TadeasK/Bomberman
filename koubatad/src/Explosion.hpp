@@ -5,7 +5,8 @@
 /**
  * @brief Class representing bomb explosion
  */
-class Explosion: public Special {
+class Explosion : public Special
+{
 public:
     /**
      * @brief Construct a new Explosion object
@@ -13,9 +14,10 @@ public:
      * @param x A X position of the explosion
      * @param y An Y position of the explosion
      */
-    Explosion(int x, int y, WINDOW* window);
+    Explosion(int x, int y, WINDOW *window);
 
     virtual bool drawObj() const override;
+
     virtual int giveEffect() override;
 
 private:

@@ -7,7 +7,7 @@
  * @brief Represents Menu where you can select what game mode to play, starts that game mode
  * 
  */
-class GameMenu: public Menu
+class GameMenu : public Menu
 {
 public:
     /**
@@ -16,7 +16,10 @@ public:
     GameMenu();
 
 private:
-    enum OPTIONS { SINGLE, MULTI, BACK};
+    enum OPTIONS
+    {
+        SINGLE, MULTI, BACK
+    };
 
     /**
      * @brief Starts single player game

@@ -1,7 +1,7 @@
 #include "GameMenu.hpp"
 
 GameMenu::GameMenu()
-    :Menu()
+        : Menu()
 {
     running = true;
     m_Name = "Select game mode";
