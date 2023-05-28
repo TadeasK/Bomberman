@@ -23,6 +23,8 @@ public:
 
     void move() override;
 
+    virtual void receiveEffect ( int effect ) override;
+
 private:
     int m_Delay = rand() % 3001; // Delays enemy movement
     enum STATE_OPTIONS {

@@ -6,3 +6,11 @@ Object::Object ( int x, int y, WINDOW * window )
     m_Y = y;
     m_Window = window;
 }
+
+void Object::receiveEffect(int effect)
+{}
+
+std::pair<int, int> Object::getPosition() {
+    return {m_X, m_Y};
+}
+

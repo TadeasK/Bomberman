@@ -10,7 +10,7 @@ bool BuffRadius::drawObj() const
 
 }
 
-void BuffRadius::giveEffect()
+int BuffRadius::giveEffect()
 {
-
+    return RADIUS_INC;
 }

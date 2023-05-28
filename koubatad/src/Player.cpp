@@ -16,6 +16,7 @@ bool Player::drawObj() const {
     wattron(m_Window, COLOR_PAIR(m_Color));
     mvwprintw(m_Window, m_Y, m_X, "%c", m_Repr);
     wattroff(m_Window, COLOR_PAIR(m_Color));
+    return m_Exist;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -127,16 +128,38 @@ int Player::getHealth() const {
 bool Player::checkConstrains(int x, int y) {
     if (x < 0 || y < 0 || x > GAME_WINDOW_WIDTH || y > GAME_WINDOW_HEIGHT)
         return false;
+
     chtype screenObj = mvwinch(m_Window, y, x);
     chtype screenChar = screenObj & A_CHARTEXT;
-    switch (screenChar) {
-        case ' ':
-            return true;
-        case '$':
+    if ( screenChar == ' ')
+        return true;
+    else if ( screenChar == '#' || screenChar == 'X' )
+        return false;
+    return m_Levitate;
+}
+
+void Player::receiveEffect(int effect)
+{
+    switch (effect) {
+        case EXPLOSION:
             m_Health--;
-            return false;
+            break;
+        case BOMB_INC:
+            m_BombsCount++;
+            break;
+        case RADIUS_INC:
+            m_BombRadius++;
+            break;
+        case HEAL:
+            m_Health++;
+            break;
+        case LEVITATE:
+            m_Levitate = true;
+            break;
+        case DETONATOR:
+            m_Detonator = true;
         default:
-            return false;
+            break;
     }
 }
 

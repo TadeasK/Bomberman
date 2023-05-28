@@ -9,7 +9,7 @@ bool BuffBomb::drawObj() const
 
 }
 
-void BuffBomb::giveEffect()
+int BuffBomb::giveEffect()
 {
-    
+  return BOMB_INC;
 }

@@ -10,7 +10,7 @@ bool BuffDetonator::drawObj() const
 
 }
 
-void BuffDetonator::giveEffect()
+int BuffDetonator::giveEffect()
 {
-    
+   return DETONATOR;
 }

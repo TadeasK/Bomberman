@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ncurses.h"
+#include <utility>
 
 /**
  * @brief A class representing any object in the game 
@@ -34,6 +35,12 @@ public:
 
 protected:
     WINDOW * m_Window; // Window where object is displayed
-    int m_X; // A current X position of object 
+    int m_X; // A current X position of object
     int m_Y; // A current  Y position of object
+    bool m_Exist = true; // If object exists or if it has been destoroyed/killed
+    enum EFFECT {
+        EXPLOSION, BOMB_INC, RADIUS_INC, HEAL, LEVITATE, DETONATOR
+    };
+    const int GAME_WINDOW_HEIGHT = 15;
+    const int GAME_WINDOW_WIDTH = 15;
 };

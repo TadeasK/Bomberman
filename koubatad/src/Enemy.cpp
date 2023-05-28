@@ -7,6 +7,7 @@ bool Enemy::drawObj() const {
     wattron(m_Window, COLOR_PAIR(7));
     mvwprintw(m_Window, m_Y, m_X, "%c", m_Repr);
     wattroff(m_Window, COLOR_PAIR(7));
+    return m_Exist;
 }
 //----------------------------------------------------------------------------------------------
 
@@ -55,12 +56,12 @@ bool Enemy::checkConstrains(int x, int y) {
         return false;
     chtype screenObj = mvwinch(m_Window, y, x);
     chtype screenChar = screenObj & A_CHARTEXT;
-    switch (screenChar) {
-        case ' ':
-            return true;
-        case '@':
-            // TODO: When player hit - reduce player HP
-        default:
-            return false;
-    }
+    if ( screenChar == ' ')
+        return true;
+    return false;
+}
+
+void Enemy::receiveEffect(int effect) {
+    if ( effect == EXPLOSION )
+        m_Exist = false;
 }

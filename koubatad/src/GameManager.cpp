@@ -250,3 +250,10 @@ void GameManager::explodeBomb(std::shared_ptr<Bomb> &bomb) {
     }
 }
 //----------------------------------------------------------------------------------------------
+void GameManager::handleCollision(const std::shared_ptr<Special> &special)
+{
+    for ( auto& obj: m_Objects) {
+        if ( obj->getPosition() == special->getPosition() )
+            obj->receiveEffect(special->giveEffect());
+    }
+}

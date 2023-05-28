@@ -10,7 +10,7 @@ bool BuffHeal::drawObj() const
 
 }
 
-void BuffThrow::giveEffect()
+int BuffHeal::giveEffect()
 {
-    
+    return HEAL;
 }
