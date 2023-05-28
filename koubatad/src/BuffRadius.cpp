@@ -5,7 +5,7 @@ BuffRadius::BuffRadius( int x, int y )
 {}
 
 // TODO
-void BuffRadius::drawObj() const
+bool BuffRadius::drawObj() const
 {
 
 }

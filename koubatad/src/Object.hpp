@@ -26,7 +26,11 @@ public:
      * @return true If drawn successfully
      * @return false 
      */
-    virtual void drawObj () const = 0;
+    virtual bool drawObj () const = 0;
+
+    virtual void receiveEffect ( int effect );
+
+    virtual std::pair<int,int> getPosition();
 
 protected:
     WINDOW * m_Window; // Window where object is displayed

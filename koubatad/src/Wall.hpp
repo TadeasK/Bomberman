@@ -18,7 +18,7 @@ public:
      */
     Wall( int x, int y, WINDOW* window );
 
-    void drawObj() const override;
+    bool drawObj() const override;
     
 private:
     const char m_Repr = 'X'; // Char representing Wall

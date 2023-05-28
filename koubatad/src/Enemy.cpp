@@ -3,7 +3,7 @@
 Enemy::Enemy(int x, int y, WINDOW *window, int speed)
         : Entity(x, y, window, speed) {}
 
-void Enemy::drawObj() const {
+bool Enemy::drawObj() const {
     wattron(m_Window, COLOR_PAIR(7));
     mvwprintw(m_Window, m_Y, m_X, "%c", m_Repr);
     wattroff(m_Window, COLOR_PAIR(7));

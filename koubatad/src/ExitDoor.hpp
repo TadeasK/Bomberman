@@ -17,6 +17,6 @@ public:
      */
     ExitDoor(int x, int y);
 
-    void drawObj() const override;
-    void giveEffect() override;
+    bool drawObj() const override;
+    int giveEffect() override;
 };

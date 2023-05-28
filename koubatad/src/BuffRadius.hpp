@@ -18,6 +18,6 @@ public:
      */
     BuffRadius(int x, int y);
 
-    virtual void drawObj() const override;
-    virtual void giveEffect() override;
+    virtual bool drawObj() const override;
+    virtual int giveEffect() override;
 };

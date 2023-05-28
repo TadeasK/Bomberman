@@ -9,7 +9,7 @@ Bomb::Bomb( int x, int y, WINDOW* window, int timer, int radius )
     m_PlacedTime = std::chrono::steady_clock::now();
 }
 
-void Bomb::drawObj() const
+bool Bomb::drawObj() const
 {
     wattron(m_Window, COLOR_PAIR(8));
     mvwprintw(m_Window,m_Y, m_X, "%d", m_Timer);

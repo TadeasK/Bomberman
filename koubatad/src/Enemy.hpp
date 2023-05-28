@@ -19,7 +19,7 @@ public:
      */
     Enemy( int x, int y, WINDOW * window, int speed );
     
-    void drawObj() const override;
+    bool drawObj() const override;
 
     void move() override;
 

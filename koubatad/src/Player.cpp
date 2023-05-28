@@ -12,7 +12,7 @@ Player::Player(int x, int y, WINDOW *window, int color, int speed, int bombRadiu
 }
 
 //----------------------------------------------------------------------------------------------
-void Player::drawObj() const {
+bool Player::drawObj() const {
     wattron(m_Window, COLOR_PAIR(m_Color));
     mvwprintw(m_Window, m_Y, m_X, "%c", m_Repr);
     wattroff(m_Window, COLOR_PAIR(m_Color));

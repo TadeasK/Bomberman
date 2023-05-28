@@ -18,6 +18,6 @@ public:
      */
     BuffBomb(int x, int y, WINDOW* window);
 
-    virtual void drawObj() const override;
-    virtual void giveEffect() override;
+    virtual bool drawObj() const override;
+    virtual int giveEffect() override;
 };

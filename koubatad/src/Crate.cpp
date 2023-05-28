@@ -6,7 +6,7 @@ Crate::Crate ( int x, int y, WINDOW* window, bool full )
     m_Filled = full;
 }
 
-void Crate::drawObj() const
+bool Crate::drawObj() const
 {
     wattron(m_Window, COLOR_PAIR(6));
     mvwprintw(m_Window,m_Y, m_X, "%c", m_Repr);

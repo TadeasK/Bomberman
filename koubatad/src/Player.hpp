@@ -30,7 +30,9 @@ public:
 
     int getHealth() const;
 
-    void drawObj() const override;
+    bool drawObj() const override;
+
+    virtual void receiveEffect ( int effect ) override;
 
     void move() override;
 

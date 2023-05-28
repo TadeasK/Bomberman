@@ -5,7 +5,7 @@ BuffThrow::BuffThrow( int x, int y )
 {}
 
 // TODO
-void BuffThrow::drawObj() const
+bool BuffHeal::drawObj() const
 {
 
 }

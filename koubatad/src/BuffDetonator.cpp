@@ -5,7 +5,7 @@ BuffDetonator::BuffDetonator( int x, int y )
 {}
 
 // TODO
-void BuffDetonator::drawObj() const
+bool BuffDetonator::drawObj() const
 {
 
 }

@@ -25,7 +25,7 @@ public:
      */
     Bomb( int x, int y, WINDOW* window, int timer = 5, int radius = 1);
    
-    void drawObj() const override;
+    bool drawObj() const override;
 
     void action();
 

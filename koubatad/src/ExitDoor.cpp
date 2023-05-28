@@ -5,7 +5,7 @@ ExitDoor::ExitDoor( int x, int y )
 {}
 
 // TODO
-void ExitDoor::drawObj() const
+bool ExitDoor::drawObj() const
 {
 
 }

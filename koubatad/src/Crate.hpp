@@ -20,8 +20,8 @@ public:
      */
     Crate(int x, int y, WINDOW* window, bool full);
   
-    virtual void drawObj() const override;
-
+    virtual bool drawObj() const override;
+    virtual void receiveEffect(int effect);
 private:
     const char m_Repr = '#';
     bool m_Filled; // Attribute containing info about whether the object has bonus inside or not
