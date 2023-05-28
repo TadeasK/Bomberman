@@ -15,7 +15,7 @@ public:
      * @param x A X position of the door
      * @param y An Y position of the door
      */
-    ExitDoor(int x, int y);
+    ExitDoor(int x, int y,WINDOW* window);
 
     bool drawObj() const override;
     int giveEffect() override;

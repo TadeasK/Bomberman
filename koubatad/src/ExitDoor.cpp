@@ -1,7 +1,7 @@
 #include "ExitDoor.hpp"
 
-ExitDoor::ExitDoor( int x, int y )
-: Special (x,y)
+ExitDoor::ExitDoor( int x, int y,WINDOW* window )
+: Special (x,y,window)
 {}
 
 // TODO

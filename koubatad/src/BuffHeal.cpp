@@ -1,7 +1,7 @@
-#include "BuffThrow.hpp"
+#include "BuffHeal.hpp"
 
-BuffThrow::BuffThrow( int x, int y )
-: Special (x,y)
+BuffHeal::BuffHeal( int x, int y ,WINDOW* window)
+: Special (x,y, window)
 {}
 
 // TODO

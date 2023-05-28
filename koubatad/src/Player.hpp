@@ -26,7 +26,7 @@ public:
      * @param health Health of player
      */
     Player(int x, int y, WINDOW *window, int color = 4, int speed = 1, int bombRadius = 1, int bombsCount = 1,
-           int bombThrow = 0, int bombTimer = 5, int health = 3);
+           int bombTimer = 5, int health = 3);
 
     int getHealth() const;
 
@@ -59,14 +59,15 @@ private:
         MOVE_UP = 1, MOVE_LEFT, MOVE_RIGHT, MOVE_DOWN
     };
     int m_Color; // Color of player on the map
-    int m_Dir = 0; // State of player
+    int m_Dir = 0; // Direction of player
     const char m_Repr = '@'; // Constant character representing the player on the map
     int m_BombRadius; // Current radius of player placed bombs
     size_t m_BombsCount; // Current maximum count of bombs player can place at the same time
     std::vector<std::shared_ptr<Bomb>> m_BombsPlaced;
-    int m_BombThrow; // Max range at which player can place a bomb
     int m_BombTimer; // How long it takes for bombs placed by this player to explode
     int m_Health;
+    bool m_Levitate = false;
+    bool m_Detonator = false;
 
     /**
      * @brief Sets player's direction to UP, checking if he can move that way

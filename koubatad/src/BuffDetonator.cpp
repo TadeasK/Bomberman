@@ -1,7 +1,7 @@
 #include "BuffDetonator.hpp"
 
-BuffDetonator::BuffDetonator( int x, int y )
-: Special (x,y)
+BuffDetonator::BuffDetonator( int x, int y, WINDOW* window )
+: Special (x,y, window)
 {}
 
 // TODO

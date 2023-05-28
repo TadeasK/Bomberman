@@ -1,7 +1,7 @@
 #include "BuffRadius.hpp"
 
-BuffRadius::BuffRadius( int x, int y )
-: Special (x,y)
+BuffRadius::BuffRadius( int x, int y,WINDOW* window )
+: Special (x,y,window)
 {}
 
 // TODO

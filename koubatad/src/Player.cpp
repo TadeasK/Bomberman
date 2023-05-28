@@ -1,12 +1,11 @@
 #include "Player.hpp"
 
 
-Player::Player(int x, int y, WINDOW *window, int color, int speed, int bombRadius, int bombsCount, int bombThrow,
+Player::Player(int x, int y, WINDOW *window, int color, int speed, int bombRadius, int bombsCount,
                int bombTimer, int health) : Entity(x, y, window, speed) {
     m_Color = color;
     m_BombRadius = bombRadius;
     m_BombsCount = bombsCount;
-    m_BombThrow = bombThrow;
     m_BombTimer = bombTimer;
     m_Health = health;
 }
