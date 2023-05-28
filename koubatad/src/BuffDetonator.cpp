@@ -7,7 +7,7 @@ BuffDetonator::BuffDetonator( int x, int y, WINDOW* window )
 // TODO
 bool BuffDetonator::drawObj() const
 {
-
+    return m_Exist;
 }
 
 int BuffDetonator::giveEffect()

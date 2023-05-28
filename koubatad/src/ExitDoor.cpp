@@ -8,6 +8,7 @@ ExitDoor::ExitDoor( int x, int y,WINDOW* window )
 bool ExitDoor::drawObj() const
 {
 
+    return m_Exist;
 }
 
 int ExitDoor::giveEffect()

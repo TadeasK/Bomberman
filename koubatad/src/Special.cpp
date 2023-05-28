@@ -8,8 +8,23 @@ int Special::collision() const {
         return -1;
     chtype screenObj = mvwinch(m_Window, m_Y, m_X);
     chtype screenChar = screenObj & A_CHARTEXT;
-    if ( screenChar != ' ' )
-        return 1;
-    return 0;
+    if (screenChar == ' ' || screenChar == '1')
+        return 0;
+    return 1;
 }
+//----------------------------------------------------------------------------------------------
+
+int Special::update()
+{
+    reduceLifeSpan();
+    return collision();
+}
+//----------------------------------------------------------------------------------------------
+
+void Special::reduceLifeSpan()
+{
+    if ( --m_LifeSpan <= 0)
+        m_Exist = false;
+}
+//----------------------------------------------------------------------------------------------
 

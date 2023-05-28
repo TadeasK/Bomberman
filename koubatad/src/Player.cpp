@@ -19,7 +19,10 @@ bool Player::drawObj() const {
 }
 
 //----------------------------------------------------------------------------------------------
-void Player::move() {
+void Player::move()
+{
+    checkBombs();
+    checkHealth();
     switch (m_Dir) {
         case MOVE_UP:
             moveUp();
@@ -161,4 +164,11 @@ void Player::receiveEffect(int effect)
             break;
     }
 }
+
+void Player::checkHealth()
+{
+    if ( m_Health <= 0)
+        m_Exist = false;
+}
+//----------------------------------------------------------------------------------------------
 

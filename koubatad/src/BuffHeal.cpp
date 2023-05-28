@@ -7,6 +7,7 @@ BuffHeal::BuffHeal( int x, int y ,WINDOW* window)
 // TODO
 bool BuffHeal::drawObj() const
 {
+    return m_Exist;
 
 }
 

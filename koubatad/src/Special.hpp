@@ -17,6 +17,9 @@ public:
      */
     Special(int x, int y, WINDOW* window);
 
+
+    virtual int update();
+
     /**
      * @brief If Special object is picked up gives the Player picking it it's bonus 
      * 
@@ -30,5 +33,8 @@ public:
      *          0 if my position is clear
      */
     virtual int collision() const;
-private:
+protected:
+    int m_LifeSpan = 9000; // Lifespan in frames
+
+    void reduceLifeSpan();
 };

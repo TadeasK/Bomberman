@@ -103,4 +103,9 @@ private:
      * @brief Checks status of bombs, removes exploded bombs
      */
     void checkBombs();
+
+    /**
+     * @brief Check health status, set Exist status to false if health <= 0
+     */
+    void checkHealth();
 };

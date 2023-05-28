@@ -8,6 +8,7 @@ BuffRadius::BuffRadius( int x, int y,WINDOW* window )
 bool BuffRadius::drawObj() const
 {
 
+    return m_Exist;
 }
 
 int BuffRadius::giveEffect()
