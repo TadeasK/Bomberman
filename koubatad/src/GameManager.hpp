@@ -87,8 +87,20 @@ private:
      */
     void explodeBomb( std::shared_ptr<Bomb>& bomb );
 
-    void handleCollision(const std::shared_ptr<Special>& obj );
+    void handleCollision(const std::shared_ptr<Special>& special );
 
+    /**
+     * @brief Check if given object is in Entity vector, if so removes it
+     * @param obj Object to check presence of
+     * @return True if object found, False otherwise
+     */
+    bool checkEntity( const std::shared_ptr<Object>& obj);
+    /**
+     * @brief Check if given object is in Special vector, if so removes it
+     * @param obj Object to check presence of
+     * @return True if object found, False otherwise
+     */
+    bool checkSpecial( const std::shared_ptr<Object>& obj);
 };
 
 
