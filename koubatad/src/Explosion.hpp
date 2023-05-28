@@ -13,8 +13,11 @@ public:
      * @param x A X position of the explosion
      * @param y An Y position of the explosion
      */
-    Explosion(int x, int y);
+    Explosion(int x, int y, WINDOW* window);
 
     virtual void drawObj() const override;
-    virtual void giveEffect() override;
+    virtual int giveEffect() override;
+
+private:
+    const char m_Repr = 'x';
 };

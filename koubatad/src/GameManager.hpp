@@ -13,6 +13,7 @@
 #include <sstream>
 #include <iostream>
 #include <chrono>
+#include <thread>
 
 /**
  * @brief Main game object - Manages all game objects and runs the game
@@ -37,6 +38,7 @@ private:
     std::shared_ptr<Player> m_Player1; // Player1 object
     std::shared_ptr<Player> m_Player2; // Player2 object
     std::vector<std::shared_ptr<Bomb>> m_Bombs; // Bomb objects
+    std::vector<std::shared_ptr<Special>> m_Special; // Special objects
 
     /**
      * @brief Generate map based on chosen map file
@@ -78,6 +80,14 @@ private:
     int readInput(int &currSelect) override;
 
     void takeAction(int action) override;
+
+    /**
+     * @brief Explode bomb, remove it from objects, create explosion
+     * @param bomb Bomb to be exploded
+     */
+    void explodeBomb( std::shared_ptr<Bomb>& bomb );
+
+    void handleCollision(const std::shared_ptr<Special>& obj );
 
 };
 

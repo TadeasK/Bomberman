@@ -31,13 +31,8 @@ void GameManager::runMenu() {
         for ( auto bombIt = m_Bombs.begin(); bombIt != m_Bombs.end(); ) {
             (*bombIt)->action();
             if ( (*bombIt)->m_Exploded ) {
-                for ( auto objIt = m_Objects.begin(); objIt != m_Objects.end(); ) {
-                    if ( *objIt == *bombIt)
-                        objIt = m_Objects.erase(objIt);
-                    else
-                        ++objIt;
-                }
                 bombIt = m_Bombs.erase(bombIt);
+                explodeBomb(*bombIt);
             }
             else
                 ++bombIt;
@@ -224,5 +219,27 @@ double GameManager::getElapsedTime() const {
     auto currTimePoint = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsedTime = currTimePoint - m_StartTime;
     return elapsedTime.count();
+}
+//----------------------------------------------------------------------------------------------
+void GameManager::explodeBomb(std::shared_ptr<Bomb> &bomb) {
+    auto explosion = bomb->explode();
+    for ( const auto& x: explosion ) {
+        int status = x->collision();
+        if ( status == -1 ) {
+            continue;
+        }
+        else if ( status == 1) {
+            handleCollision(x);
+        }
+        else
+            m_Special.emplace_back(x);
+    }
+
+    for ( auto objIt = m_Objects.begin(); objIt != m_Objects.end(); ) {
+        if ( *objIt == bomb)
+            objIt = m_Objects.erase(objIt);
+        else
+            ++objIt;
+    }
 }
 //----------------------------------------------------------------------------------------------

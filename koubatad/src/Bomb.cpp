@@ -19,7 +19,7 @@ void Bomb::drawObj() const
 void Bomb::action() {
     countDown();
     if (m_Timer <= 0) {
-        explode();
+        m_Exploded = true;
         return;
     }
 }
@@ -31,10 +31,17 @@ void Bomb::countDown()
     }
 //----------------------------------------------------------------------------------------------
 
-void Bomb::explode()
+std::vector<std::shared_ptr<Explosion>> Bomb::explode()
 {
-    m_Exploded = true;
-    //m_Explosion.push_back('+');
+    std::vector<std::shared_ptr<Explosion>> tmp;
+    tmp.emplace_back(std::make_shared<Explosion>(m_X, m_Y, m_Window));
+    for ( int i = 1; i <= m_Radius; ++i) {
+        tmp.emplace_back(std::make_shared<Explosion>(m_X + i, m_Y, m_Window));
+        tmp.emplace_back(std::make_shared<Explosion>(m_X - i, m_Y, m_Window));
+        tmp.emplace_back(std::make_shared<Explosion>(m_X, m_Y + i, m_Window));
+        tmp.emplace_back(std::make_shared<Explosion>(m_X, m_Y - i, m_Window));
+    }
+    return tmp;
 }
 //----------------------------------------------------------------------------------------------
 double Bomb::getElapsedTime() const {

@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Object.hpp"
+#include "Explosion.hpp"
 #include <chrono>
 #include <vector>
 #include <cmath>
+#include <memory>
 
 /**
  * @brief A class representing Bomb object
@@ -27,19 +29,18 @@ public:
 
     void action();
 
+    /**
+     * @brief Draws explosion in radius, destroys destroyable objects
+     *
+     */
+    std::vector<std::shared_ptr<Explosion>> explode();
+
     bool m_Exploded = false; // Activity of bomb
 private:
     int m_FusionTimer; // Fusion time (until explosion)
     int m_Timer; // Current time until explosion
     int m_Radius; // Radius of explosion
     std::chrono::steady_clock::time_point m_PlacedTime;
-
-
-    /**
-     * @brief Draws explosion in radius, destroys destroyable objects
-     *
-     */
-    void explode();
 
     /**
      * @brief Counts down timer, at 0 explodes
@@ -48,4 +49,5 @@ private:
     void countDown();
 
     double getElapsedTime() const;
+
 };
