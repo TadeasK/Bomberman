@@ -20,4 +20,7 @@ public:
     virtual bool drawObj() const override;
 
     virtual int giveEffect() override;
+
+private:
+    const char m_Repr = 'H';
 };

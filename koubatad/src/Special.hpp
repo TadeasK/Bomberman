@@ -15,7 +15,7 @@ public:
      * @param y An Y position of new Bomb
      * @param window Window, where object is displayed
      */
-    Special(int x, int y, WINDOW* window);
+    Special(int x, int y, WINDOW* window, int lifeSpan = 900000);
 
 
     virtual int update();
@@ -34,7 +34,7 @@ public:
      */
     virtual int collision() const;
 protected:
-    int m_LifeSpan = 9000; // Lifespan in frames
+    int m_LifeSpan; // Lifespan in frames
 
     void reduceLifeSpan();
 };
