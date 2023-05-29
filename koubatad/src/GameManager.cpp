@@ -53,18 +53,19 @@ void GameManager::runMenu()
             if (!(*obj)->drawObj()) { // Object was destroyed/killed
                 if ((*obj) == m_Player1) {
                     // Player 2 is winner TODO
-                    //running = false;
+                    running = false;
                     break;
                 }
                 if ((*obj) == m_Player2)
                     // Player 1 is winner TODO
                     break;
+
                 if (checkEntity((*obj))) // Must be Enemy
                     m_Score += 100;
-                /*
-                if ( checkSpecial((*obj)) ) // Must be Enemy
+
+                if (checkSpecial((*obj))) // Must be Special
                     m_Score += 50;
-*/
+
                 obj = m_Objects.erase(obj);
             }
             else
@@ -89,7 +90,7 @@ void GameManager::runMenu()
 }
 
 //----------------------------------------------------------------------------------------------
-
+// TODO add Testing mode
 void GameManager::generateMap()
 {
     std::string objects = readConfig(m_MapPath);
@@ -277,6 +278,8 @@ void GameManager::explodeBomb(std::shared_ptr<Bomb> &bomb)
         }
         else if (status == 1) {
             handleCollision(x);
+            m_Special.emplace_back(x);
+            m_Objects.emplace_back(x);
         }
         else {
             m_Special.emplace_back(x);
@@ -309,6 +312,7 @@ bool GameManager::checkEntity(const std::shared_ptr<Object> &obj)
             m_Entities.erase(entity);
             return true;
         }
+        ++entity;
     }
     return false;
 }
@@ -316,11 +320,15 @@ bool GameManager::checkEntity(const std::shared_ptr<Object> &obj)
 
 bool GameManager::checkSpecial(const std::shared_ptr<Object> &obj)
 {
+    bool ret = false;
     for (auto spec = m_Special.begin(); spec != m_Special.end();) {
         if (*spec == obj) {
+            if ((*spec)->giveEffect() != 0)
+                ret = true;
             m_Special.erase(spec);
-            return true;
+            return ret;
         }
+        ++spec;
     }
     return false;
 }
