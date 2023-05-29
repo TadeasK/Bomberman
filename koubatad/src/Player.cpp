@@ -25,6 +25,7 @@ void Player::move()
 {
     checkBombs();
     checkHealth();
+    checkState();
     switch (m_Dir) {
         case MOVE_UP:
             moveUp();
@@ -41,7 +42,7 @@ void Player::move()
         default:
             break;
     }
-    // TODO POSSIBLE BUG WITH THROW
+
     m_Dir = 0;
 }
 
@@ -73,13 +74,16 @@ void Player::setMove(size_t dir)
 //----------------------------------------------------------------------------------------------
 std::shared_ptr<Bomb> Player::placeBomb()
 {
-    // TODO Throw at player pos + throw dist (method deciding face direction)
+    if ( m_Detonator && !m_BombsPlaced.empty() ) {
+        for ( auto &x: m_BombsPlaced )
+            x->explode();
+        return nullptr;
+    }
+
     if (m_BombsPlaced.size() >= m_BombsCount)
         return nullptr;
 
-    // if ( !checkConstrains() )
-
-    int bombX = m_X, bombY = m_Y; // + m_BombThrow
+    int bombX = m_X, bombY = m_Y;
     auto bomb = std::make_shared<Bomb>(bombX, bombY, m_Window, m_BombTimer, m_BombRadius);
     m_BombsPlaced.push_back(bomb);
     return bomb;
@@ -141,16 +145,25 @@ int Player::getHealth() const
 //----------------------------------------------------------------------------------------------
 bool Player::checkConstrains(int x, int y)
 {
-    if (x < 0 || y < 0 || x > GAME_WINDOW_WIDTH || y > GAME_WINDOW_HEIGHT)
+    if (x <= 0 || y <= 0 || x >= GAME_WINDOW_WIDTH-1 || y >= GAME_WINDOW_HEIGHT-1) // Out of window bounds
         return false;
 
     chtype screenObj = mvwinch(m_Window, y, x);
     chtype screenChar = screenObj & A_CHARTEXT;
-    if (screenChar == ' ')
+    if (screenChar == ' ') // Movement clear
         return true;
-    else if (screenChar == '#' || screenChar == 'X')
+
+    if (screenChar == '#' || screenChar == 'X') // Collision with wall or crate
         return false;
-    return m_Levitate;
+    // TODO Levitation better collision handling
+    /*
+    if ( screenChar == 'x' || screenChar == '$') {// Collision with explosion or monster
+        if ( !m_Levitate ) {
+            takeDamage();
+        }
+        return true;
+    }*/
+    return false;
 }
 //----------------------------------------------------------------------------------------------
 
@@ -158,7 +171,7 @@ void Player::receiveEffect(int effect)
 {
     switch (effect) {
         case EXPLOSION:
-            m_Health--;
+            takeDamage();
             break;
         case BOMB_INC:
             m_BombsCount++;
@@ -171,9 +184,11 @@ void Player::receiveEffect(int effect)
             break;
         case LEVITATE:
             m_Levitate = true;
+            startTimer(LEVITATE);
             break;
         case DETONATOR:
             m_Detonator = true;
+            startTimer(DETONATOR);
         default:
             break;
     }
@@ -184,6 +199,45 @@ void Player::checkHealth()
 {
     if (m_Health <= 0)
         m_Exist = false;
+}
+//----------------------------------------------------------------------------------------------
+void Player::takeDamage()
+{
+    if ( m_Invulnerable )
+        return;
+
+    m_Health--;
+    m_Invulnerable = true;
+    startTimer(EXPLOSION);
+}
+//----------------------------------------------------------------------------------------------
+
+void Player::startTimer( int timerType )
+{
+    m_TimePoints[timerType] = std::chrono::steady_clock::now();
+}
+//----------------------------------------------------------------------------------------------
+
+void Player::checkState()
+{
+    auto currTimePoint = std::chrono::steady_clock::now();
+    std::chrono::duration<double> elapsedTime{};
+    if ( m_Invulnerable ) {
+        elapsedTime = currTimePoint - m_TimePoints[0];
+        if ( elapsedTime.count() >= 1 )
+            m_Invulnerable = false;
+    }
+    if ( m_Levitate ) {
+        elapsedTime = currTimePoint - m_TimePoints[1];
+        if ( elapsedTime.count() >= 5 )
+            m_Levitate = false;
+    }
+
+    if ( m_Detonator ) {
+        elapsedTime = currTimePoint - m_TimePoints[2];
+        if ( elapsedTime.count() >= 5 )
+            m_Detonator = false;
+    }
 }
 //----------------------------------------------------------------------------------------------
 

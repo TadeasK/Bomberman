@@ -3,6 +3,7 @@
 #include "Entity.hpp"
 #include "Bomb.hpp"
 #include <vector>
+#include <chrono>
 #include <memory>
 
 /**
@@ -22,7 +23,6 @@ public:
      * @param speed Movement speed of Player
      * @param bombRadius Explosion radius of player's bombs
      * @param bombsCount Maximum number of bombs player is allowed to place at the same time
-     * @param bombThrow Range at which player can throw bomb
      * @param bombTimer Time until player placed bombs explode
      * @param health Health of player
      */
@@ -62,14 +62,18 @@ private:
     };
     int m_Color; // Color of player on the map
     int m_Dir = 0; // Direction of player
-    const char m_Repr = '@'; // Constant character representing the player on the map
+    const char m_Repr = '@'; // Character representing the player on the map
     int m_BombRadius; // Current radius of player placed bombs
     size_t m_BombsCount; // Current maximum count of bombs player can place at the same time
     std::vector<std::shared_ptr<Bomb>> m_BombsPlaced;
+    std::chrono::steady_clock::time_point m_TimePoints[3]; // Array of timepoints where [0] invulnerability
+                                                           //                           [1] Levitation
+                                                           //                           [2] Detonator
     int m_BombTimer; // How long it takes for bombs placed by this player to explode
-    int m_Health;
-    bool m_Levitate = false;
-    bool m_Detonator = false;
+    int m_Health; // Health of player
+    bool m_Levitate = false; // If player has levitation buff (can pass enemies, explosions)
+    bool m_Detonator = false; // If player can detonate bombs remotely
+    bool m_Invulnerable = false; // Player is invulnerable for a short time after receiving damage
 
     /**
      * @brief Sets player's direction to UP, checking if he can move that way
@@ -110,4 +114,20 @@ private:
      * @brief Check health status, set Exist status to false if health <= 0
      */
     void checkHealth();
+
+    /**
+     * @brief Checks active effects and turns them off if timer has run out
+     */
+    void checkState();
+
+    /**
+     * @brief Damages player, sets him into invulnerable state for a duration
+     */
+    void takeDamage();
+
+    /**
+     * @brief Start timer for given effect
+     * @param timerType Type of effect
+     */
+    void startTimer( int timerType );
 };
