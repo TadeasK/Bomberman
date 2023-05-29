@@ -1,8 +1,9 @@
 #include "Special.hpp"
 
-Special::Special(int x, int y, WINDOW *window)
+Special::Special(int x, int y, WINDOW *window, int lifeSpan)
         : Object(x, y, window)
 {
+    m_LifeSpan = lifeSpan;
 }
 //----------------------------------------------------------------------------------------------
 
@@ -12,7 +13,9 @@ int Special::collision() const
         return -1;
     chtype screenObj = mvwinch(m_Window, m_Y, m_X);
     chtype screenChar = screenObj & A_CHARTEXT;
-    if (screenChar == ' ' || screenChar == '1')
+    if ( screenChar == 'X')
+        return -1;
+    if (screenChar == ' ')
         return 0;
     return 1;
 }
