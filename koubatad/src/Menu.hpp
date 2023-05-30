@@ -59,7 +59,7 @@ protected:
      * @brief Set colors to use
      *
      */
-    void static initColors();
+    void initColors();
 
     /**
      * @brief Reads, acts upon user input

@@ -63,6 +63,7 @@ void Menu::runMenu()
         if (refreshWindow())
             displayErr(sizeErrMsg, "");
 
+        displayCustom();
         displayName();
         displayHelp();
         printMenuItems(currSelect);

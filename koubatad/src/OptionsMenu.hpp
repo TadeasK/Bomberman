@@ -2,8 +2,6 @@
 
 #include "Menu.hpp"
 
-#include <map>
-
 /**
  * @brief Represents menu which shows available controls
  */
@@ -16,7 +14,6 @@ public:
     */
     OptionsMenu();
 
-    void runMenu() override;
 
 private:
     enum OPTIONS
@@ -47,7 +44,7 @@ private:
      * @brief Display settings for both players
      *
      */
-    void displaySettings();
+    void displayCustom() override;
 
     void takeAction(int currSelect) override;
 };

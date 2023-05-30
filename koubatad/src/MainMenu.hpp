@@ -31,13 +31,13 @@ private:
     *  @brief Prepares the game to run, starts the game
     *
     */
-    void static runGame();
+    void runGame();
 
     /**
      * @brief Operates options menu, user can see and edit configuration
     *
     */
-    void static controls();
+    void controls();
 
     /**
      * @brief Shows score of best runs
@@ -45,6 +45,8 @@ private:
     void showLeaderboard();
 
     void takeAction(int currSelect) override;
+
+    void displayCustom() override {};
 };
 
 

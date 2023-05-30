@@ -39,6 +39,8 @@ private:
 
     void takeAction(int currSelect) override;
 
+    void displayCustom() override {};
+
     /**
      * @brief Starts the game
      */

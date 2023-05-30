@@ -25,13 +25,14 @@ private:
     /**
      * @brief Starts single player game
      */
-    static void startSingle();
+     void startSingle();
 
     /**
      * @brief Starts multi player game
      */
-    static void startMulti();
+    void startMulti();
 
     void takeAction(int currSelect) override;
+    void displayCustom() override {};
 
 };

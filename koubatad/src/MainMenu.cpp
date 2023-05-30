@@ -3,7 +3,6 @@
 MainMenu::MainMenu(bool test)
         : Menu()
 {
-    running = true;
     m_Name = "Main menu";
     m_Test = test;
     menuItems = {

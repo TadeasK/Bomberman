@@ -6,7 +6,6 @@ LevelMenu::LevelMenu(std::string &name, bool test, bool multi,
         : Menu()
 {
     maps = mapsPath;
-    running = true;
     m_Name = name;
     m_Multi = multi;
     m_Test = test;

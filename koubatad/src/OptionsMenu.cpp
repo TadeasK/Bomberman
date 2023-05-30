@@ -3,36 +3,12 @@
 OptionsMenu::OptionsMenu()
         : Menu()
 {
-    running = true;
     m_Name = "Controls";
-    getmaxyx(stdscr, m_WIDTH, m_HEIGHT);
     menuItems = {
             "Back"
     };
 }
 
-//----------------------------------------------------------------------------------------------
-
-void OptionsMenu::runMenu()
-{
-    int input;
-    int currSelect = 0;
-
-    while (running) {
-        if (refreshWindow())
-            displayErr(sizeErrMsg, "");
-
-        displaySettings();
-        displayName();
-        displayHelp();
-        printMenuItems(currSelect);
-        input = readInput(currSelect);
-
-        if (input == KEY_ENTER || input == ENTER) // KEY_ENTER does not work for some reason
-            takeAction(currSelect);
-    }
-    delwin(menuWindow);
-}
 //----------------------------------------------------------------------------------------------
 
 void OptionsMenu::takeAction(int currSelect)
@@ -46,7 +22,7 @@ void OptionsMenu::takeAction(int currSelect)
 }
 //----------------------------------------------------------------------------------------------
 
-void OptionsMenu::displaySettings()
+void OptionsMenu::displayCustom()
 {
     for (size_t i = 0; i < m_SettingKeysP1.size(); i++) { // Prints the settings
         mvwprintw(menuWindow,
