@@ -191,4 +191,34 @@ void Menu::cleanUp()
 }
 
 //----------------------------------------------------------------------------------------------
+std::map<int,std::pair<std::string,int>> Menu::readScoreFile( const std::string& path )
+{
+    std::map<int,std::pair<std::string,int>> scores;
+
+    std::ifstream scoreFile(path);
+    if ( !scoreFile )
+        return scores;
+    std::string line;
+    std::string part;
+    int mapID, score;
+    std::string name;
+    while( scoreFile >> line ) {
+        std::stringstream ss(line);
+        for ( int i = 0; i < 3; ++i ) {
+            std::getline(ss, part, ':');
+            if ( i == 0 )
+                mapID = atoi(part.c_str());
+            else if ( i == 1 )
+                name = part;
+            else
+                score = atoi(part.c_str());
+        }
+        if ( mapID > 10 || mapID == 0 || name.length() > 28 )
+            continue;
+        if ( scores[mapID].second < score )
+            scores[mapID] = {name, score};
+    }
+    return scores;
+}
+//----------------------------------------------------------------------------------------------
 

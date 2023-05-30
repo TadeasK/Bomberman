@@ -31,12 +31,10 @@ void MainMenu::controls()
 }
 
 //----------------------------------------------------------------------------------------------
-
-// TODO
 void MainMenu::showLeaderboard()
 {
-
-    // TODO: Read/Write file assets/scores.txt
+    ScoreMenu scoreMenu("assets/scores.txt");
+    scoreMenu.runMenu();
 }
 
 //----------------------------------------------------------------------------------------------

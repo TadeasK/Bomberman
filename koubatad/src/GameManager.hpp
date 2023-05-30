@@ -28,10 +28,13 @@ public:
 
 private:
     bool m_Multi = false;
+    bool m_Player1Winner = true;
+    bool m_Test;
     int m_Score = 0;
     const int GAME_WINDOW_HEIGHT = 15;
     const int GAME_WINDOW_WIDTH = 15;
     std::string m_MapPath;
+    std::string m_ScorePath;
     std::chrono::steady_clock::time_point m_StartTime;
 
     std::vector<std::shared_ptr<Object>> m_Objects; // All the object present in game
@@ -103,6 +106,12 @@ private:
      * @return True if object found, False otherwise
      */
     bool checkSpecial(const std::shared_ptr<Object> &obj);
+
+    void displayWinner();
+
+    void saveScore();
+
+    void writeScore(const std::map<int, std::pair<std::string, int>> &scores);
 };
 
 

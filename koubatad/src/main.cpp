@@ -9,8 +9,9 @@ void asserts()
 {
     // Test corrupted file1 - invalid content
     std::string mapPath = "examples/corruptedMap1";
+    std::string scorePath = "assets/scores.txt";
     try {
-        GameManager game(true, mapPath);
+        GameManager game(true, mapPath, scorePath);
         assert("No exception thrown!" == nullptr);
     }
     catch (std::string &err) {
@@ -20,7 +21,7 @@ void asserts()
     // Test corrupted file2 - invalid map size
     mapPath = "examples/corruptedMap2";
     try {
-        GameManager game(true, mapPath);
+        GameManager game(true, mapPath, scorePath);
         assert("No exception thrown!" == nullptr);
     }
     catch (std::string &err) {
@@ -30,7 +31,7 @@ void asserts()
     // Test corrupted file3 - more than one player entities
     mapPath = "examples/corruptedMap3";
     try {
-        GameManager game(true, mapPath);
+        GameManager game(true, mapPath, scorePath);
         assert("No exception thrown!" == nullptr);
     }
     catch (std::string &err) {
@@ -40,7 +41,7 @@ void asserts()
     // Test file readability - no read permissions file
     mapPath = "examples/permissionsMap";
     try {
-        GameManager game(true, mapPath);
+        GameManager game(true, mapPath, scorePath);
         assert("No exception thrown!" == nullptr);
     }
     catch (std::string &err) {
@@ -50,7 +51,7 @@ void asserts()
     // Test file readability - nonexistent file
     mapPath = "examples/MapX";
     try {
-        GameManager game(true, mapPath);
+        GameManager game(true, mapPath, scorePath);
         assert("No exception thrown!" == nullptr);
     }
     catch (std::string &err) {
@@ -62,8 +63,10 @@ void asserts()
 
 int main(int argc, char const *argv[])
 {
+    bool test = false;
     if (argc > 1 && !strcasecmp(argv[1], "-test")) {
         asserts();
+        test = true;
     }
     else {
         try {

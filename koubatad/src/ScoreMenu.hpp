@@ -12,14 +12,17 @@ public:
      * @brief Initialize ncurses for menus, read and apply from config file
      *
      */
-    ScoreMenu();
-
+    ScoreMenu( const std::string& scorePath);
 
 private:
+    std::map<int, std::pair<std::string, int>> m_Scores;
     enum OPTIONS
     {
         BACK
     };
 
+
     void takeAction(int currSelect) override;
+
+    void displayCustom() override;
 };

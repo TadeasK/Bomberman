@@ -3,7 +3,9 @@
 #include <ncurses.h>
 #include <string>
 #include <vector>
-
+#include <map>
+#include <fstream>
+#include <sstream>
 
 /**
  * @brief Represents and operates Menu functions, prints Menu windows
@@ -106,5 +108,9 @@ protected:
      *
      */
     virtual void takeAction(int currSelect) = 0;
+
+    virtual void displayCustom() = 0;
+
+    std::map<int,std::pair<std::string,int>> readScoreFile( const std::string& path );
 };
 

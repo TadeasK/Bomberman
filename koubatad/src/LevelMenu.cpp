@@ -67,7 +67,7 @@ void LevelMenu::runGame()
 {
     maps.append(std::to_string(m_Map));
     try {
-        GameManager game(m_Multi, maps);
+        GameManager game(m_Multi, maps, bestScoreFile, m_Test);
         game.runMenu();
     }
     catch (std::string &err) {

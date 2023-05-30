@@ -4,6 +4,7 @@ GameManager::GameManager(bool multi, std::string &map) : Menu()
 {
     m_Multi = multi;
     m_MapPath = map;
+    m_ScorePath = score;
     running = true;
     delwin(menuWindow);
     menuWidth = GAME_WINDOW_WIDTH;
@@ -52,12 +53,14 @@ void GameManager::runMenu()
         for (auto obj = m_Objects.begin(); obj != m_Objects.end();) {
             if (!(*obj)->drawObj()) { // Object was destroyed/killed
                 if ((*obj) == m_Player1) {
-                    // Player 2 is winner TODO
+                    if (m_Multi)
+                        m_Player1Winner = false;
                     running = false;
                     break;
                 }
-                if ((*obj) == m_Player2)
-                    // Player 1 is winner TODO
+                if ((*obj) == m_Player2) {
+                    m_Player1Winner = true;
+                    running = false;
                     break;
 
                 if (checkEntity((*obj))) // Must be Enemy
@@ -84,8 +87,18 @@ void GameManager::runMenu()
         if (delay > std::chrono::milliseconds::zero())
             std::this_thread::sleep_for(delay);
     }
-    // TODO saveScore();
+    werase(menuWindow);
+    wrefresh(menuWindow);
     cleanUp();
+    if (input == -2) {
+        delwin(menuWindow);
+        return;
+    }
+
+    if (m_Multi)
+        displayWinner();
+    else
+        saveScore();
     delwin(menuWindow);
 }
 
@@ -331,5 +344,89 @@ bool GameManager::checkSpecial(const std::shared_ptr<Object> &obj)
         ++spec;
     }
     return false;
+}
+
+//----------------------------------------------------------------------------------------------
+void GameManager::displayWinner()
+{
+    int width = 30, height = 10;
+    std::string message = "WINNER IS:";
+    std::string winner = m_Player1Winner ? "PLAYER 1" : "PLAYER 2";
+    std::string hint = "Press ENTER to continue";
+    auto winnerWindow = newwin(height, width, m_HEIGHT / 2 - height / 2,
+                               m_WIDTH / 2 - width / 2);
+
+    mvwprintw(winnerWindow, 2, (width / 2 - message.length() / 2), "%s", message.c_str());
+    wattron(winnerWindow, COLOR_PAIR(3) | A_BLINK);
+    mvwprintw(winnerWindow, 3, (width / 2 - winner.length() / 2), "%s", winner.c_str());
+    wattroff(winnerWindow, COLOR_PAIR(3) | A_BLINK);
+    mvwprintw(winnerWindow, 6, (width / 2 - hint.length() / 2), "%s", hint.c_str());
+
+    box(winnerWindow, 0, 0);
+    int input;
+    while (true) {
+        input = wgetch(winnerWindow);
+        if (input == ENTER || input == EOT || input == ETX)
+            break;
+    }
+    wrefresh(winnerWindow);
+    delwin(winnerWindow);
+}
+
+//----------------------------------------------------------------------------------------------
+void GameManager::saveScore()
+{
+
+    auto scores = readScoreFile(m_ScorePath);
+    int map = m_MapPath.back() - '0';
+    if (scores.count(map) != 0)
+        if (scores[map].second > m_Score) {
+            displayErr("You DIED!", "");
+            std::this_thread::sleep_for(std::chrono::milliseconds(250));
+            return;
+        }
+
+    int width = 30, height = 10;
+    std::string message = "NEW HIGH SCORE!";
+    std::string namePrompt = "Enter your name:";
+    std::string hint = "Press ENTER to continue";
+    auto scoreWindow = newwin(height, width, m_HEIGHT / 2 - height / 2,
+                              m_WIDTH / 2 - width / 2);
+
+    mvwprintw(scoreWindow, 2, (width / 2 - message.length() / 2), "%s", message.c_str());
+    mvwprintw(scoreWindow, 3, (width / 2 - namePrompt.length() / 2), "%s", namePrompt.c_str());
+    mvwprintw(scoreWindow, 6, (width / 2 - hint.length() / 2), "%s", hint.c_str());
+
+    box(scoreWindow, 0, 0);
+    echo();
+    int input;
+    std::string name = "";
+    wmove(scoreWindow, 4, 2);
+    while (true) {
+        input = wgetch(scoreWindow);
+        if (input == ENTER || input == EOT || input == ETX)
+            break;
+        if (name.length() > 24) {
+            noecho();
+            continue;
+        }
+        name += input;
+    }
+
+    scores[map] = {name, m_Score};
+    writeScore(scores);
+
+    noecho();
+    wrefresh(scoreWindow);
+    delwin(scoreWindow);
+}
+
+//----------------------------------------------------------------------------------------------
+void GameManager::writeScore(const std::map<int, std::pair<std::string, int>> &scores)
+{
+    std::ofstream oFile(m_ScorePath);
+    for (const auto &line: scores) {
+        oFile << line.first << ':' << line.second.first << ':' << line.second.second << "\n";
+    }
 }
 //----------------------------------------------------------------------------------------------

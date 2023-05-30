@@ -1,3 +1,1 @@
-# NAME:SCORE:BEST_LEVEL
-
-1. wiz 666 1
+6:ahoj:2000

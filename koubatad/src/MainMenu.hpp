@@ -3,6 +3,7 @@
 #include "Menu.hpp"
 #include "OptionsMenu.hpp"
 #include "GameMenu.hpp"
+#include "ScoreMenu.hpp"
 #include <vector>
 #include <string>
 
