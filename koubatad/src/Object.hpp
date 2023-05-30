@@ -33,14 +33,16 @@ public:
 
     virtual std::pair<int,int> getPosition();
 
+    enum EFFECT {
+        EXPLOSION, LEVITATE, DETONATOR, BOMB_INC, RADIUS_INC, HEAL,
+    };
+
 protected:
     WINDOW * m_Window; // Window where object is displayed
     int m_X; // A current X position of object
     int m_Y; // A current  Y position of object
     bool m_Exist = true; // If object exists or if it has been destroyed/killed
-    enum EFFECT {
-        EXPLOSION, LEVITATE, DETONATOR, BOMB_INC, RADIUS_INC, HEAL,
-    };
+
     const int GAME_WINDOW_HEIGHT = 15;
     const int GAME_WINDOW_WIDTH = 15;
 };

@@ -1,10 +1,8 @@
 #include "Crate.hpp"
 
-Crate::Crate(int x, int y, WINDOW *window, bool full)
+Crate::Crate(int x, int y, WINDOW *window)
         : Object(x, y, window)
-{
-    m_Filled = full;
-}
+{}
 //----------------------------------------------------------------------------------------------
 
 bool Crate::drawObj() const

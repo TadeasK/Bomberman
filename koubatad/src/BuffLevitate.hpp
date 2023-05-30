@@ -7,6 +7,7 @@
  */
 class BuffLevitate : public Special
 {
+public:
     /**
      * @brief Construct a new Levitate Buff object
      *

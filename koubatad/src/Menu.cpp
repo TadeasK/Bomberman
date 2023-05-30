@@ -42,10 +42,10 @@ void Menu::initNcurses()
 
 void Menu::initColors()
 {
-    init_pair(1, COLOR_RED, COLOR_MAGENTA); // Placed bomb, Wall color
+    init_pair(1, COLOR_RED, COLOR_MAGENTA); // Wall color
     init_pair(8, COLOR_RED, COLOR_BLACK); // Placed bomb
     init_pair(2, COLOR_RED, COLOR_YELLOW); // Explosion color
-    init_pair(3, COLOR_WHITE, COLOR_BLACK); // Specials color
+    init_pair(3, COLOR_WHITE, COLOR_GREEN); // Specials color
     init_pair(4, COLOR_GREEN, COLOR_BLACK); // Player color
     init_pair(5, COLOR_BLUE, COLOR_BLACK); // Player2 color
     init_pair(6, COLOR_MAGENTA, COLOR_BLACK); // Hint color, Crate color

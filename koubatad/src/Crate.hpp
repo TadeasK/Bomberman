@@ -18,7 +18,7 @@ public:
      * @param window Window, where object is displayed
      * @param full Boolean value of whether Crate contains anything or not
      */
-    Crate(int x, int y, WINDOW *window, bool full);
+    Crate(int x, int y, WINDOW *window);
 
     virtual bool drawObj() const override;
 
@@ -26,6 +26,5 @@ public:
 
 private:
     const char m_Repr = '#';
-    bool m_Filled; // Attribute containing info about whether the object has bonus inside or not
 
 };

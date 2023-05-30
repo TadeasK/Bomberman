@@ -4,13 +4,13 @@
 
 /**
  * @brief A class representing any Special object
- * 
+ *
  */
 class Special : public Object {
 public:
     /**
      * @brief Construct a new Special object
-     * 
+     *
      * @param x An X position of new Bomb
      * @param y An Y position of new Bomb
      * @param window Window, where object is displayed
