@@ -22,7 +22,7 @@
 class GameManager : public Menu
 {
 public:
-    explicit GameManager(bool multi, std::string &map);
+    explicit GameManager(bool multi, std::string &map, std::string &score, bool test = false);
 
     void runMenu() override;
 

@@ -68,15 +68,14 @@ int main(int argc, char const *argv[])
         asserts();
         test = true;
     }
-    else {
-        try {
-            MainMenu menu;
-            menu.runMenu();
-        }
-        catch (const std::string &err) {
-            std::cout << err << std::endl;
-            return 1;
-        }
+
+    try {
+        MainMenu menu(test);
+        menu.runMenu();
+    }
+    catch (const std::string &err) {
+        std::cout << err << std::endl;
+        return 1;
     }
     return 0;
 }

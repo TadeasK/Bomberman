@@ -1,9 +1,9 @@
 #include "GameMenu.hpp"
 
-GameMenu::GameMenu()
+GameMenu::GameMenu(bool test)
         : Menu()
 {
-    running = true;
+    m_Test = test;
     m_Name = "Select game mode";
 
     menuItems = {
@@ -40,7 +40,7 @@ void GameMenu::takeAction(int currSelect)
 void GameMenu::startSingle()
 {
     std::string name = "Choose level";
-    LevelMenu game(name);
+    LevelMenu game(name, m_Test);
     game.runMenu();
 }
 
@@ -49,6 +49,6 @@ void GameMenu::startSingle()
 void GameMenu::startMulti()
 {
     std::string name = "Choose map";
-    LevelMenu game(name, true);
+    LevelMenu game(name, m_Test, true);
     game.runMenu();
 }

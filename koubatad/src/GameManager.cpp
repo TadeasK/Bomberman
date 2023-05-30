@@ -1,8 +1,9 @@
 #include "GameManager.hpp"
 
-GameManager::GameManager(bool multi, std::string &map) : Menu()
+GameManager::GameManager(bool multi, std::string &map, std::string &score, bool test) : Menu()
 {
     m_Multi = multi;
+    m_Test = test;
     m_MapPath = map;
     m_ScorePath = score;
     running = true;
@@ -129,7 +130,24 @@ void GameManager::generateMap()
                     createPlayer1(j, i);
                     break;
                 case '6':
-                    createPlayer2(j, i);
+                    if (m_Test)
+                        createBonus({j,i}, Object::EFFECT::LEVITATE);
+                    break;
+                case '7':
+                    if (m_Test)
+                        createBonus({j,i}, Object::EFFECT::DETONATOR);
+                    break;
+                case '8':
+                    if (m_Test)
+                        createBonus({j,i}, Object::EFFECT::BOMB_INC);
+                    break;
+                case '9':
+                    if (m_Test)
+                        createBonus({j,i}, Object::EFFECT::RADIUS_INC);
+                    break;
+                case 'x':
+                    if (m_Test)
+                        createBonus({j,i}, Object::EFFECT::HEAL);
                     break;
                 default:
                     throw "Content of file " + m_MapPath + " might be corrupted.";
@@ -250,7 +268,10 @@ void GameManager::createEnemy(int x, int y)
 void GameManager::createPlayer1(int x, int y)
 {
     if (m_Player1 == nullptr) {
-        m_Player1 = std::make_shared<Player>(x, y, menuWindow);
+        if ( m_Test )
+            m_Player1 = std::make_shared<Player>(coord.first, coord.second, menuWindow, 4, 1, 3, 3, 3);
+        else
+            m_Player1 = std::make_shared<Player>(coord.first, coord.second, menuWindow);
         m_Objects.push_back(m_Player1);
         m_Entities.push_back(m_Player1);
     }

@@ -1,6 +1,6 @@
 #include "LevelMenu.hpp"
 
-LevelMenu::LevelMenu(std::string &name, bool multi,
+LevelMenu::LevelMenu(std::string &name, bool test, bool multi,
                      const std::string &bestScorePath,
                      const std::string &mapsPath)
         : Menu()
@@ -9,6 +9,7 @@ LevelMenu::LevelMenu(std::string &name, bool multi,
     running = true;
     m_Name = name;
     m_Multi = multi;
+    m_Test = test;
     bestScoreFile = bestScorePath;
 
     menuItems = {

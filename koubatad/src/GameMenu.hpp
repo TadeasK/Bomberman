@@ -13,9 +13,10 @@ public:
     /**
      * @brief Initializes ncurses window for this menu
      */
-    GameMenu();
+    GameMenu(bool test);
 
 private:
+    bool m_Test;
     enum OPTIONS
     {
         SINGLE, MULTI, BACK

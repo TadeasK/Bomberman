@@ -44,6 +44,7 @@ protected:
     const static int ENTER = 10; // Alias for ASCII value of ENTER key
     const static int EOT = 4; // Alias for ASCII value of CTRL+D
     const static int ETX = 3; // Alias for ASCII value of CTRL+C
+    static bool m_Testing;
     const std::string hintMsg = "Navigate using ARROW keys and ENTER.";
     const std::string sizeErrMsg = "Terminal reached minimal dimensions!";
 

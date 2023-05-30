@@ -17,9 +17,10 @@ public:
      * @brief Initialize ncurses for menus, read and apply from config file
      * 
      */
-    MainMenu();
+    MainMenu(bool test);
 
 private:
+    bool m_Test;
     enum OPTIONS
     {
         START_GAME, BEST_SCORES, CONTROLS, QUIT

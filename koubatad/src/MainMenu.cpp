@@ -1,11 +1,11 @@
 #include "MainMenu.hpp"
 
-MainMenu::MainMenu()
+MainMenu::MainMenu(bool test)
         : Menu()
 {
     running = true;
     m_Name = "Main menu";
-
+    m_Test = test;
     menuItems = {
             "Start game",
             "Best Scores",
@@ -18,7 +18,7 @@ MainMenu::MainMenu()
 
 void MainMenu::runGame()
 {
-    GameMenu gameMenu;
+    GameMenu gameMenu(m_Test);
     gameMenu.runMenu();
 }
 

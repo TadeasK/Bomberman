@@ -20,13 +20,14 @@ public:
      * @param bestScorePath Path to best score file
      * @param mapsPath Path to maps file
      */
-    explicit LevelMenu(std::string &name, bool multi = false,
+    explicit LevelMenu(std::string &name, bool test, bool multi = false,
                        const std::string &bestScorePath = "assets/scores.txt",
                        const std::string &mapsPath = "assets/map");
 
 
 private:
     bool m_Multi;
+    bool m_Test;
     int m_Map = 1;
 
     enum OPTIONS
