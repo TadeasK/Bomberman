@@ -13,14 +13,13 @@ RM=rm -rf
 BIN=koubatad
 
 # What to put into zip file
-ZIP=zadani.txt prohlaseni.txt src/ doc/
+ZIP=zadani.txt prohlaseni.txt src/ assets/ examples/ Doxyfile Makefile
 
 # modules to make 
 # ls src/*.cpp | sed 's/.cpp/.o/g' | sed 's/src/tmp/g' | tr '\n' ' '
-MODULES=tmp/Bomb.o  tmp/Crate.o \
-tmp/Enemy.o tmp/Entity.o  tmp/GameMenu.o tmp/main.o tmp/MainMenu.o tmp/Menu.o  \
-tmp/Object.o tmp/OptionsMenu.o tmp/Player.o tmp/Special.o tmp/Wall.o tmp/GameManager.o \
-tmp/LevelMenu.o
+MODULES=tmp/Bomb.o tmp/BuffBomb.o tmp/BuffDetonator.o tmp/BuffHeal.o tmp/BuffLevitate.o tmp/BuffRadius.o tmp/Crate.o \
+tmp/Enemy.o tmp/Entity.o tmp/Explosion.o tmp/GameManager.o tmp/GameMenu.o tmp/LevelMenu.o tmp/main.o tmp/MainMenu.o \
+tmp/Menu.o tmp/Object.o tmp/OptionsMenu.o tmp/Player.o tmp/ScoreMenu.o tmp/Special.o tmp/Wall.o
 
 # tmp/Monster1.o tmp/Monster2.o tmp/Monster3.o tmp/BuffBomb.o tmp/BuffDetonator.o tmp/BuffMove.o tmp/BuffRadius.o tmp/BuffThrow.o tmp/ExitDoor.o
 

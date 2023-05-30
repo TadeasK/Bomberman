@@ -64,7 +64,7 @@ Vlastní specifikace zadání:
 Hra Bomberman se bude řídit standartními pravidly původní hry.
 
 Hráč bude pokládat bomby, které budou schopné rozbít bedny, ze kterých při rozbití může vypadnout
-nějaký bonus (dobrý nebo špatný), zároveň bomby budou schopné zabít monstra, jiné hráče, ale i
+nějaký bonus, zároveň bomby budou schopné zabít monstra, jiné hráče, ale i
 hráče, který sám bombu položil. 
 
 Bude možné hrát jak singleplayer 'kampaň' proti AI kontrolovaným nepřátelům (monstra), tak
@@ -80,7 +80,7 @@ bude předem nastaveno.
 
 Dále se v souboru bude ukládat nejlepš dosažené skóre na každé mapě v rámci singleplazer módu, které získává hráč za
 zabíjení monster a sbírání bonusů. Při dosažení nejlepšího skóre bude hráč vyzván k zadání jména, které se u jeho
-skóre zobrazí. Nakonec bude v konfiguračním souboru uloženo nastavení herních oběktů (šance na spadnutí bonusu, skóre za
+skóre zobrazí. Nakonec bude v konfiguračním souboru uloženo nastavení herních objektů (šance na spadnutí bonusu, skóre za
 zničení jednotlivých objektů (monster/beden), skóre za sebrání jednotlivých bonusů).
 
 Při spuštění hry si hráč bude moci zvolit jaký typ hry chce hrát (hráč proti monstrům, hráč proti hráči), zobrazit
@@ -101,8 +101,7 @@ Polymorfismus:
     Další třída bude třída hráče, která bude o sobě navíc ukládat údaje o sebraných bonusech.
     
     Poslední polymorfní třída rovněž dědící z hlavní třídy bude obalovat spceiální objekty.
-    Tyto speciální objekty budou například různé bonusy pro hráče, který je sebere či exit do
-    dalšího levelu kampaně.
+    Tyto speciální objekty budou například různé bonusy pro hráče, který je sebere.
 
     Další úroveň polymorfismu je aplikována v třídách reprezentujících menu hry. Mateřská třída
     implementuje vykreslování oken menu a další základní vlastnosti, jako třeba chování při 
