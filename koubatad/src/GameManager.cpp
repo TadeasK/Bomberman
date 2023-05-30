@@ -20,21 +20,20 @@ GameManager::GameManager(bool multi, std::string &map, std::string &score, bool 
 // TODO collisions, damage
 void GameManager::runMenu()
 {
-    int input;
+    int input = -1;
     int x = 0;
     m_StartTime = std::chrono::steady_clock::now();
     const std::chrono::microseconds frameDelay(static_cast<int>(1000.0 / 30.0));
 
     while (running) {
         auto start = std::chrono::steady_clock::now();
-        box(menuWindow, x, x);
+        box(menuWindow, 0, 0);
         wrefresh(menuWindow);
         refresh();
 
         input = readInput(x);
         takeAction(input);
         printStats();
-
         for (auto bombIt = m_Bombs.begin(); bombIt != m_Bombs.end();) {
             (*bombIt)->action();
             if ((*bombIt)->m_Exploded) {
@@ -63,6 +62,7 @@ void GameManager::runMenu()
                     m_Player1Winner = true;
                     running = false;
                     break;
+                }
 
                 if (checkEntity((*obj))) // Must be Enemy
                     m_Score += 100;
@@ -104,7 +104,6 @@ void GameManager::runMenu()
 }
 
 //----------------------------------------------------------------------------------------------
-// TODO add Testing mode
 void GameManager::generateMap()
 {
     std::string objects = readConfig(m_MapPath);
@@ -115,19 +114,19 @@ void GameManager::generateMap()
                 case '0':
                     break;
                 case '1':
-                    createWall(j, i);
+                    createWall({j, i});
                     break;
                 case '2':
-                    createCrate(j, i, false);
+                    createCrate({j, i});
                     break;
                 case '3':
-                    createCrate(j, i, true);
+                    createEnemy({j, i});
                     break;
                 case '4':
-                    createEnemy(j, i);
+                    createPlayer1({j, i});
                     break;
                 case '5':
-                    createPlayer1(j, i);
+                    createPlayer2({j, i});
                     break;
                 case '6':
                     if (m_Test)
@@ -167,7 +166,7 @@ int GameManager::readInput(int &currSelect)
 
     if (input == EOT || input == ETX) { // Check if user pressed ctrl+C or ctrl+D
         running = false;
-        return -1;
+        return -2;
     }
 
     return input;
@@ -243,29 +242,29 @@ std::string GameManager::parseFile(std::ifstream &file)
 }
 //----------------------------------------------------------------------------------------------
 
-void GameManager::createWall(int x, int y)
+void GameManager::createWall(std::pair<int, int> coord)
 {
-    m_Objects.emplace_back(std::make_shared<Wall>(x, y, menuWindow));
+    m_Objects.emplace_back(std::make_shared<Wall>(coord.first, coord.second, menuWindow));
 }
 
 //----------------------------------------------------------------------------------------------
-void GameManager::createCrate(int x, int y, bool isFull)
+void GameManager::createCrate(std::pair<int, int> coord)
 {
-    m_Objects.emplace_back(std::make_shared<Crate>(x, y, menuWindow, isFull));
+    m_Objects.emplace_back(std::make_shared<Crate>(coord.first, coord.second, menuWindow));
 }
 
 //----------------------------------------------------------------------------------------------
-void GameManager::createEnemy(int x, int y)
+void GameManager::createEnemy(std::pair<int, int> coord)
 {
     if (!m_Multi) {
-        std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(x, y, menuWindow, 1);
+        std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(coord.first, coord.second, menuWindow, 1);
         m_Objects.emplace_back(enemy);
         m_Entities.emplace_back(enemy);
     }
 }
 
 //----------------------------------------------------------------------------------------------
-void GameManager::createPlayer1(int x, int y)
+void GameManager::createPlayer1(std::pair<int, int> coord)
 {
     if (m_Player1 == nullptr) {
         if ( m_Test )
@@ -280,12 +279,12 @@ void GameManager::createPlayer1(int x, int y)
 }
 
 //----------------------------------------------------------------------------------------------
-void GameManager::createPlayer2(int x, int y)
+void GameManager::createPlayer2(std::pair<int, int> coord)
 {
     if (!m_Multi)
         return;
     if (m_Player2 == nullptr) {
-        m_Player2 = std::make_shared<Player>(x, y, menuWindow, 5);
+        m_Player2 = std::make_shared<Player>(coord.first, coord.second, menuWindow, 5);
         m_Objects.push_back(m_Player2);
         m_Entities.push_back(m_Player2);
     }
@@ -357,7 +356,7 @@ bool GameManager::checkSpecial(const std::shared_ptr<Object> &obj)
     bool ret = false;
     for (auto spec = m_Special.begin(); spec != m_Special.end();) {
         if (*spec == obj) {
-            if ((*spec)->giveEffect() != 0)
+            if ((*spec)->giveEffect() != Object::EFFECT::EXPLOSION)
                 ret = true;
             m_Special.erase(spec);
             return ret;

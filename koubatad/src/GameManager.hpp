@@ -9,9 +9,8 @@
 #include "Enemy.hpp"
 #include <vector>
 #include <memory>
-#include <fstream>
-#include <sstream>
-#include <iostream>
+#include <utility>
+#include <random>
 #include <chrono>
 #include <thread>
 
@@ -69,13 +68,13 @@ private:
      */
     std::string parseFile(std::ifstream &file);
 
-    void createWall(int x, int y);
+    void createWall(std::pair<int, int> coord);
 
-    void createCrate(int x, int y, bool isFull);
+    void createCrate(std::pair<int, int> coord);
 
-    void createEnemy(int x, int y);
+    void createEnemy(std::pair<int, int> coord);
 
-    void createPlayer1(int x, int y);
+    void createPlayer1(std::pair<int, int> coord);
 
     void createPlayer2(int x, int y);
 
