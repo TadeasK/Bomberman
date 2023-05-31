@@ -377,20 +377,48 @@ double GameManager::getElapsedTime() const
 void GameManager::explodeBomb(std::shared_ptr<Bomb> &bomb)
 {
     auto explosion = bomb->explode();
+    bool limitUp = false, limitDown = false, limitLeft = false, limitRight = false;
+    auto center = explosion.front()->getPosition();
     for (const auto &x: explosion) {
         int status = x->collision();
-        if (status == -1) {
+        auto pos = x->getPosition();
+        // Check if boundary was already encountered in given axis way
+        if ( pos.first < center.first ) {
+            if ( limitLeft )
+                continue;
+        }
+        else if ( pos.first > center.first ) {
+            if ( limitRight )
+                continue;
+        }
+        else if ( pos.second < center.second ) {
+            if ( limitUp )
+                continue;
+        }
+        else if ( pos.second > center.second ) {
+            if ( limitDown )
+                continue;
+        }
+
+        if (status == 0 ) { // Free movement
+            m_Special.emplace_back(x);
+            m_Objects.emplace_back(x);
             continue;
         }
-        else if (status == 1) {
+        else if (status == 1) { // Hit non-crate
             handleCollision(x);
             m_Special.emplace_back(x);
             m_Objects.emplace_back(x);
         }
-        else {
-            m_Special.emplace_back(x);
-            m_Objects.emplace_back(x);
-        }
+        // Set boundary in given axis way
+        if ( pos.first < center.first )
+            limitLeft = true;
+        else if ( pos.first > center.first )
+            limitRight = true;
+        else if ( pos.second < center.second )
+            limitUp = true;
+        else if ( pos.second > center.second )
+            limitDown = true;
     }
 
     for (auto objIt = m_Objects.begin(); objIt != m_Objects.end();) {
