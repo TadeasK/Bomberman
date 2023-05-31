@@ -6,7 +6,8 @@
  * @brief A class representing any Special object
  *
  */
-class Special : public Object {
+class Special : public Object
+{
 public:
     /**
      * @brief Construct a new Special object
@@ -16,7 +17,7 @@ public:
      * @param window Window, where object is displayed
      * @param lifeSpan Lifespan of object (in frames)
      */
-    Special(int x, int y, WINDOW* window, int lifeSpan = 900000);
+    Special(int x, int y, WINDOW *window, int lifeSpan = 70000);
 
 
     virtual int update();
@@ -34,8 +35,10 @@ public:
      *          0 if my position is clear
      */
     virtual int collision() const;
+
 protected:
     int m_LifeSpan; // Lifespan in frames
     unsigned int m_Attr = A_NORMAL;
+
     void reduceLifeSpan();
 };

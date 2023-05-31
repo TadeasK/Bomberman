@@ -12,7 +12,7 @@ Bomb::Bomb(int x, int y, WINDOW *window, int timer, int radius)
 //----------------------------------------------------------------------------------------------
 bool Bomb::drawObj() const
 {
-    if ( m_Exist ) {
+    if (m_Exist) {
         wattron(m_Window, COLOR_PAIR(8));
         mvwprintw(m_Window, m_Y, m_X, "%d", m_Timer);
         wattroff(m_Window, COLOR_PAIR(8));

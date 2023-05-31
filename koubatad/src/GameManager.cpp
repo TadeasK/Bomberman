@@ -53,9 +53,9 @@ void GameManager::runMenu()
 
         for (auto const &entity: m_Entities) {
             entity->move(m_Player1->getPosition());
-            if ( entity->getPosition() == m_Player1->getPosition() && entity != m_Player1 && entity != m_Player2 )
+            if (entity->getPosition() == m_Player1->getPosition() && entity != m_Player1 && entity != m_Player2)
                 m_Player1->receiveEffect(Object::EFFECT::DAMAGE);
-            if ( m_Multi ) {
+            if (m_Multi) {
                 if (entity->getPosition() == m_Player2->getPosition() && entity != m_Player2 && entity != m_Player1)
                     m_Player2->receiveEffect(Object::EFFECT::DAMAGE);
             }
@@ -87,26 +87,7 @@ void GameManager::runMenu()
                 ++obj;
         }
 
-        for (auto const &spec: m_Special) {
-            int status = spec->update();
-            if (status == 1)
-                handleCollision(spec);
-        }
-
-        if ( m_Entities.size() <= 1 ) { // Only player left
-            running = false;
-            m_Player1Winner = true;
-            break;
-        }
-
-        for (auto const &entity: m_Entities) {
-            entity->move(m_Player1->getPosition());
-            if ( entity->getPosition() == m_Player1->getPosition() && entity != m_Player1 )
-                m_Player1->receiveEffect(Object::EFFECT::DAMAGE);
-        }
-
-
-        if ( m_Entities.size() <= 1 && !m_Test) { // Only player left
+        if (m_Entities.size() <= 1 && !m_Test) { // Only player left
             running = false;
             m_Player1Winner = true;
             break;
@@ -210,6 +191,7 @@ void GameManager::takeAction(int action)
 {
     if (action == ENTER)
         action = KEY_ENTER;
+
     if (action == 'w' || action == 'a' || action == 's' || action == 'd')
         m_Player1->setMove(action);
     if (action == ' ') {
@@ -269,7 +251,7 @@ std::string GameManager::parseMapFile(std::ifstream &file)
     while (std::getline(file, line)) {
         final.append(line);
     }
-    if (final.length() != (size_t) ((GAME_WINDOW_WIDTH - 2) * (GAME_WINDOW_HEIGHT - 2)))
+    if (final.length() != (size_t)((GAME_WINDOW_WIDTH - 2) * (GAME_WINDOW_HEIGHT - 2)))
         throw "Content of file '" + m_MapPath + "' might be corrupted.";
     return final;
 }
@@ -336,19 +318,19 @@ void GameManager::createBonus(std::pair<int, int> coord, int bonus)
     double randomNumber;
     if (bonus == 0) {
         randomNumber = distribution(gen);
-        if ( randomNumber > m_Config.m_DropChance) // Drop didn't happen
+        if (randomNumber > m_Config.m_DropChance) // Drop didn't happen
             return;
         // Drop happened, choose effect
         randomNumber = distribution(gen);
         double totalProbability = 0.0;
         int i = 1;
         for (const auto &x: probabilities) {
-           totalProbability += x;
-           if ( randomNumber <= totalProbability ) {
-               bonus = i;
-               break;
-           }
-           ++i;
+            totalProbability += x;
+            if (randomNumber <= totalProbability) {
+                bonus = i;
+                break;
+            }
+            ++i;
         }
     }
 
@@ -396,24 +378,24 @@ void GameManager::explodeBomb(std::shared_ptr<Bomb> &bomb)
         int status = x->collision();
         auto pos = x->getPosition();
         // Check if boundary was already encountered in given axis way
-        if ( pos.first < center.first ) {
-            if ( limitLeft )
+        if (pos.first < center.first) {
+            if (limitLeft)
                 continue;
         }
-        else if ( pos.first > center.first ) {
-            if ( limitRight )
+        else if (pos.first > center.first) {
+            if (limitRight)
                 continue;
         }
-        else if ( pos.second < center.second ) {
-            if ( limitUp )
+        else if (pos.second < center.second) {
+            if (limitUp)
                 continue;
         }
-        else if ( pos.second > center.second ) {
-            if ( limitDown )
+        else if (pos.second > center.second) {
+            if (limitDown)
                 continue;
         }
 
-        if (status == 0 ) { // Free movement
+        if (status == 0) { // Free movement
             m_Special.emplace_back(x);
             m_Objects.emplace_back(x);
             continue;
@@ -424,13 +406,13 @@ void GameManager::explodeBomb(std::shared_ptr<Bomb> &bomb)
             m_Objects.emplace_back(x);
         }
         // Set boundary in given axis way
-        if ( pos.first < center.first )
+        if (pos.first < center.first)
             limitLeft = true;
-        else if ( pos.first > center.first )
+        else if (pos.first > center.first)
             limitRight = true;
-        else if ( pos.second < center.second )
+        else if (pos.second < center.second)
             limitUp = true;
-        else if ( pos.second > center.second )
+        else if (pos.second > center.second)
             limitDown = true;
     }
 
@@ -445,16 +427,16 @@ void GameManager::explodeBomb(std::shared_ptr<Bomb> &bomb)
 //----------------------------------------------------------------------------------------------
 void GameManager::handleCollision(const std::shared_ptr<Special> &special)
 {
-    bool isSpecial = false;
+    bool isSpecial;
     for (auto &obj: m_Objects) {
         isSpecial = false;
-        for ( auto const &x: m_Special ) {
-            if ( x == obj ) {
+        for (auto const &x: m_Special) {
+            if (x == obj) {
                 isSpecial = true;
                 break;
             }
         }
-        if ( isSpecial )
+        if (isSpecial)
             continue;
 
         if (obj->getPosition() == special->getPosition() && obj != special) {
@@ -524,7 +506,7 @@ void GameManager::saveScore()
 
     auto scores = readScoreFile(m_ScorePath);
     int map = m_MapPath.back() - '0';
-    if ( m_Player1Winner )
+    if (m_Player1Winner)
         displayErr("You WIN!", "Good Job!");
     else
         displayErr("You DIED!", "Better luck next time!");
@@ -559,7 +541,7 @@ void GameManager::saveScore()
             noecho();
             continue;
         }
-        name += input;
+        name += (char) input;
     }
 
     scores[map] = {name, m_Score};
@@ -584,22 +566,22 @@ void GameManager::readConfig()
 {
     std::vector<std::pair<std::string, double>> values;
     std::ifstream conf(m_ConfigPath);
-    if ( !conf )
+    if (!conf)
         return;
     std::string line;
     std::string part;
     std::string field;
     double value;
-    while( conf >> line ) {
+    while (conf >> line) {
         std::stringstream ss(line);
-        for ( int i = 0; i < 2; ++i ) {
+        for (int i = 0; i < 2; ++i) {
             std::getline(ss, part, ':');
-            if ( i == 0 )
+            if (i == 0)
                 field = part;
             else
-            value = atof(part.c_str());
+                value = atof(part.c_str());
         }
-        values.emplace_back(field,value);
+        values.emplace_back(field, value);
     }
     parseConfig(values);
 }
@@ -608,45 +590,45 @@ void GameManager::readConfig()
 void GameManager::parseConfig(std::vector<std::pair<std::string, double>> &values)
 {
     double combinedChance = 0;
-    for ( const auto &x: values) {
+    for (const auto &x: values) {
         combinedChance += x.second;
-        if ( x.first == "drop" ) {
+        if (x.first == "drop") {
             combinedChance -= x.second;
-            if ( x.second > 0 && x.second <= 1.0)
+            if (x.second > 0 && x.second <= 1.0)
                 m_Config.m_DropChance = x.second;
         }
-        else if ( x.first == "levitate" ) {
-            if ( x.second > 0 && x.second <= 1.0)
+        else if (x.first == "levitate") {
+            if (x.second > 0 && x.second <= 1.0)
                 m_Config.m_LevitateChance = x.second;
         }
-        else if ( x.first == "detonator" ) {
-            if ( x.second > 0 && x.second <= 1.0)
+        else if (x.first == "detonator") {
+            if (x.second > 0 && x.second <= 1.0)
                 m_Config.m_DetonatorChance = x.second;
         }
-        else if ( x.first == "bomb" ) {
-            if ( x.second > 0 && x.second <= 1.0)
+        else if (x.first == "bomb") {
+            if (x.second > 0 && x.second <= 1.0)
                 m_Config.m_BombChance = x.second;
         }
-        else if ( x.first == "radius" ) {
-            if ( x.second > 0 && x.second <= 1.0)
+        else if (x.first == "radius") {
+            if (x.second > 0 && x.second <= 1.0)
                 m_Config.m_RadiusChance = x.second;
         }
-        else if ( x.first == "heal" ) {
-            if ( x.second > 0 && x.second <= 1.0)
+        else if (x.first == "heal") {
+            if (x.second > 0 && x.second <= 1.0)
                 m_Config.m_HealChance = x.second;
         }
-        else if ( x.first == "monster" ) {
+        else if (x.first == "monster") {
             combinedChance -= x.second;
             m_Config.m_MonsterScore = x.second;
         }
-        else if ( x.first == "bonus" ) {
+        else if (x.first == "bonus") {
             combinedChance -= x.second;
             m_Config.m_BonusScore = x.second;
         }
         else
             continue;
     }
-    if ( combinedChance != 1.0 ) {
+    if (combinedChance != 1.0) {
         m_Config.m_RadiusChance = m_Config.m_DetonatorChance = m_Config.m_BombChance = \
             m_Config.m_LevitateChance = m_Config.m_HealChance = 0.2;
         return;

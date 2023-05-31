@@ -17,7 +17,7 @@ public:
      * @brief Initialize ncurses for menus, read and apply from config file
      * 
      */
-    MainMenu(bool test);
+    explicit MainMenu(bool test);
 
 private:
     bool m_Test;
@@ -31,18 +31,18 @@ private:
     *  @brief Prepares the game to run, starts the game
     *
     */
-    void runGame();
+    void runGame() const;
 
     /**
      * @brief Operates options menu, user can see and edit configuration
     *
     */
-    void controls();
+    void controls() const;
 
     /**
      * @brief Shows score of best runs
      */
-    void showLeaderboard();
+    void showLeaderboard() const;
 
     void takeAction(int currSelect) override;
 

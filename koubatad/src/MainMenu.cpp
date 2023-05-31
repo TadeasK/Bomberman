@@ -15,7 +15,7 @@ MainMenu::MainMenu(bool test)
 
 //----------------------------------------------------------------------------------------------
 
-void MainMenu::runGame()
+void MainMenu::runGame() const
 {
     GameMenu gameMenu(m_Test);
     gameMenu.runMenu();
@@ -23,14 +23,14 @@ void MainMenu::runGame()
 
 //----------------------------------------------------------------------------------------------
 
-void MainMenu::controls()
+void MainMenu::controls() const
 {
     OptionsMenu optionsMenu;
     optionsMenu.runMenu();
 }
 
 //----------------------------------------------------------------------------------------------
-void MainMenu::showLeaderboard()
+void MainMenu::showLeaderboard() const
 {
     ScoreMenu scoreMenu("assets/scores.txt");
     scoreMenu.runMenu();

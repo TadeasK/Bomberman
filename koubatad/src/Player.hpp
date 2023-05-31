@@ -36,7 +36,7 @@ public:
 
     virtual void receiveEffect(int effect) override;
 
-    void move( const std::pair<int, int>& playerPos) override;
+    void move(const std::pair<int, int> &playerPos) override;
 
     /**
      * @brief Sets Player direction, which will be evaluated when move() is called
@@ -67,9 +67,10 @@ private:
     int m_BombRadius; // Current radius of player placed bombs
     size_t m_BombsCount; // Current maximum count of bombs player can place at the same time
     std::vector<std::shared_ptr<Bomb>> m_BombsPlaced;
-    std::chrono::steady_clock::time_point m_TimePoints[3]; // Array of timepoints where [0] invulnerability
-                                                           //                           [1] Levitation
-                                                           //                           [2] Detonator
+    std::chrono::steady_clock::time_point m_TimePoints[3]; // Array of timepoints where
+    //                           [0] invulnerability
+    //                           [1] Levitation
+    //                           [2] Detonator
     int m_BombTimer; // How long it takes for bombs placed by this player to explode
     int m_Health; // Health of player
     bool m_Levitate = false; // If player has levitation buff (can pass enemies, explosions)
@@ -130,5 +131,5 @@ private:
      * @brief Start timer for given effect
      * @param timerType Type of effect
      */
-    void startTimer( int timerType );
+    void startTimer(int timerType);
 };

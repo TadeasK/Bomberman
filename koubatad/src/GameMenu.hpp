@@ -13,7 +13,7 @@ public:
     /**
      * @brief Initializes ncurses window for this menu
      */
-    GameMenu(bool test);
+    explicit GameMenu(bool test);
 
 private:
     bool m_Test;
@@ -25,14 +25,14 @@ private:
     /**
      * @brief Starts single player game
      */
-     void startSingle();
+    void startSingle() const;
 
     /**
      * @brief Starts multi player game
      */
-    void startMulti();
+    void startMulti() const;
 
     void takeAction(int currSelect) override;
-    void displayCustom() override {};
 
+    void displayCustom() override {};
 };

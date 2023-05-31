@@ -40,7 +40,7 @@ void Menu::initNcurses()
 
 //----------------------------------------------------------------------------------------------
 
-void Menu::initColors()
+void Menu::initColors() const
 {
     init_pair(1, COLOR_RED, COLOR_MAGENTA); // Wall color
     init_pair(8, COLOR_RED, COLOR_BLACK); // Placed bomb
@@ -192,31 +192,31 @@ void Menu::cleanUp()
 }
 
 //----------------------------------------------------------------------------------------------
-std::map<int,std::pair<std::string,int>> Menu::readScoreFile( const std::string& path )
+std::map<int, std::pair<std::string, int>> Menu::readScoreFile(const std::string &path) const
 {
-    std::map<int,std::pair<std::string,int>> scores;
+    std::map<int, std::pair<std::string, int>> scores;
 
     std::ifstream scoreFile(path);
-    if ( !scoreFile )
+    if (!scoreFile)
         return scores;
     std::string line;
     std::string part;
     int mapID, score;
     std::string name;
-    while( scoreFile >> line ) {
+    while (scoreFile >> line) {
         std::stringstream ss(line);
-        for ( int i = 0; i < 3; ++i ) {
+        for (int i = 0; i < 3; ++i) {
             std::getline(ss, part, ':');
-            if ( i == 0 )
+            if (i == 0)
                 mapID = atoi(part.c_str());
-            else if ( i == 1 )
+            else if (i == 1)
                 name = part;
             else
                 score = atoi(part.c_str());
         }
-        if ( mapID > 10 || mapID == 0 || name.length() > 28 )
+        if (mapID > 10 || mapID == 0 || name.length() > 28)
             continue;
-        if ( scores[mapID].second < score )
+        if (scores[mapID].second < score)
             scores[mapID] = {name, score};
     }
     return scores;

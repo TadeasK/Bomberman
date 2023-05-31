@@ -22,7 +22,7 @@ public:
 
     bool drawObj() const override;
 
-    void move(const std::pair<int, int>& playerPos) override;
+    void move(const std::pair<int, int> &playerPos) override;
 
     virtual void receiveEffect(int effect) override;
 
@@ -34,7 +34,8 @@ private:
     {
         MOVE_UP = 1, MOVE_LEFT, MOVE_DOWN, MOVE_RIGHT
     };
-    std::pair<int, int> m_State = {1,2}; // State of Enemy { most significant move, second second most significant move }
+    // State of Enemy { most significant move, second second most significant move }
+    std::pair<int, int> m_State ={1,2};
     const char m_Repr = '$';
 
     bool checkConstrains(int x, int y) override;
@@ -43,11 +44,12 @@ private:
      * @brief Set state based on player position
      * @param playerPos Position of player
      */
-    void setState(const std::pair<int, int>& playerPos);
+    void setState(const std::pair<int, int> &playerPos);
 
     /**
      * @brief Switch movement state of Enemy
      */
     void switchStates();
+
     void defaultMove();
 };

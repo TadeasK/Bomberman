@@ -158,7 +158,7 @@ private:
     /**
      * @brief Load configuration, if invalid use default
      */
-    void parseConfig( std::vector<std::pair<std::string, double>>& values);
+    void parseConfig(std::vector<std::pair<std::string, double>> &values);
 };
 
 

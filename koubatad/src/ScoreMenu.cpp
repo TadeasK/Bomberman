@@ -1,7 +1,7 @@
 #include "ScoreMenu.hpp"
 
 ScoreMenu::ScoreMenu(const std::string &scorePath)
-    : Menu()
+        : Menu()
 {
     m_Name = "Hall Of Fame";
     menuItems = {
@@ -20,6 +20,7 @@ void ScoreMenu::takeAction(int currSelect)
             break;
     }
 }
+
 //----------------------------------------------------------------------------------------------
 void ScoreMenu::displayCustom()
 {
@@ -29,9 +30,9 @@ void ScoreMenu::displayCustom()
 
     std::ostringstream oss;
     int i = 5;
-    for ( const auto &x: m_Scores ) {
+    for (const auto &x: m_Scores) {
         oss << x.first << ". " << x.second.first << " : " << x.second.second;
-        mvwprintw(menuWindow, i,(menuWidth / 2 - oss.str().length() / 2),
+        mvwprintw(menuWindow, i, (menuWidth / 2 - oss.str().length() / 2),
                   "%s", oss.str().c_str());
         oss.str("");
         ++i;

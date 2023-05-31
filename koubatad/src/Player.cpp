@@ -21,7 +21,7 @@ bool Player::drawObj() const
 }
 
 //----------------------------------------------------------------------------------------------
-void Player::move(const std::pair<int, int>& playerPos)
+void Player::move(const std::pair<int, int> &playerPos)
 {
     checkBombs();
     checkHealth();
@@ -148,15 +148,15 @@ bool Player::checkConstrains(int x, int y)
         return false;
 
     chtype screenObj = mvwinch(m_Window, y, x);
-    chtype screenChar = screenObj & A_CHARTEXT ;
+    chtype screenChar = screenObj & A_CHARTEXT;
     if (screenChar == ' ') // Movement clear
         return true;
     if (screenChar == '#' || screenChar == 'X') // Collision with wall or crate
         return false;
-    if ( screenChar == 'x' || screenChar == '$') {// Collision with explosion or monster
+    if (screenChar == 'x' || screenChar == '$') {// Collision with explosion or monster
         return true;
     }
-    if ( screenChar == '@' || isdigit(screenChar) ) // Collision with another player
+    if (screenChar == '@' || isdigit(screenChar)) // Collision with another player
         return m_Levitate;
 
     if (screenChar == 'H' || screenChar == 'D' || screenChar == 'B'
@@ -170,7 +170,7 @@ void Player::receiveEffect(int effect)
 {
     switch (effect) {
         case DAMAGE:
-            if ( !m_Levitate)
+            if (!m_Levitate)
                 takeDamage();
             break;
         case EXPLOSION:
@@ -202,10 +202,11 @@ void Player::checkHealth()
     if (m_Health <= 0)
         m_Exist = false;
 }
+
 //----------------------------------------------------------------------------------------------
 void Player::takeDamage()
 {
-    if ( m_Invulnerable )
+    if (m_Invulnerable)
         return;
 
     m_Health--;
@@ -214,7 +215,7 @@ void Player::takeDamage()
 }
 //----------------------------------------------------------------------------------------------
 
-void Player::startTimer( int timerType )
+void Player::startTimer(int timerType)
 {
     m_TimePoints[timerType] = std::chrono::steady_clock::now();
 }
@@ -224,20 +225,20 @@ void Player::checkState()
 {
     auto currTimePoint = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsedTime{};
-    if ( m_Invulnerable ) {
+    if (m_Invulnerable) {
         elapsedTime = currTimePoint - m_TimePoints[0];
-        if ( elapsedTime.count() >= 1 )
+        if (elapsedTime.count() >= 1)
             m_Invulnerable = false;
     }
-    if ( m_Levitate ) {
+    if (m_Levitate) {
         elapsedTime = currTimePoint - m_TimePoints[1];
-        if ( elapsedTime.count() >= 5 )
+        if (elapsedTime.count() >= 5)
             m_Levitate = false;
     }
 
-    if ( m_Detonator ) {
+    if (m_Detonator) {
         elapsedTime = currTimePoint - m_TimePoints[2];
-        if ( elapsedTime.count() >= 5 )
+        if (elapsedTime.count() >= 5)
             m_Detonator = false;
     }
 }

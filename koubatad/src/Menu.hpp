@@ -11,7 +11,8 @@
  * @brief Represents and operates Menu functions, prints Menu windows
  * 
  */
-class Menu {
+class Menu
+{
 public:
     /**
      * @brief Constructs a new menu object
@@ -19,7 +20,8 @@ public:
      */
     Menu();
 
-    ~Menu() { endwin(); }
+    ~Menu()
+    { endwin(); }
 
     /**
      * @brief Operates menus, based on user choice can start the game,
@@ -44,7 +46,6 @@ protected:
     const static int ENTER = 10; // Alias for ASCII value of ENTER key
     const static int EOT = 4; // Alias for ASCII value of CTRL+D
     const static int ETX = 3; // Alias for ASCII value of CTRL+C
-    static bool m_Testing;
     const std::string hintMsg = "Navigate using ARROW keys and ENTER.";
     const std::string sizeErrMsg = "Terminal reached minimal dimensions!";
 
@@ -59,7 +60,7 @@ protected:
      * @brief Set colors to use
      *
      */
-    void initColors();
+    void initColors() const;
 
     /**
      * @brief Reads, acts upon user input
@@ -112,6 +113,6 @@ protected:
 
     virtual void displayCustom() = 0;
 
-    std::map<int,std::pair<std::string,int>> readScoreFile( const std::string& path );
+    std::map<int, std::pair<std::string, int>> readScoreFile(const std::string &path) const;
 };
 

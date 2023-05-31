@@ -12,7 +12,7 @@ public:
      * @brief Initialize ncurses for menus, read and apply from config file
      *
      */
-    ScoreMenu( const std::string& scorePath);
+    explicit ScoreMenu(const std::string &scorePath);
 
 private:
     std::map<int, std::pair<std::string, int>> m_Scores;

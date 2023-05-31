@@ -37,7 +37,7 @@ void GameMenu::takeAction(int currSelect)
 
 //----------------------------------------------------------------------------------------------
 
-void GameMenu::startSingle()
+void GameMenu::startSingle() const
 {
     std::string name = "Choose level";
     LevelMenu game(name, m_Test);
@@ -46,7 +46,7 @@ void GameMenu::startSingle()
 
 //----------------------------------------------------------------------------------------------
 
-void GameMenu::startMulti()
+void GameMenu::startMulti() const
 {
     std::string name = "Choose map";
     LevelMenu game(name, m_Test, true);
