@@ -12,9 +12,13 @@ Bomb::Bomb(int x, int y, WINDOW *window, int timer, int radius)
 //----------------------------------------------------------------------------------------------
 bool Bomb::drawObj() const
 {
-    wattron(m_Window, COLOR_PAIR(8));
-    mvwprintw(m_Window, m_Y, m_X, "%d", m_Timer);
-    wattroff(m_Window, COLOR_PAIR(8));
+    if ( m_Exist ) {
+        wattron(m_Window, COLOR_PAIR(8));
+        mvwprintw(m_Window, m_Y, m_X, "%d", m_Timer);
+        wattroff(m_Window, COLOR_PAIR(8));
+    }
+    else
+        mvwprintw(m_Window, m_Y, m_X, " ");
     return m_Exist;
 }
 
@@ -24,6 +28,7 @@ void Bomb::action()
     countDown();
     if (m_Timer <= 0) {
         m_Exploded = true;
+        m_Exist = false;
         return;
     }
 }

@@ -83,8 +83,7 @@ std::shared_ptr<Bomb> Player::placeBomb()
     if (m_BombsPlaced.size() >= m_BombsCount)
         return nullptr;
 
-    int bombX = m_X, bombY = m_Y;
-    auto bomb = std::make_shared<Bomb>(bombX, bombY, m_Window, m_BombTimer, m_BombRadius);
+    auto bomb = std::make_shared<Bomb>(m_X, m_Y, m_Window, m_BombTimer, m_BombRadius);
     m_BombsPlaced.push_back(bomb);
     return bomb;
 }

@@ -23,7 +23,7 @@ public:
      * @param timer Time in seconds until explosion
      * @param radius Radius of explosion
      */
-    Bomb(int x, int y, WINDOW *window, int timer = 5, int radius = 1);
+    Bomb(int x, int y, WINDOW *window, int timer, int radius);
 
     bool drawObj() const override;
 

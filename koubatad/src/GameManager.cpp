@@ -36,11 +36,12 @@ void GameManager::runMenu()
         input = readInput(x);
         takeAction(input);
         printStats();
+
         for (auto bombIt = m_Bombs.begin(); bombIt != m_Bombs.end();) {
             (*bombIt)->action();
             if ((*bombIt)->m_Exploded) {
-                bombIt = m_Bombs.erase(bombIt);
                 explodeBomb(*bombIt);
+                bombIt = m_Bombs.erase(bombIt);
             }
             else
                 ++bombIt;
