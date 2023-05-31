@@ -153,12 +153,12 @@ bool Player::checkConstrains(int x, int y)
         return true;
     if (screenChar == '#' || screenChar == 'X') // Collision with wall or crate
         return false;
-    if (screenChar == 'x' || screenChar == '$') {// Collision with explosion or monster
-        if (!m_Levitate) {
-            takeDamage();
-        }
+    if ( screenChar == 'x' || screenChar == '$') {// Collision with explosion or monster
         return true;
     }
+    if ( screenChar == '@' || isdigit(screenChar) ) // Collision with another player
+        return m_Levitate;
+
     if (screenChar == 'H' || screenChar == 'D' || screenChar == 'B'
         || screenChar == 'L' || screenChar == 'R') // Effect collision
         return true;
