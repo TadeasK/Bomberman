@@ -135,7 +135,7 @@ bool Enemy::checkConstrains(int x, int y)
 
 void Enemy::receiveEffect(int effect)
 {
-    if (effect == EXPLOSION)
+    if (effect == DAMAGE)
         m_Exist = false;
 }
 //----------------------------------------------------------------------------------------------

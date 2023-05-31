@@ -414,7 +414,7 @@ bool GameManager::checkSpecial(const std::shared_ptr<Object> &obj)
     bool ret = false;
     for (auto spec = m_Special.begin(); spec != m_Special.end();) {
         if (*spec == obj) {
-            if ((*spec)->giveEffect() != Object::EFFECT::EXPLOSION)
+            if ((*spec)->giveEffect() != Object::EFFECT::DAMAGE)
                 ret = true;
             m_Special.erase(spec);
             return ret;

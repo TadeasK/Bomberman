@@ -34,7 +34,7 @@ public:
     virtual std::pair<int,int> getPosition();
 
     enum EFFECT {
-        EXPLOSION, LEVITATE, DETONATOR, BOMB_INC, RADIUS_INC, HEAL,
+        DAMAGE, LEVITATE, DETONATOR, BOMB_INC, RADIUS_INC, HEAL,
     };
 
 protected:

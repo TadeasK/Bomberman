@@ -16,7 +16,7 @@ bool Crate::drawObj() const
 
 void Crate::receiveEffect(int effect)
 {
-    if (effect == EXPLOSION) {
+    if (effect == DAMAGE) {
         m_Exist = false;
     }
 }

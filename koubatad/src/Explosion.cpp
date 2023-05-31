@@ -20,6 +20,6 @@ bool Explosion::drawObj() const
 
 int Explosion::giveEffect()
 {
-    return EXPLOSION;
+    return DAMAGE;
 }
 //----------------------------------------------------------------------------------------------

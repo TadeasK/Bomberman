@@ -170,7 +170,7 @@ bool Player::checkConstrains(int x, int y)
 void Player::receiveEffect(int effect)
 {
     switch (effect) {
-        case EXPLOSION:
+        case DAMAGE:
             takeDamage();
             break;
         case BOMB_INC:
@@ -208,7 +208,7 @@ void Player::takeDamage()
 
     m_Health--;
     m_Invulnerable = true;
-    startTimer(EXPLOSION);
+    startTimer(DAMAGE);
 }
 //----------------------------------------------------------------------------------------------
 
