@@ -16,9 +16,11 @@ public:
     /**
      * @brief Constructs LevelMenu
      * @param name Name of menu
+     * @param test Testing configuration
      * @param multi true if multi player, else single player
      * @param bestScorePath Path to best score file
      * @param mapsPath Path to maps file
+     * @param configPath Path to configuration filea
      */
     explicit LevelMenu(std::string &name, bool test, bool multi = false,
                        const std::string &bestScorePath = "assets/scores.txt",

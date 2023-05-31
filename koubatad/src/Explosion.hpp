@@ -13,6 +13,7 @@ public:
      *
      * @param x A X position of the explosion
      * @param y An Y position of the explosion
+     * @param window Window, where object is displayed
      */
     Explosion(int x, int y, WINDOW *window);
 

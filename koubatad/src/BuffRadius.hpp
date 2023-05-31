@@ -15,6 +15,7 @@ public:
      * 
      * @param x A X position of the buff
      * @param y An Y position of the buff
+     * @param window Window, where object is displayed
      */
     BuffRadius(int x, int y, WINDOW *window);
 

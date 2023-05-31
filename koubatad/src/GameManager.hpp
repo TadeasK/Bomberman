@@ -38,16 +38,19 @@ private:
     int m_Score = 0;
     const int GAME_WINDOW_HEIGHT = 15;
     const int GAME_WINDOW_WIDTH = 15;
+    /**
+     * @brief Stores configuration values
+     */
     struct Config
     {
-        int m_MonsterScore = 100;
-        int m_BonusScore = 50;
-        double m_DropChance = 0.5;
-        double m_LevitateChance = 0.2;
-        double m_DetonatorChance = 0.2;
-        double m_BombChance = 0.2;
-        double m_RadiusChance = 0.2;
-        double m_HealChance = 0.2;
+        int m_MonsterScore = 100; // Score for monster kill
+        int m_BonusScore = 50; // Score for picking up bonus
+        double m_DropChance = 0.5; // Chance of a bonus to drop from Crate
+        double m_LevitateChance = 0.2; // Chance of Levitate drop
+        double m_DetonatorChance = 0.2; // Chance of Detonator drop
+        double m_BombChance = 0.2; // Chance of additional Bomb drop
+        double m_RadiusChance = 0.2; // Chance of Radius increase drop
+        double m_HealChance = 0.2; // Chance of Heal drop
     };
     Config m_Config;
 
@@ -131,10 +134,20 @@ private:
      */
     bool checkSpecial(const std::shared_ptr<Object> &obj);
 
+    /**
+     * @brief Displays winner window
+     */
     void displayWinner();
 
+    /**
+     * @brief Check if new high score has been achieved, if so prompt player to input name
+     */
     void saveScore();
 
+    /**
+     * @brief Save new high scores to file
+     * @param scores map of mapID:Name:Score
+     */
     void writeScore(const std::map<int, std::pair<std::string, int>> &scores);
 
     /**
