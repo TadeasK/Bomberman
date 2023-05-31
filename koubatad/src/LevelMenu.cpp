@@ -2,7 +2,8 @@
 
 LevelMenu::LevelMenu(std::string &name, bool test, bool multi,
                      const std::string &bestScorePath,
-                     const std::string &mapsPath)
+                     const std::string &mapsPath,
+                     const std::string &configPath)
         : Menu()
 {
     maps = mapsPath;
@@ -10,7 +11,7 @@ LevelMenu::LevelMenu(std::string &name, bool test, bool multi,
     m_Multi = multi;
     m_Test = test;
     bestScoreFile = bestScorePath;
-
+    configFile = configPath;
     menuItems = {
             "Level 1",
             "Level 2",
@@ -67,7 +68,7 @@ void LevelMenu::runGame()
 {
     maps.append(std::to_string(m_Map));
     try {
-        GameManager game(m_Multi, maps, bestScoreFile, m_Test);
+        GameManager game(m_Multi, maps, bestScoreFile, configFile, m_Test);
         game.runMenu();
     }
     catch (std::string &err) {

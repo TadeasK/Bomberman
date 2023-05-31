@@ -22,7 +22,8 @@ public:
      */
     explicit LevelMenu(std::string &name, bool test, bool multi = false,
                        const std::string &bestScorePath = "assets/scores.txt",
-                       const std::string &mapsPath = "assets/map");
+                       const std::string &mapsPath = "assets/map",
+                       const std::string &configPath = "assets/config.txt");
 
 
 private:
@@ -36,6 +37,7 @@ private:
     };
     std::string bestScoreFile;
     std::string maps;
+    std::string configFile;
 
     void takeAction(int currSelect) override;
 

@@ -1,11 +1,12 @@
 #include "GameManager.hpp"
 
-GameManager::GameManager(bool multi, std::string &map, std::string &score, bool test) : Menu()
+GameManager::GameManager(bool multi, std::string &map, std::string &score, std::string &conf, bool test) : Menu()
 {
     m_Multi = multi;
     m_Test = test;
     m_MapPath = map;
     m_ScorePath = score;
+    m_ConfigPath = conf;
     running = true;
     delwin(menuWindow);
     menuWidth = GAME_WINDOW_WIDTH;
@@ -14,6 +15,7 @@ GameManager::GameManager(bool multi, std::string &map, std::string &score, bool 
     keypad(menuWindow, true);
     nodelay(menuWindow, true);
     generateMap();
+    readConfig();
 }
 //----------------------------------------------------------------------------------------------
 
@@ -65,11 +67,14 @@ void GameManager::runMenu()
                 }
 
                 if (checkEntity((*obj))) // Must be Enemy
-                    m_Score += 100;
-
-                if (checkSpecial((*obj))) // Must be Special
-                    m_Score += 50;
-
+                    m_Score += m_Config.m_MonsterScore;
+                else if (checkSpecial((*obj))) {// Must be Special
+                    // TODO Gives score even if it despawns probably
+                    m_Score += m_Config.m_BonusScore;
+                }
+                else {
+                    createBonus(std::pair<int, int>((*obj)->getPosition()));
+                }
                 obj = m_Objects.erase(obj);
             }
             else
@@ -106,7 +111,7 @@ void GameManager::runMenu()
 //----------------------------------------------------------------------------------------------
 void GameManager::generateMap()
 {
-    std::string objects = readConfig(m_MapPath);
+    std::string objects = readMapFile(m_MapPath);
     int index = 0;
     for (int i = 1; i < GAME_WINDOW_HEIGHT - 1; i++) {
         for (int j = 1; j < GAME_WINDOW_WIDTH - 1; j++) {
@@ -130,23 +135,23 @@ void GameManager::generateMap()
                     break;
                 case '6':
                     if (m_Test)
-                        createBonus({j,i}, Object::EFFECT::LEVITATE);
+                        createBonus({j, i}, Object::EFFECT::LEVITATE);
                     break;
                 case '7':
                     if (m_Test)
-                        createBonus({j,i}, Object::EFFECT::DETONATOR);
+                        createBonus({j, i}, Object::EFFECT::DETONATOR);
                     break;
                 case '8':
                     if (m_Test)
-                        createBonus({j,i}, Object::EFFECT::BOMB_INC);
+                        createBonus({j, i}, Object::EFFECT::BOMB_INC);
                     break;
                 case '9':
                     if (m_Test)
-                        createBonus({j,i}, Object::EFFECT::RADIUS_INC);
+                        createBonus({j, i}, Object::EFFECT::RADIUS_INC);
                     break;
                 case 'x':
                     if (m_Test)
-                        createBonus({j,i}, Object::EFFECT::HEAL);
+                        createBonus({j, i}, Object::EFFECT::HEAL);
                     break;
                 default:
                     throw "Content of file " + m_MapPath + " might be corrupted.";
@@ -218,18 +223,18 @@ void GameManager::printStats()
 
 //----------------------------------------------------------------------------------------------
 
-std::string GameManager::readConfig(const std::string &path)
+std::string GameManager::readMapFile(const std::string &path)
 {
     std::ifstream inFile(path);
     if (!inFile.is_open() || !inFile.good())
         throw "Couldn't open file: '" + path + "'.";
 
-    return parseFile(inFile);
+    return parseMapFile(inFile);
 }
 
 //----------------------------------------------------------------------------------------------
 
-std::string GameManager::parseFile(std::ifstream &file)
+std::string GameManager::parseMapFile(std::ifstream &file)
 {
     std::string line;
     std::string final;
@@ -267,7 +272,7 @@ void GameManager::createEnemy(std::pair<int, int> coord)
 void GameManager::createPlayer1(std::pair<int, int> coord)
 {
     if (m_Player1 == nullptr) {
-        if ( m_Test )
+        if (m_Test)
             m_Player1 = std::make_shared<Player>(coord.first, coord.second, menuWindow, 4, 1, 3, 3, 3);
         else
             m_Player1 = std::make_shared<Player>(coord.first, coord.second, menuWindow);
@@ -290,6 +295,59 @@ void GameManager::createPlayer2(std::pair<int, int> coord)
     }
     else
         throw "Content of file '" + m_MapPath + "' might be corrupted.";
+}
+
+//----------------------------------------------------------------------------------------------
+void GameManager::createBonus(std::pair<int, int> coord, int bonus)
+{
+    std::random_device randomDevice;
+    std::mt19937 gen(randomDevice());
+    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    std::vector<double> probabilities{m_Config.m_LevitateChance, m_Config.m_DetonatorChance, m_Config.m_BombChance,
+                                      m_Config.m_RadiusChance, m_Config.m_HealChance};
+    double randomNumber;
+    if (bonus == 0) {
+        randomNumber = distribution(gen);
+        if ( randomNumber > m_Config.m_DropChance) // Drop didn't happen
+            return;
+        // Drop happened, choose effect
+        randomNumber = distribution(gen);
+        double totalProbability = 0.0;
+        int i = 1;
+        for (const auto &x: probabilities) {
+           totalProbability += x;
+           if ( randomNumber <= totalProbability ) {
+               bonus = i;
+               break;
+           }
+           ++i;
+        }
+    }
+
+    std::shared_ptr<Special> special = nullptr;
+    switch (bonus) {
+        case Object::EFFECT::LEVITATE:
+            special = std::make_shared<BuffLevitate>(coord.first, coord.second, menuWindow);
+            break;
+        case Object::EFFECT::DETONATOR:
+            special = std::make_shared<BuffDetonator>(coord.first, coord.second, menuWindow);
+            break;
+        case Object::EFFECT::BOMB_INC:
+            special = std::make_shared<BuffBomb>(coord.first, coord.second, menuWindow);
+            break;
+        case Object::EFFECT::RADIUS_INC:
+            special = std::make_shared<BuffRadius>(coord.first, coord.second, menuWindow);
+            break;
+        case Object::EFFECT::HEAL:
+            special = std::make_shared<BuffHeal>(coord.first, coord.second, menuWindow);
+            break;
+        default:
+            break;
+    }
+    if (special != nullptr) {
+        m_Objects.push_back(special);
+        m_Special.push_back(special);
+    }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -447,6 +505,80 @@ void GameManager::writeScore(const std::map<int, std::pair<std::string, int>> &s
     std::ofstream oFile(m_ScorePath);
     for (const auto &line: scores) {
         oFile << line.first << ':' << line.second.first << ':' << line.second.second << "\n";
+    }
+}
+
+//----------------------------------------------------------------------------------------------
+void GameManager::readConfig()
+{
+    std::vector<std::pair<std::string, double>> values;
+    std::ifstream conf(m_ConfigPath);
+    if ( !conf )
+        return;
+    std::string line;
+    std::string part;
+    std::string field;
+    double value;
+    while( conf >> line ) {
+        std::stringstream ss(line);
+        for ( int i = 0; i < 2; ++i ) {
+            std::getline(ss, part, ':');
+            if ( i == 0 )
+                field = part;
+            else
+            value = atof(part.c_str());
+        }
+        values.emplace_back(field,value);
+    }
+    parseConfig(values);
+}
+//----------------------------------------------------------------------------------------------
+
+void GameManager::parseConfig(std::vector<std::pair<std::string, double>> &values)
+{
+    double combinedChance = 0;
+    for ( const auto &x: values) {
+        combinedChance += x.second;
+        if ( x.first == "drop" ) {
+            combinedChance -= x.second;
+            if ( x.second > 0 && x.second <= 1.0)
+                m_Config.m_DropChance = x.second;
+        }
+        else if ( x.first == "levitate" ) {
+            if ( x.second > 0 && x.second <= 1.0)
+                m_Config.m_LevitateChance = x.second;
+        }
+        else if ( x.first == "detonator" ) {
+            if ( x.second > 0 && x.second <= 1.0)
+                m_Config.m_DetonatorChance = x.second;
+        }
+        else if ( x.first == "bomb" ) {
+            if ( x.second > 0 && x.second <= 1.0)
+                m_Config.m_BombChance = x.second;
+        }
+        else if ( x.first == "radius" ) {
+            if ( x.second > 0 && x.second <= 1.0)
+                m_Config.m_RadiusChance = x.second;
+        }
+        else if ( x.first == "heal" ) {
+            if ( x.second > 0 && x.second <= 1.0)
+                m_Config.m_HealChance = x.second;
+        }
+        else if ( x.first == "monster" ) {
+            combinedChance -= x.second;
+            m_Config.m_MonsterScore = x.second;
+        }
+        else if ( x.first == "bonus" ) {
+            combinedChance -= x.second;
+            m_Config.m_BonusScore = x.second;
+        }
+        else
+            continue;
+    }
+    if ( combinedChance != 1.0 ) {
+        m_Config.m_RadiusChance = m_Config.m_DetonatorChance = m_Config.m_BombChance = \
+            m_Config.m_LevitateChance = m_Config.m_HealChance = 0.2;
+        return;
     }
 }
 //----------------------------------------------------------------------------------------------

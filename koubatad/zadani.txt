@@ -81,7 +81,7 @@ bude předem nastaveno.
 Dále se v souboru bude ukládat nejlepš dosažené skóre na každé mapě v rámci singleplazer módu, které získává hráč za
 zabíjení monster a sbírání bonusů. Při dosažení nejlepšího skóre bude hráč vyzván k zadání jména, které se u jeho
 skóre zobrazí. Nakonec bude v konfiguračním souboru uloženo nastavení herních objektů (šance na spadnutí bonusu, skóre za
-zničení jednotlivých objektů (monster/beden), skóre za sebrání jednotlivých bonusů).
+zničení jednotlivých objektů (monster/beden), skóre za sebrání bonusů).
 
 Při spuštění hry si hráč bude moci zvolit jaký typ hry chce hrát (hráč proti monstrům, hráč proti hráči), zobrazit
 tabulku skóre nebo ovládání, samotná navigace menu bude provedena pomocí 'šipek' (arrow keys).

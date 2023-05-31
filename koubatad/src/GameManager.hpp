@@ -7,6 +7,12 @@
 #include "Wall.hpp"
 #include "Crate.hpp"
 #include "Enemy.hpp"
+#include "BuffBomb.hpp"
+#include "BuffDetonator.hpp"
+#include "BuffHeal.hpp"
+#include "BuffLevitate.hpp"
+#include "BuffRadius.hpp"
+
 #include <vector>
 #include <memory>
 #include <utility>
@@ -21,7 +27,7 @@
 class GameManager : public Menu
 {
 public:
-    explicit GameManager(bool multi, std::string &map, std::string &score, bool test = false);
+    explicit GameManager(bool multi, std::string &map, std::string &score, std::string &conf, bool test = false);
 
     void runMenu() override;
 
@@ -32,8 +38,22 @@ private:
     int m_Score = 0;
     const int GAME_WINDOW_HEIGHT = 15;
     const int GAME_WINDOW_WIDTH = 15;
+    struct Config
+    {
+        int m_MonsterScore = 100;
+        int m_BonusScore = 50;
+        double m_DropChance = 0.5;
+        double m_LevitateChance = 0.2;
+        double m_DetonatorChance = 0.2;
+        double m_BombChance = 0.2;
+        double m_RadiusChance = 0.2;
+        double m_HealChance = 0.2;
+    };
+    Config m_Config;
+
     std::string m_MapPath;
     std::string m_ScorePath;
+    std::string m_ConfigPath;
     std::chrono::steady_clock::time_point m_StartTime;
 
     std::vector<std::shared_ptr<Object>> m_Objects; // All the object present in game
@@ -59,14 +79,14 @@ private:
      * @throws String error if file couldn't be opened or closed or if configuration in it is corrupted
      *
      */
-    std::string readConfig(const std::string &path);
+    std::string readMapFile(const std::string &path);
 
     /**
      * @brief Parse file, save constants
      * @param file File to be parsed
      *
      */
-    std::string parseFile(std::ifstream &file);
+    std::string parseMapFile(std::ifstream &file);
 
     void createWall(std::pair<int, int> coord);
 
@@ -76,13 +96,18 @@ private:
 
     void createPlayer1(std::pair<int, int> coord);
 
-    void createPlayer2(int x, int y);
+    void createPlayer2(std::pair<int, int> coord);
+
+    void createBonus(std::pair<int, int> coord, int bonus = 0);
 
     double getElapsedTime() const;
 
     int readInput(int &currSelect) override;
 
     void takeAction(int action) override;
+
+    void displayCustom() override
+    {};
 
     /**
      * @brief Explode bomb, remove it from objects, create explosion
@@ -111,6 +136,16 @@ private:
     void saveScore();
 
     void writeScore(const std::map<int, std::pair<std::string, int>> &scores);
+
+    /**
+     * @brief Read configuration file
+     */
+    void readConfig();
+
+    /**
+     * @brief Load configuration, if invalid use default
+     */
+    void parseConfig( std::vector<std::pair<std::string, double>>& values);
 };
 
 
