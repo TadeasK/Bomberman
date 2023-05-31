@@ -36,6 +36,6 @@ public:
     virtual int collision() const;
 protected:
     int m_LifeSpan; // Lifespan in frames
-
+    unsigned int m_Attr = A_NORMAL;
     void reduceLifeSpan();
 };

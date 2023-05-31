@@ -32,6 +32,10 @@ void Special::reduceLifeSpan()
 {
     if (--m_LifeSpan <= 0)
         m_Exist = false;
+    if ( m_LifeSpan < 10000 )
+        m_Attr = A_BLINK;
+    else
+        m_Attr = A_NORMAL;
 }
 //----------------------------------------------------------------------------------------------
 
