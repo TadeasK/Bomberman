@@ -1,1 +1,2 @@
-6:ahoj:2000
+1:Tadeas:2150
+6:Zombie:3500

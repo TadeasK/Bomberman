@@ -87,6 +87,26 @@ Při spuštění hry si hráč bude moci zvolit jaký typ hry chce hrát (hráč
 tabulku skóre nebo ovládání, samotná navigace menu bude provedena pomocí 'šipek' (arrow keys).
 
 -------------------------------------------------------------------------------------------------
+Splněné body zadní:
+   Režimy:
+            Hráč proti počítači. (Hráč je zelený zavináč '@', monstra žluté dolary '$')
+            Hráč proti hráči na jednom počítači. (Hráč1 je zelený, Hráč2 modrý zavináč '@')
+   Funkcionality:
+            AI se hýbe směrem ke hráči, když nemůže hýbe se podobně jako monstra v Bombermanovi (dokola/přímky)
+            Bedny ('#') jsou ničitelné a padají z nich bonusy
+            Zdi ('X') nelze zničit.
+   Bonusy: ()
+            Zvětšení počtu bomb ('B')
+            Zvětšení dosahu výbuchu ('R')
+            Levitace ('L') - Hráč může chodit skrz monstra/hráče/bomby aniž by utrpěl poškození, výbuchy ho ale stále zraní
+            Detonator ('D') - Pokud hráč má detonátor a položí bombu opětovný pokus o položení bomby odpálí již položené bomby
+            Zvýšení počtu životů hráče ('H')
+   Konfigurace ze souborů:
+            Hra načítá konfigurace map ze souboru
+            Hra načítá tabulku nejlepších skŕe ze souboru
+            Hra načítá pravděpodobnosti pádu bonusů, skóre za monstra/sbírání bonusů ze souboru
+   Hra umožňuje zobrazit nejlepší výsledek na každé mapě a při dosažení lepšího výsledku vyzve hráče k uložení svého jména
+-------------------------------------------------------------------------------------------------
 
 Polymorfismus:
     Všechny herní objekt budou dědit ze třídy, která bude držet informaci o své současné pozici,
