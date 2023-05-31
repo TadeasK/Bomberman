@@ -21,9 +21,10 @@ public:
 
     /**
      * @brief Moves the entity 
-     * 
+     * @param playerPos Position of player - for Enemy move AI
+     *
      */
-    virtual void move() = 0;
+    virtual void move( const std::pair<int,int>& playerPos ) = 0;
 
     /**
      * @brief Check if place defined by the x,y coordinates is free

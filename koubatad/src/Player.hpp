@@ -35,7 +35,7 @@ public:
 
     virtual void receiveEffect(int effect) override;
 
-    void move() override;
+    void move( const std::pair<int, int>& playerPos) override;
 
     /**
      * @brief Sets Player direction, which will be evaluated when move() is called

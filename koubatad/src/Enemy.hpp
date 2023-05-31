@@ -22,18 +22,32 @@ public:
 
     bool drawObj() const override;
 
-    void move() override;
+    void move(const std::pair<int, int>& playerPos) override;
 
     virtual void receiveEffect(int effect) override;
 
 private:
     int m_Delay = rand() % 3001; // Delays enemy movement
+    int m_NotMoved = 0;
+    int m_DefaultMoves = 0;
     enum STATE_OPTIONS
     {
         MOVE_UP = 1, MOVE_LEFT, MOVE_DOWN, MOVE_RIGHT
     };
-    int m_State = 1; // State of Enemy
+    std::pair<int, int> m_State = {1,2}; // State of Enemy { most significant move, second second most significant move }
     const char m_Repr = '$';
 
     bool checkConstrains(int x, int y) override;
+
+    /**
+     * @brief Set state based on player position
+     * @param playerPos Position of player
+     */
+    void setState(const std::pair<int, int>& playerPos);
+
+    /**
+     * @brief Switch movement state of Enemy
+     */
+    void switchStates();
+    void defaultMove();
 };

@@ -14,15 +14,75 @@ bool Enemy::drawObj() const
 }
 //----------------------------------------------------------------------------------------------
 
-void Enemy::move()
+void Enemy::move(const std::pair<int, int>& playerPos)
 {
     if (m_Delay < 4000) {
         m_Delay++;
         return;
     }
     m_Delay = 0;
+    if ( m_NotMoved > 4 && m_DefaultMoves == 0) {
+        m_DefaultMoves = 10;
+    }
 
-    switch (m_State) {
+    if ( m_DefaultMoves > 0 ) {
+        defaultMove();
+        return;
+    }
+
+    setState(playerPos);
+    int moved = 4;
+    while ( --moved > 0) {
+        switch (m_State.first) {
+            case MOVE_UP:
+                if (checkConstrains(m_X, m_Y - m_Speed)) {
+                    mvwprintw(m_Window, m_Y, m_X, " ");
+                    m_Y -= m_Speed;
+                    moved = 0;
+                    m_NotMoved--;
+                }
+                else
+                    switchStates();
+                break;
+            case MOVE_LEFT:
+                if (checkConstrains(m_X - m_Speed, m_Y)) {
+                    mvwprintw(m_Window, m_Y, m_X, " ");
+                    m_X -= m_Speed;
+                    moved = 0;
+                    m_NotMoved--;
+                }
+                else
+                    switchStates();
+                break;
+            case MOVE_DOWN:
+                if (checkConstrains(m_X, m_Y + m_Speed)) {
+                    mvwprintw(m_Window, m_Y, m_X, " ");
+                    m_Y += m_Speed;
+                    moved = 0;
+                    m_NotMoved--;
+                }
+                else
+                    switchStates();
+                break;
+            case MOVE_RIGHT:
+                if (checkConstrains(m_X + m_Speed, m_Y)) {
+                    mvwprintw(m_Window, m_Y, m_X, " ");
+                    m_X += m_Speed;
+                    moved = 0;
+                    m_NotMoved--;
+                }
+                else
+                    switchStates();
+                break;
+        }
+    }
+    m_NotMoved++;
+}
+
+//----------------------------------------------------------------------------------------------
+void Enemy::defaultMove()
+{
+    switch (m_State.first) {
         case MOVE_UP:
             if (checkConstrains(m_X, m_Y - m_Speed)) {
                 mvwprintw(m_Window, m_Y, m_X, " ");
@@ -30,32 +90,34 @@ void Enemy::move()
                 break;
             }
             else
-                m_State++;
-        case MOVE_LEFT:
-            if (checkConstrains(m_X - m_Speed, m_Y)) {
-                mvwprintw(m_Window, m_Y, m_X, " ");
-                m_X -= m_Speed;
-                break;
-            }
-            else
-                m_State++;
-        case MOVE_DOWN:
-            if (checkConstrains(m_X, m_Y + m_Speed)) {
-                mvwprintw(m_Window, m_Y, m_X, " ");
-                m_Y += m_Speed;
-                break;
-            }
-            else
-                m_State++;
-        case MOVE_RIGHT:
-            if (checkConstrains(m_X + m_Speed, m_Y)) {
-                mvwprintw(m_Window, m_Y, m_X, " ");
-                m_X += m_Speed;
-                break;
-            }
-            else
-                m_State = 1;
+                m_State.first++;
+            case MOVE_LEFT:
+                if (checkConstrains(m_X - m_Speed, m_Y)) {
+                    mvwprintw(m_Window, m_Y, m_X, " ");
+                    m_X -= m_Speed;
+                    break;
+                }
+                else
+                    m_State.first++;
+                case MOVE_DOWN:
+                    if (checkConstrains(m_X, m_Y + m_Speed)) {
+                        mvwprintw(m_Window, m_Y, m_X, " ");
+                        m_Y += m_Speed;
+                        break;
+                    }
+                    else
+                        m_State.first++;
+                    case MOVE_RIGHT:
+                        if (checkConstrains(m_X + m_Speed, m_Y)) {
+                            mvwprintw(m_Window, m_Y, m_X, " ");
+                            m_X += m_Speed;
+                            break;
+                        }
+                        else
+                            m_State.first = 1;
     }
+    if ( --m_DefaultMoves == 0 )
+        m_NotMoved = 0;
 }
 //----------------------------------------------------------------------------------------------
 
@@ -75,5 +137,41 @@ void Enemy::receiveEffect(int effect)
 {
     if (effect == EXPLOSION)
         m_Exist = false;
+}
+//----------------------------------------------------------------------------------------------
+
+void Enemy::setState(const std::pair<int, int> &playerPos)
+{
+    int xDiff = playerPos.first - m_X;
+    int yDiff = playerPos.second - m_Y;
+    int absX = abs(xDiff);
+    int absY = abs(yDiff);
+    if ( absX >= absY ) {
+        if (xDiff > 0) {
+            m_State.first = MOVE_RIGHT;
+            m_State.second = yDiff > 0 ? MOVE_UP : MOVE_DOWN;
+        }
+        else if (xDiff < 0) {
+            m_State.first = MOVE_LEFT;
+            m_State.second = yDiff > 0 ? MOVE_UP : MOVE_DOWN;
+        }
+    }
+    else {
+        if ( yDiff > 0 ) {
+            m_State.first = MOVE_DOWN;
+            m_State.second = xDiff > 0 ? MOVE_RIGHT : MOVE_LEFT;
+        }
+        else if ( yDiff < 0 ) {
+            m_State.first = MOVE_UP;
+            m_State.second = xDiff > 0 ? MOVE_RIGHT : MOVE_LEFT;
+        }
+    }
+}
+//----------------------------------------------------------------------------------------------
+
+void Enemy::switchStates()
+{
+    m_State.first = m_State.second;
+    m_State.second = ( m_State.second + 1 ) % 4 + 1;
 }
 //----------------------------------------------------------------------------------------------

@@ -82,7 +82,7 @@ void GameManager::runMenu()
         }
 
         for (auto const &entity: m_Entities)
-            entity->move();
+            entity->move(m_Player1->getPosition());
 
         if (input != ERR)
             werase(menuWindow);

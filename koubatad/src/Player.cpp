@@ -21,7 +21,7 @@ bool Player::drawObj() const
 }
 
 //----------------------------------------------------------------------------------------------
-void Player::move()
+void Player::move(const std::pair<int, int>& playerPos)
 {
     checkBombs();
     checkHealth();
