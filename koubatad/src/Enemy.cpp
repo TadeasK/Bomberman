@@ -123,7 +123,7 @@ void Enemy::defaultMove()
 
 bool Enemy::checkConstrains(int x, int y)
 {
-    if (x < 0 || y < 0 || x > GAME_WINDOW_WIDTH || y > GAME_WINDOW_HEIGHT)
+    if (x <= 0 || y <= 0 || x >= GAME_WINDOW_WIDTH-1 || y >= GAME_WINDOW_HEIGHT-1)
         return false;
     chtype screenObj = mvwinch(m_Window, y, x);
     chtype screenChar = screenObj & A_CHARTEXT;

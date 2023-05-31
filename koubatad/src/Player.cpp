@@ -144,11 +144,11 @@ int Player::getHealth() const
 //----------------------------------------------------------------------------------------------
 bool Player::checkConstrains(int x, int y)
 {
-    if (x <= 0 || y <= 0 || x >= GAME_WINDOW_WIDTH-1 || y >= GAME_WINDOW_HEIGHT-1) // Out of window bounds
+    if (x <= 0 || y <= 0 || x >= GAME_WINDOW_WIDTH - 1 || y >= GAME_WINDOW_HEIGHT - 1) // Out of window bounds
         return false;
 
     chtype screenObj = mvwinch(m_Window, y, x);
-    chtype screenChar = screenObj & A_CHARTEXT;
+    chtype screenChar = screenObj & A_CHARTEXT ;
     if (screenChar == ' ') // Movement clear
         return true;
     if (screenChar == '#' || screenChar == 'X') // Collision with wall or crate

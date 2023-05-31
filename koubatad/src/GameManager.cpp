@@ -47,9 +47,18 @@ void GameManager::runMenu()
         }
 
         for (auto const &spec: m_Special) {
-            int status = spec->update();
-            if (status == 1)
-                handleCollision(spec);
+            spec->update();
+            handleCollision(spec);
+        }
+
+        for (auto const &entity: m_Entities) {
+            entity->move(m_Player1->getPosition());
+            if ( entity->getPosition() == m_Player1->getPosition() && entity != m_Player1 && entity != m_Player2 )
+                m_Player1->receiveEffect(Object::EFFECT::DAMAGE);
+            if ( m_Multi ) {
+                if (entity->getPosition() == m_Player2->getPosition() && entity != m_Player2 && entity != m_Player1)
+                    m_Player2->receiveEffect(Object::EFFECT::DAMAGE);
+            }
         }
 
         for (auto obj = m_Objects.begin(); obj != m_Objects.end();) {
@@ -436,8 +445,19 @@ void GameManager::explodeBomb(std::shared_ptr<Bomb> &bomb)
 //----------------------------------------------------------------------------------------------
 void GameManager::handleCollision(const std::shared_ptr<Special> &special)
 {
+    bool isSpecial = false;
     for (auto &obj: m_Objects) {
-        if (obj->getPosition() == special->getPosition())
+        isSpecial = false;
+        for ( auto const &x: m_Special ) {
+            if ( x == obj ) {
+                isSpecial = true;
+                break;
+            }
+        }
+        if ( isSpecial )
+            continue;
+
+        if (obj->getPosition() == special->getPosition() && obj != special) {
             obj->receiveEffect(special->giveEffect());
             if (obj == m_Player1 && special->giveEffect() != Object::EFFECT::EXPLOSION)
                 m_Score += m_Config.m_BonusScore;
