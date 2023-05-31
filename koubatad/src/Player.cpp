@@ -170,8 +170,11 @@ void Player::receiveEffect(int effect)
 {
     switch (effect) {
         case DAMAGE:
-            takeDamage();
+            if ( !m_Levitate)
+                takeDamage();
             break;
+        case EXPLOSION:
+            takeDamage();
         case BOMB_INC:
             m_BombsCount++;
             break;

@@ -34,6 +34,6 @@ int Explosion::collision() const
 
 int Explosion::giveEffect()
 {
-    return DAMAGE;
+    return EXPLOSION;
 }
 //----------------------------------------------------------------------------------------------

@@ -5,6 +5,7 @@
 #include <vector>
 #include <chrono>
 #include <memory>
+#include <cctype>
 
 /**
  * @brief A class representing a Player entity 

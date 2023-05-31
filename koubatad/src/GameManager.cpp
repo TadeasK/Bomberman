@@ -439,8 +439,9 @@ void GameManager::handleCollision(const std::shared_ptr<Special> &special)
     for (auto &obj: m_Objects) {
         if (obj->getPosition() == special->getPosition())
             obj->receiveEffect(special->giveEffect());
-        if ( obj == m_Player1 && special->giveEffect() != Object::EFFECT::DAMAGE)
-            m_Score += m_Config.m_BonusScore;
+            if (obj == m_Player1 && special->giveEffect() != Object::EFFECT::EXPLOSION)
+                m_Score += m_Config.m_BonusScore;
+        }
     }
 }
 //----------------------------------------------------------------------------------------------
