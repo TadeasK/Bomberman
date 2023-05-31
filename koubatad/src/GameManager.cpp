@@ -19,7 +19,6 @@ GameManager::GameManager(bool multi, std::string &map, std::string &score, std::
 }
 //----------------------------------------------------------------------------------------------
 
-// TODO collisions, damage
 void GameManager::runMenu()
 {
     int input = -1;
@@ -69,10 +68,7 @@ void GameManager::runMenu()
 
                 if (checkEntity((*obj))) // Must be Enemy
                     m_Score += m_Config.m_MonsterScore;
-                else if (checkSpecial((*obj))) {// Must be Special
-                    // TODO Gives score even if it despawns probably
-                    m_Score += m_Config.m_BonusScore;
-                }
+                else if (checkSpecial((*obj))) {}// Must be Special
                 else {
                     createBonus(std::pair<int, int>((*obj)->getPosition()));
                 }
@@ -464,13 +460,10 @@ bool GameManager::checkEntity(const std::shared_ptr<Object> &obj)
 
 bool GameManager::checkSpecial(const std::shared_ptr<Object> &obj)
 {
-    bool ret = false;
     for (auto spec = m_Special.begin(); spec != m_Special.end();) {
         if (*spec == obj) {
-            if ((*spec)->giveEffect() != Object::EFFECT::DAMAGE)
-                ret = true;
             m_Special.erase(spec);
-            return ret;
+            return true;
         }
         ++spec;
     }
