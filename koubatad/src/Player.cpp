@@ -74,9 +74,9 @@ void Player::setMove(size_t dir)
 //----------------------------------------------------------------------------------------------
 std::shared_ptr<Bomb> Player::placeBomb()
 {
-    if ( m_Detonator && !m_BombsPlaced.empty() ) {
-        for ( auto &x: m_BombsPlaced )
-            x->explode();
+    if (m_Detonator && !m_BombsPlaced.empty()) {
+        for (auto &x: m_BombsPlaced)
+            x->m_Exploded = true;
         return nullptr;
     }
 
