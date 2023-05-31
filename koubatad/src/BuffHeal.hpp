@@ -23,5 +23,6 @@ public:
     virtual int giveEffect() override;
 
 private:
+    /// Char representing buff on game window
     const char m_Repr = 'H';
 };

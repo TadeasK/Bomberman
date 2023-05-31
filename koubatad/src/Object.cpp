@@ -12,7 +12,7 @@ void Object::receiveEffect(int effect)
 {}
 //----------------------------------------------------------------------------------------------
 
-std::pair<int, int> Object::getPosition()
+std::pair<int, int> Object::getPosition() const
 {
     return {m_X, m_Y};
 }

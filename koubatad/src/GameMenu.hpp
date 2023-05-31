@@ -16,6 +16,7 @@ public:
     explicit GameMenu(bool test);
 
 private:
+    /// If testing mode is running
     bool m_Test;
     enum OPTIONS
     {
@@ -32,7 +33,7 @@ private:
      */
     void startMulti() const;
 
-    void takeAction(int currSelect) override;
+    virtual void takeAction(int currSelect) override;
 
-    void displayCustom() override {};
+    virtual void displayCustom() override {};
 };

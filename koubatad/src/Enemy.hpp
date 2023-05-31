@@ -20,22 +20,27 @@ public:
      */
     Enemy(int x, int y, WINDOW *window, int speed);
 
-    bool drawObj() const override;
+    virtual bool drawObj() const override;
 
-    void move(const std::pair<int, int> &playerPos) override;
+    virtual void move(const std::pair<int, int> &playerPos) override;
 
     virtual void receiveEffect(int effect) override;
 
 private:
-    int m_Delay = rand() % 3001; // Delays enemy movement
+    /// Delays enemy movement
+    int m_Delay = rand() % 3001;
+    /// Times enemy has not moved
     int m_NotMoved = 0;
+    /// Count of default moves remaining
     int m_DefaultMoves = 0;
+    /// Different states enemy can be in
     enum STATE_OPTIONS
     {
         MOVE_UP = 1, MOVE_LEFT, MOVE_DOWN, MOVE_RIGHT
     };
-    // State of Enemy { most significant move, second second most significant move }
+    /// State of Enemy { most significant move, second second most significant move }
     std::pair<int, int> m_State ={1,2};
+    /// Char representing Enemy on game window
     const char m_Repr = '$';
 
     bool checkConstrains(int x, int y) override;
@@ -51,5 +56,8 @@ private:
      */
     void switchStates();
 
+    /**
+     * @brief Perform default move
+     */
     void defaultMove();
 };

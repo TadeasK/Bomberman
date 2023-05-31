@@ -19,7 +19,10 @@ public:
      */
     Special(int x, int y, WINDOW *window, int lifeSpan = 70000);
 
-
+    /**
+     * @brief Updates Special effect
+     * @return Status of effect
+     */
     virtual int update();
 
     /**
@@ -31,14 +34,19 @@ public:
     /**
      * @brief Check if something is on my position
      * @return -1 if my position would be out of map bounds
-     *          1 if I collide with another object
-     *          0 if my position is clear
+     * @return 1 if I collide with another object
+     * @return 0 if my position is clear
      */
     virtual int collision() const;
 
 protected:
-    int m_LifeSpan; // Lifespan in frames
+    /// Lifespan in frames
+    int m_LifeSpan;
+    /// Attributes of effect (for ncurses)
     unsigned int m_Attr = A_NORMAL;
 
+    /**
+     * @brief Decreases lifeSpan frames remaining
+     */
     void reduceLifeSpan();
 };

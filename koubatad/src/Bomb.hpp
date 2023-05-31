@@ -27,6 +27,9 @@ public:
 
     bool drawObj() const override;
 
+    /**
+     * @brief Operates bomb timer, status
+     */
     void action();
 
     /**
@@ -34,12 +37,16 @@ public:
      *
      */
     std::vector<std::shared_ptr<Explosion>> explode();
-
-    bool m_Exploded = false; // Activity of bomb
+    /// Activity of bomb
+    bool m_Exploded = false;
 private:
-    int m_FusionTimer; // Fusion time (until explosion)
-    int m_Timer; // Current time until explosion
-    int m_Radius; // Radius of explosion
+    /// Fusion time (until explosion)
+    int m_FusionTimer;
+    /// Current time until explosion
+    int m_Timer;
+    /// Radius of explosion
+    int m_Radius;
+    /// Time of bomb placement
     std::chrono::steady_clock::time_point m_PlacedTime;
 
     /**
@@ -48,6 +55,10 @@ private:
      */
     void countDown();
 
+    /**
+     * @brief Calculate elapsed time since bomb was places
+     * @return Time since placement
+     */
     double getElapsedTime() const;
 
 };

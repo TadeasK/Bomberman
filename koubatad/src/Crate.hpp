@@ -21,9 +21,10 @@ public:
 
     virtual bool drawObj() const override;
 
-    virtual void receiveEffect(int effect);
+    virtual void receiveEffect(int effect) override;
 
 private:
+    /// Char representing Crate on game window
     const char m_Repr = '#';
 
 };

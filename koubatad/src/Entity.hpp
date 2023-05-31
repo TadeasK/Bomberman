@@ -35,5 +35,6 @@ public:
     virtual bool checkConstrains(int x, int y) = 0;
 
 protected:
-    int m_Speed; // Speed of entity
+    /// Speed of entity
+    int m_Speed;
 };

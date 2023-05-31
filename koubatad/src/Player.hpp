@@ -30,13 +30,16 @@ public:
     Player(int x, int y, WINDOW *window, int color = 4, int speed = 1, int bombRadius = 1, int bombsCount = 1,
            int bombTimer = 5, int health = 3);
 
+    /**
+     * @return Current player health count
+     */
     int getHealth() const;
 
-    bool drawObj() const override;
+    virtual bool drawObj() const override;
 
     virtual void receiveEffect(int effect) override;
 
-    void move(const std::pair<int, int> &playerPos) override;
+    virtual void move(const std::pair<int, int> &playerPos) override;
 
     /**
      * @brief Sets Player direction, which will be evaluated when move() is called
@@ -57,25 +60,36 @@ public:
 
 
 private:
+    /// Options of movement for player
     enum DIR_OPTIONS
     {
         MOVE_UP = 1, MOVE_LEFT, MOVE_RIGHT, MOVE_DOWN
     };
-    int m_Color; // Color of player on the map
-    int m_Dir = 0; // Direction of player
-    const char m_Repr = '@'; // Character representing the player on the map
-    int m_BombRadius; // Current radius of player placed bombs
-    size_t m_BombsCount; // Current maximum count of bombs player can place at the same time
+    /// Color of player on the map
+    int m_Color;
+    /// Direction of player
+    int m_Dir = 0;
+    /// Character representing the player on the map
+    const char m_Repr = '@';
+    /// Current radius of player placed bombs
+    int m_BombRadius;
+    /// Current maximum count of bombs player can place at the same time
+    size_t m_BombsCount;
+    /// Vector of currently placed bombs
     std::vector<std::shared_ptr<Bomb>> m_BombsPlaced;
-    std::chrono::steady_clock::time_point m_TimePoints[3]; // Array of timepoints where
-    //                           [0] invulnerability
-    //                           [1] Levitation
-    //                           [2] Detonator
-    int m_BombTimer; // How long it takes for bombs placed by this player to explode
-    int m_Health; // Health of player
-    bool m_Levitate = false; // If player has levitation buff (can pass enemies, explosions)
-    bool m_Detonator = false; // If player can detonate bombs remotely
-    bool m_Invulnerable = false; // Player is invulnerable for a short time after receiving damage
+    /// Array of timepoints where [0] invulnerability, [1], Levitation, [2] Detonator
+    std::chrono::steady_clock::time_point m_TimePoints[3];
+
+    /// How long it takes for bombs placed by this player to explode
+    int m_BombTimer;
+    /// Health of player
+    int m_Health;
+    /// If player has levitation buff (can pass enemies, explosions)
+    bool m_Levitate = false;
+    /// If player can detonate bombs remotely
+    bool m_Detonator = false;
+    /// Player is invulnerable for a short time after receiving damage
+    bool m_Invulnerable = false;
 
     /**
      * @brief Sets player's direction to UP, checking if he can move that way

@@ -20,6 +20,7 @@ private:
     {
         BACK
     };
+    /// Settings for player1
     const std::vector<std::string> m_SettingKeysP1 = {
             "PLAYER 1:",
             "",
@@ -30,6 +31,7 @@ private:
             "BOMB  = SPACE"
     };
 
+    /// Settings for player2
     const std::vector<std::string> m_SettingKeysP2 = {
             "PLAYER 2:",
             "",
@@ -44,7 +46,7 @@ private:
      * @brief Display settings for both players
      *
      */
-    void displayCustom() override;
+    virtual void displayCustom() override;
 
-    void takeAction(int currSelect) override;
+    virtual void takeAction(int currSelect) override;
 };

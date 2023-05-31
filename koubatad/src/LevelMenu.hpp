@@ -20,7 +20,7 @@ public:
      * @param multi true if multi player, else single player
      * @param bestScorePath Path to best score file
      * @param mapsPath Path to maps file
-     * @param configPath Path to configuration filea
+     * @param configPath Path to configuration file
      */
     explicit LevelMenu(std::string &name, bool test, bool multi = false,
                        const std::string &bestScorePath = "assets/scores.txt",
@@ -29,8 +29,11 @@ public:
 
 
 private:
+    /// If multiplayer mode selected
     bool m_Multi;
+    /// If testing mode is running
     bool m_Test;
+    /// Map ID
     int m_Map = 1;
 
     enum OPTIONS
@@ -41,9 +44,9 @@ private:
     std::string maps;
     std::string configFile;
 
-    void takeAction(int currSelect) override;
+    virtual void takeAction(int currSelect) override;
 
-    void displayCustom() override {};
+    virtual void displayCustom() override {};
 
     /**
      * @brief Starts the game

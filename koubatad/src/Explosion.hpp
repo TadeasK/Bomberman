@@ -24,5 +24,6 @@ public:
     virtual int collision() const override;
 
 private:
+    /// Char representing Explosion on game window
     const char m_Repr = 'x';
 };

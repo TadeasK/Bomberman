@@ -29,20 +29,33 @@ public:
      */
     virtual bool drawObj() const = 0;
 
+    /**
+     * @brief Makes Object receive given effect
+     * @param effect Effect to receive
+     */
     virtual void receiveEffect(int effect);
 
-    virtual std::pair<int, int> getPosition();
+    /**
+     * @brief Get current Object position
+     * @return Current position
+     */
+    virtual std::pair<int, int> getPosition() const;
 
+    /// Various effects
     enum EFFECT
     {
         DAMAGE, LEVITATE, DETONATOR, BOMB_INC, RADIUS_INC, HEAL, EXPLOSION,
     };
 
 protected:
-    WINDOW *m_Window; // Window where object is displayed
-    int m_X; // A current X position of object
-    int m_Y; // A current  Y position of object
-    bool m_Exist = true; // If object exists or if it has been destroyed/killed
+    /// Window where object is displayed
+    WINDOW *m_Window;
+    /// A current X position of object
+    int m_X;
+    /// A current  Y position of object
+    int m_Y;
+    /// If object exists or if it has been destroyed/killed
+    bool m_Exist = true;
 
     const int GAME_WINDOW_HEIGHT = 15;
     const int GAME_WINDOW_WIDTH = 15;

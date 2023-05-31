@@ -20,8 +20,8 @@ public:
      */
     Menu();
 
-    ~Menu()
-    { endwin(); }
+    ~Menu();
+
 
     /**
      * @brief Operates menus, based on user choice can start the game,
@@ -31,14 +31,22 @@ public:
     virtual void runMenu();
 
 protected:
-    int m_WIDTH = 0; // Width of window
-    int m_HEIGHT = 0; // Height of window
+    /// Width of window
+    int m_WIDTH = 0;
+    /// Height of window
+    int m_HEIGHT = 0;
+    /// Is menu running
     bool running;
-    std::string m_Name; // Name of Menu
-    std::vector<std::string> menuItems; // Items in menu
-    int menuHeight; // Height of sub-window
-    int menuWidth; // Width of sub-window
-    WINDOW *menuWindow; // Pointer to sub-window
+    /// Name of Menu
+    std::string m_Name;
+    /// Items in menu
+    std::vector<std::string> menuItems;
+    // Height of sub-window
+    int menuHeight;
+    // Width of sub-window
+    int menuWidth;
+    /// Pointer to sub-window
+    WINDOW *menuWindow;
 
     // Constants
     const static int MIN_WIDTH = 80; // Minimal width of window to run game
@@ -111,8 +119,16 @@ protected:
      */
     virtual void takeAction(int currSelect) = 0;
 
+    /**
+     * @brief Display custom menu options
+     */
     virtual void displayCustom() = 0;
 
+    /**
+     * @brief Read from score file
+     * @param path Path to score file
+     * @return Read, formatted score file
+     */
     std::map<int, std::pair<std::string, int>> readScoreFile(const std::string &path) const;
 };
 

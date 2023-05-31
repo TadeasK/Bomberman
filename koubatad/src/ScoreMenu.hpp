@@ -15,14 +15,14 @@ public:
     explicit ScoreMenu(const std::string &scorePath);
 
 private:
+    /// Current scores
     std::map<int, std::pair<std::string, int>> m_Scores;
     enum OPTIONS
     {
         BACK
     };
 
+    virtual void takeAction(int currSelect) override;
 
-    void takeAction(int currSelect) override;
-
-    void displayCustom() override;
+    virtual void displayCustom() override;
 };

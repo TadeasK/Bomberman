@@ -21,5 +21,6 @@ public:
     bool drawObj() const override;
 
 private:
-    const char m_Repr = 'X'; // Char representing Wall
+    /// Char representing Wall on game window
+    const char m_Repr = 'X';
 };
