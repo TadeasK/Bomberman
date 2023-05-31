@@ -33,7 +33,7 @@ public:
 
 private:
     bool m_Multi = false;
-    bool m_Player1Winner = true;
+    bool m_Player1Winner = false;
     bool m_Test;
     int m_Score = 0;
     const int GAME_WINDOW_HEIGHT = 15;

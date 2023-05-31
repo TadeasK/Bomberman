@@ -99,6 +99,13 @@ void GameManager::runMenu()
                 m_Player1->receiveEffect(Object::EFFECT::DAMAGE);
         }
 
+
+        if ( m_Entities.size() <= 1 && !m_Test) { // Only player left
+            running = false;
+            m_Player1Winner = true;
+            break;
+        }
+
         if (input != ERR)
             werase(menuWindow);
 
@@ -502,12 +509,16 @@ void GameManager::saveScore()
 
     auto scores = readScoreFile(m_ScorePath);
     int map = m_MapPath.back() - '0';
-    if (scores.count(map) != 0)
-        if (scores[map].second > m_Score) {
-            displayErr("You DIED!", "");
-            std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    if ( m_Player1Winner )
+        displayErr("You WIN!", "Good Job!");
+    else
+        displayErr("You DIED!", "Better luck next time!");
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
+    if (scores.count(map) != 0) {
+        if (scores[map].second > m_Score)
             return;
-        }
+    }
 
     int width = 30, height = 10;
     std::string message = "NEW HIGH SCORE!";
