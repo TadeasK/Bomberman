@@ -1,0 +1,8 @@
+drop:1
+levitate:0.05
+detonator:0.05
+bomb:0.05
+radius:0.05
+heal:0.8
+monster:150
+bonus:50
