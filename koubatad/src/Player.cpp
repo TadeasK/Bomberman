@@ -152,17 +152,17 @@ bool Player::checkConstrains(int x, int y)
     chtype screenChar = screenObj & A_CHARTEXT;
     if (screenChar == ' ') // Movement clear
         return true;
-
     if (screenChar == '#' || screenChar == 'X') // Collision with wall or crate
         return false;
-    // TODO Levitation better collision handling
-    /*
-    if ( screenChar == 'x' || screenChar == '$') {// Collision with explosion or monster
-        if ( !m_Levitate ) {
+    if (screenChar == 'x' || screenChar == '$') {// Collision with explosion or monster
+        if (!m_Levitate) {
             takeDamage();
         }
         return true;
-    }*/
+    }
+    if (screenChar == 'H' || screenChar == 'D' || screenChar == 'B'
+        || screenChar == 'L' || screenChar == 'R') // Effect collision
+        return true;
     return false;
 }
 //----------------------------------------------------------------------------------------------

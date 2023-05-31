@@ -13,11 +13,11 @@ int Special::collision() const
         return -1;
     chtype screenObj = mvwinch(m_Window, m_Y, m_X);
     chtype screenChar = screenObj & A_CHARTEXT;
-    if ( screenChar == 'X')
-        return -1;
+    if ( screenChar == '@' || screenChar == '$') // Player picked up bonus or Enemy destroyed bonus
+        return 1;
     if (screenChar == ' ')
         return 0;
-    return 1;
+    return -1;
 }
 //----------------------------------------------------------------------------------------------
 

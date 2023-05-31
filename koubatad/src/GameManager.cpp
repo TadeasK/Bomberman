@@ -81,8 +81,23 @@ void GameManager::runMenu()
                 ++obj;
         }
 
-        for (auto const &entity: m_Entities)
+        for (auto const &spec: m_Special) {
+            int status = spec->update();
+            if (status == 1)
+                handleCollision(spec);
+        }
+
+        if ( m_Entities.size() <= 1 ) { // Only player left
+            running = false;
+            m_Player1Winner = true;
+            break;
+        }
+
+        for (auto const &entity: m_Entities) {
             entity->move(m_Player1->getPosition());
+            if ( entity->getPosition() == m_Player1->getPosition() && entity != m_Player1 )
+                m_Player1->receiveEffect(Object::EFFECT::DAMAGE);
+        }
 
         if (input != ERR)
             werase(menuWindow);
@@ -392,6 +407,8 @@ void GameManager::handleCollision(const std::shared_ptr<Special> &special)
     for (auto &obj: m_Objects) {
         if (obj->getPosition() == special->getPosition())
             obj->receiveEffect(special->giveEffect());
+        if ( obj == m_Player1 && special->giveEffect() != Object::EFFECT::DAMAGE)
+            m_Score += m_Config.m_BonusScore;
     }
 }
 //----------------------------------------------------------------------------------------------

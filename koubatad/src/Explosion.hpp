@@ -21,6 +21,8 @@ public:
 
     virtual int giveEffect() override;
 
+    virtual int collision() const override;
+
 private:
     const char m_Repr = 'x';
 };

@@ -129,6 +129,9 @@ bool Enemy::checkConstrains(int x, int y)
     chtype screenChar = screenObj & A_CHARTEXT;
     if (screenChar == ' ')
         return true;
+    if (screenChar == 'H' || screenChar == 'D' || screenChar == 'B'
+        || screenChar == 'L' || screenChar == 'R' || screenChar == '@')
+        return true;
     return false;
 }
 //----------------------------------------------------------------------------------------------
