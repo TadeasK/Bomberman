@@ -111,8 +111,8 @@ Splněné body zadní:
 Polymorfismus:
     Všechny herní objekt budou dědit ze třídy, která bude držet informaci o své současné pozici,
     jelikož tu o sobě musí vědět každý z nich. Dále bude implementovat základní metody pro
-    zobrazování na herní ploše. Z ní přímo budou čerpat třídy zobrazující statické objekty herního
-    prostředí.
+    zobrazování na herní ploše a interakce s ostatními objekty. Z ní přímo budou čerpat třídy zobrazující statické
+    objekty herního prostředí.
 
     Další mateřskou třídou (která však sama bude dědit z již zmíněné hlavní třídy) bude třída,
     která bude zastřešovat objekty, které jsou navíc schopné nějakých akcí (pohyb, pokládání bomb).
@@ -133,4 +133,3 @@ Polymorfismus:
     HTML stránce se nachází v menu "Classes/Class Hiearchy".
 
 -------------------------------------------------------------------------------------------------
-   Složka src/ obsahuje hlavičkové a .cpp soubory dosavadní implementace, která není ještě plně funkční, ale obsahuje zamýšlené rozhraní.

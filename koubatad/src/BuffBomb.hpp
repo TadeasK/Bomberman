@@ -15,6 +15,7 @@ public:
      * @param x A X position of the buff
      * @param y An Y position of the buff
      * @param window Window, where object is displayed
+     * @param activeTime Time for which Special is active (in frames)
      */
     BuffBomb(int x, int y, WINDOW *window, int activeTime = 70000);
 

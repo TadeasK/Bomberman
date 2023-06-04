@@ -14,6 +14,7 @@ public:
      * @param x A X position of the explosion
      * @param y An Y position of the explosion
      * @param window Window, where object is displayed
+     * @param activeTime Time for which Explosion is active (in frames)
      */
     Explosion(int x, int y, WINDOW *window, int activeTime = 2700);
 
