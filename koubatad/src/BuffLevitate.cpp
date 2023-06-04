@@ -1,7 +1,7 @@
 #include "BuffLevitate.hpp"
 
-BuffLevitate::BuffLevitate(int x, int y, WINDOW *window)
-        : Special(x, y, window)
+BuffLevitate::BuffLevitate(int x, int y, WINDOW *window, int activeTime)
+        : Special(x, y, window, activeTime)
 {}
 
 //----------------------------------------------------------------------------------------------

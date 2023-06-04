@@ -251,7 +251,7 @@ std::string GameManager::parseMapFile(std::ifstream &file)
     while (std::getline(file, line)) {
         final.append(line);
     }
-    if (final.length() != (size_t)((GAME_WINDOW_WIDTH - 2) * (GAME_WINDOW_HEIGHT - 2)))
+    if (final.length() != (size_t) ((GAME_WINDOW_WIDTH - 2) * (GAME_WINDOW_HEIGHT - 2)))
         throw "Content of file '" + m_MapPath + "' might be corrupted.";
     return final;
 }
@@ -283,7 +283,7 @@ void GameManager::createPlayer1(std::pair<int, int> coord)
 {
     if (m_Player1 == nullptr) {
         if (m_Test)
-            m_Player1 = std::make_shared<Player>(coord.first, coord.second, menuWindow, 4, 1, 3, 3, 3);
+            m_Player1 = std::make_shared<Player>(coord.first, coord.second, menuWindow, 4, 1, 3, 1, 3, 5);
         else
             m_Player1 = std::make_shared<Player>(coord.first, coord.second, menuWindow);
         m_Objects.push_back(m_Player1);
@@ -334,22 +334,28 @@ void GameManager::createBonus(std::pair<int, int> coord, int bonus)
         }
     }
 
+    int testTimer = 70000000;
     std::shared_ptr<Special> special = nullptr;
     switch (bonus) {
         case Object::EFFECT::LEVITATE:
-            special = std::make_shared<BuffLevitate>(coord.first, coord.second, menuWindow);
+            special = m_Test ? std::make_shared<BuffLevitate>(coord.first, coord.second, menuWindow, testTimer)
+                             : std::make_shared<BuffLevitate>(coord.first, coord.second, menuWindow);
             break;
         case Object::EFFECT::DETONATOR:
-            special = std::make_shared<BuffDetonator>(coord.first, coord.second, menuWindow);
+            special = m_Test ? std::make_shared<BuffDetonator>(coord.first, coord.second, menuWindow, testTimer)
+                             : std::make_shared<BuffDetonator>(coord.first, coord.second, menuWindow);
             break;
         case Object::EFFECT::BOMB_INC:
-            special = std::make_shared<BuffBomb>(coord.first, coord.second, menuWindow);
+            special = m_Test ? std::make_shared<BuffBomb>(coord.first, coord.second, menuWindow, testTimer)
+                             : std::make_shared<BuffBomb>(coord.first, coord.second, menuWindow);
             break;
         case Object::EFFECT::RADIUS_INC:
-            special = std::make_shared<BuffRadius>(coord.first, coord.second, menuWindow);
+            special = m_Test ? std::make_shared<BuffRadius>(coord.first, coord.second, menuWindow, testTimer)
+                             : std::make_shared<BuffRadius>(coord.first, coord.second, menuWindow);
             break;
         case Object::EFFECT::HEAL:
-            special = std::make_shared<BuffHeal>(coord.first, coord.second, menuWindow);
+            special = m_Test ? std::make_shared<BuffHeal>(coord.first, coord.second, menuWindow, testTimer)
+                             : std::make_shared<BuffHeal>(coord.first, coord.second, menuWindow);
             break;
         default:
             break;

@@ -1,7 +1,7 @@
 #include "BuffBomb.hpp"
 
-BuffBomb::BuffBomb(int x, int y, WINDOW *window)
-        : Special(x, y, window)
+BuffBomb::BuffBomb(int x, int y, WINDOW *window, int activeTime )
+        : Special(x, y, window, activeTime)
 {}
 
 //----------------------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 #include "BuffHeal.hpp"
 
-BuffHeal::BuffHeal(int x, int y, WINDOW *window)
-        : Special(x, y, window)
+BuffHeal::BuffHeal(int x, int y, WINDOW *window, int activeTime)
+        : Special(x, y, window, activeTime)
 {}
 
 //----------------------------------------------------------------------------------------------

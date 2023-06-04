@@ -17,7 +17,7 @@ public:
      * @param window Window, where object is displayed
      * @param lifeSpan Lifespan of object (in frames)
      */
-    Special(int x, int y, WINDOW *window, int lifeSpan = 70000);
+    Special(int x, int y, WINDOW *window, int lifeSpan);
 
     /**
      * @brief Updates Special effect

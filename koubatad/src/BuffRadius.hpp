@@ -17,7 +17,7 @@ public:
      * @param y An Y position of the buff
      * @param window Window, where object is displayed
      */
-    BuffRadius(int x, int y, WINDOW *window);
+    BuffRadius(int x, int y, WINDOW *window, int activeTime = 70000);
 
     virtual bool drawObj() const override;
 

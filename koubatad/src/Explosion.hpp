@@ -15,7 +15,7 @@ public:
      * @param y An Y position of the explosion
      * @param window Window, where object is displayed
      */
-    Explosion(int x, int y, WINDOW *window);
+    Explosion(int x, int y, WINDOW *window, int activeTime = 2700);
 
     virtual bool drawObj() const override;
 

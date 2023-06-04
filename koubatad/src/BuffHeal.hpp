@@ -16,7 +16,7 @@ public:
      * @param y An Y position of the buff
      * @param window Window, where object is displayed
      */
-    BuffHeal(int x, int y, WINDOW *window);
+    BuffHeal(int x, int y, WINDOW *window, int activeTime = 70000);
 
     virtual bool drawObj() const override;
 

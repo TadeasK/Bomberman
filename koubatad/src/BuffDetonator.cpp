@@ -1,7 +1,7 @@
 #include "BuffDetonator.hpp"
 
-BuffDetonator::BuffDetonator(int x, int y, WINDOW *window)
-        : Special(x, y, window)
+BuffDetonator::BuffDetonator(int x, int y, WINDOW *window, int activeTime)
+        : Special(x, y, window, activeTime)
 {}
 
 //----------------------------------------------------------------------------------------------
@@ -23,4 +23,5 @@ int BuffDetonator::giveEffect()
     m_Exist = false;
     return DETONATOR;
 }
+
 //----------------------------------------------------------------------------------------------

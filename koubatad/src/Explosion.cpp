@@ -1,7 +1,7 @@
 #include "Explosion.hpp"
 
-Explosion::Explosion(int x, int y, WINDOW *window)
-        : Special(x, y, window, 2700)
+Explosion::Explosion(int x, int y, WINDOW *window, int activeTime)
+        : Special(x, y, window, activeTime)
 {}
 //----------------------------------------------------------------------------------------------
 
